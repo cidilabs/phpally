@@ -1,0 +1,25 @@
+{
+    "name": "cidilabs/phpally",
+    "description": "PHP Accessibility (a11y) Testing Library",
+    "authors": [
+        {
+            "name": "Chuck Crandall",
+            "email": "chuck@cidilabs.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests"
+    },
+    "autoload": {
+        "classmap": [
+            "src/",
+            "tests/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}
