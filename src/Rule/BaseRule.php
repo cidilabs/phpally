@@ -14,14 +14,17 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $css = '';
     protected $issues = [];
     protected $errors = [];
+    protected $lang = 'en';
+    protected $strings = array('en' => '');
 
     const SEVERITY_ERROR = 'error';
     const SEVERITY_SUGGESTION = 'suggestion';
 
-    public function __construct(DOMDocument $dom, $css = '')
+    public function __construct(DOMDocument $dom, $css = '', $language_domain = 'en')
     {
         $this->dom = $dom;
         $this->css = $css;
+        $this->lang = $language_domain;
     }
 
     public function id()
@@ -110,5 +113,20 @@ class BaseRule implements PhpAllyRuleInterface {
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+	*	Returns a translated variable. If the translation is unavailable, English is returned
+	*	Because tests only really have one string array, we can get all of this info locally
+	*	@return mixed The translation for the object
+	*/
+    public function translation() {
+        if(isset($this->strings[$this->lang])) {
+			return $this->strings[$this->lang];
+		}
+		if(isset($this->strings['en'])) {
+			return $this->strings['en'];
+		}
+		return false;
     }
 }
