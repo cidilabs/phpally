@@ -10,7 +10,7 @@ class AnchorMustContainTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorMustContainText($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text has no issues.');
+        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text should have no issues.');
     }
 
     public function testCheckFalse()
@@ -20,6 +20,6 @@ class AnchorMustContainTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorMustContainText($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Anchor Must Contain Text has one issue.');
+        $this->assertEquals(1, $rule->check(), 'Anchor Must Contain Text should have one issue.');
     }
 }

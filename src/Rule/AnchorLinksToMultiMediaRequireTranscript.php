@@ -4,7 +4,7 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
-class AnchorLinksToSoundFilesNeedTranscripts extends BaseRule
+class AnchorLinksToMultiMediaRequireTranscript extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;
     
@@ -18,7 +18,7 @@ class AnchorLinksToSoundFilesNeedTranscripts extends BaseRule
         /**
         *	@var array $extensions A list of extensions that mean this file is a link to audio
         */
-        $extensions = ['wav', 'snd', 'mp3', 'iff', 'svx', 'sam', 'smp', 'vce', 'vox', 'pcm', 'aif'];
+        $extensions = ['wmv', 'mpg', 'mov', 'ram', 'aif'];
 
         foreach ($this->getAllElements('a') as $a) {
 			if ($a->hasAttribute('href')) {

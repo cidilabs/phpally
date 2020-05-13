@@ -10,7 +10,7 @@ class AnchorSuspiciousLinkTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorSuspiciousLinkText($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text has no issues.');
+        $this->assertEquals(0, $rule->check(), 'Anchor Suspicious Link Test should have no issues.');
     }
 
     /**
