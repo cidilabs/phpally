@@ -4,6 +4,11 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
+/**
+*  Suspicious link text.
+*  a (anchor) element cannot contain any of the following text (English): \"click here\""
+*	@link http://quail-lib.org/test-info/aSuspiciousLinkText
+*/
 class AnchorSuspiciousLinkText extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;

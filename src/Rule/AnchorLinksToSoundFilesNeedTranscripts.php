@@ -4,6 +4,11 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
+/**
+*  Sound file must have a text transcript.
+*  a (anchor) element cannot contain an href attribute value that ends with any of the following (all case insensitive): .wav, .snd, .mp3, .iff, .svx, .sam, .smp, .vce, .vox, .pcm, .aif.
+*	@link http://quail-lib.org/test-info/aLinksToSoundFilesNeedTranscripts
+*/
 class AnchorLinksToSoundFilesNeedTranscripts extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;

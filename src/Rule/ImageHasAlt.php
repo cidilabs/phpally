@@ -4,6 +4,10 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
+/**
+*  All img elements must have an alt attribute. Duh!
+*	@link http://quail-lib.org/test-info/imgHasAlt
+*/
 class ImageHasAlt extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;

@@ -4,6 +4,11 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
+/**
+*  Links to multimedia require a text transcript.
+*  a (anchor) element must not contain an href attribute value that ends with (case insensitive): .wmv, .mpg, .mov, .ram, .aif.
+*	@link http://quail-lib.org/test-info/aLinksToMultiMediaRequireTranscript
+*/
 class AnchorLinksToMultiMediaRequireTranscript extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;
