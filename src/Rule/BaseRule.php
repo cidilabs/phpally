@@ -129,4 +129,8 @@ class BaseRule implements PhpAllyRuleInterface {
 		}
 		return false;
     }
+
+    public function setLanguage($language) {
+        $this->lang = $language;
+    }
 }
