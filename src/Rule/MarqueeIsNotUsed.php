@@ -1,0 +1,33 @@
+<?php
+
+namespace CidiLabs\PhpAlly\Rule;
+
+use DOMElement;
+
+/**
+*  Marquee element is not used.
+*  This error is generated for all Marquee elements.
+*/
+class MarqueeIsNotUsed extends BaseRule
+{
+    public static $severity = self::SEVERITY_ERROR;
+    
+    public function id()
+    {
+        return self::class;
+    }
+
+    public function check()
+    {
+        foreach ($this->getAllElements('marquee') as $m) {
+			$this->setIssue($m);
+		}
+        
+        return count($this->issues);
+    }
+
+    // public function getPreviewElement(DOMElement $a = null)
+    // {
+    //     return $a->parentNode;
+    // }
+}
