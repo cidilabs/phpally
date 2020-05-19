@@ -11,7 +11,7 @@ use DOMElement;
 */
 class AnchorSuspiciousLinkText extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    public static $severity = self::SEVERITY_SUGGESTION;
     var $strings = array('en' => array('click here', 'click', 'more', 'here'),
     'es' => array('clic aqu&iacute;', 'clic', 'haga clic', 'm&aacute;s', 'aqu&iacute;'));
     
@@ -29,4 +29,9 @@ class AnchorSuspiciousLinkText extends BaseRule
 
         return count($this->issues);
     }
+
+    // public function getPreviewElement(DOMElement $a = null)
+    // {
+    //     return $a->parentNode;
+    // }
 }

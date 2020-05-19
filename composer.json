@@ -5,6 +5,10 @@
         {
             "name": "Chuck Crandall",
             "email": "chuck@cidilabs.com"
+        },
+        {
+            "name": "Ethan Finlay",
+            "email": "ethan@cidilabs.com"
         }
     ],
     "require": {

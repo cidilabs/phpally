@@ -4,6 +4,7 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use CidiLabs\PhpAlly\PhpAllyIssue;
 use CidiLabs\PhpAlly\PhpAllyRuleInterface;
+use CidiLabs\PhpAlly\HtmlElements;
 use DOMDocument;
 use DOMElement;
 
@@ -19,6 +20,7 @@ class BaseRule implements PhpAllyRuleInterface {
 
     const SEVERITY_ERROR = 'error';
     const SEVERITY_SUGGESTION = 'suggestion';
+    const ALT_TEXT_LENGTH_LIMIT = 125;
 
     public function __construct(DOMDocument $dom, $css = '', $language_domain = 'en')
     {
@@ -52,25 +54,29 @@ class BaseRule implements PhpAllyRuleInterface {
         return null;
     }
 
-    public function getAllElements($tags)
-    {
-        $result = [];
-        
-        if (!is_array($tags)) {
-            $tags = array($tags);
-        }        
+    public function getAllElements($tags = null, $options = false, $value = true) {
+		if(!is_array($tags))
+			$tags = array($tags);
+		if($options !== false) {
+			$temp = new htmlElements();
+			$tags = $temp->getElementsByOption($options, $value);
+		}
+		$result = array();
 
-        foreach ($tags as $tag) {
-            $elements = $this->dom->getElementsByTagName($tag);
-            if ($elements) {
-                foreach ($elements as $element) {
-                    $result[] = $element;
-                }
-            }
-        }
-        
-        return $result;
-    }
+		if(!is_array($tags))
+			return array();
+		foreach($tags as $tag) {
+			$elements = $this->dom->getElementsByTagName($tag);
+			if($elements) {
+				foreach($elements as $element) {
+					$result[] = $element;
+				}
+			}
+		}
+		if(count($result) == 0)
+			return array();
+		return $result;
+	}
 
     public function elementContainsReadableText($element)
     {
@@ -133,4 +139,33 @@ class BaseRule implements PhpAllyRuleInterface {
     public function setLanguage($language) {
         $this->lang = $language;
     }
+
+    /**
+	*	To minimize notices, this compares an object's property to the value
+	*	and returns true or false. False will also be returned if the object is
+	*	not really an object, or if the property doesn't exist at all
+	*	@param object $object The object too look at
+	*	@param string $property The name of the property
+	*	@param mixed $value The value to check against
+	*	@param bool $trim Whether the property value should be trimmed
+	*	@param bool $lower Whether the property value should be compared on lower case
+	**/
+	function propertyIsEqual($object, $property, $value, $trim = false, $lower = false) {
+		if(!is_object($object)) {
+			return false;
+		}
+		if(!property_exists($object, $property)) {
+			return false;
+		}
+		$property_value = $object->$property;
+		if($trim) {
+			$property_value = trim($property_value);
+			$value = trim($value);
+		}
+		if($lower) {
+			$property_value = strtolower($property_value);
+			$value = strtolower($value);
+		}
+		return ($property_value == $value);
+	}
 }

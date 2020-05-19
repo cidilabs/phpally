@@ -9,7 +9,7 @@ use DOMElement;
 *  img element cannot have alt attribute value that is the same as its src attribute.
 *	@link http://quail-lib.org/test-info/imgAltIsDifferent
 */
-class ImageAltIsDifferent extends BaseRule
+class ImageAltIsTooLong extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;
     
@@ -20,10 +20,11 @@ class ImageAltIsDifferent extends BaseRule
 
     public function check()
     {
+        $limit = self::ALT_TEXT_LENGTH_LIMIT;
+
         foreach ($this->getAllElements('img') as $img) {
-			if (trim($img->getAttribute('src')) == trim($img->getAttribute('alt')))
-				$this->setIssue($img);
-			else if ( preg_match("/.jpg|.JPG|.png|.PNG|.gif|.GIF|.jpeg|.JPEG$/", trim($img->getAttribute('alt'))) )
+			global $alt_text_length_limit;
+			if ($img->hasAttribute('alt') && strlen($img->getAttribute('alt')) > $limit)
 				$this->setIssue($img);
 		}
         

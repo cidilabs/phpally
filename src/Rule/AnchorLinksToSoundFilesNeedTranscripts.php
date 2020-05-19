@@ -11,7 +11,7 @@ use DOMElement;
 */
 class AnchorLinksToSoundFilesNeedTranscripts extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    public static $severity = self::SEVERITY_SUGGESTION;
     
     public function id()
     {

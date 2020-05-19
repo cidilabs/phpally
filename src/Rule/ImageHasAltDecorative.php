@@ -5,10 +5,9 @@ namespace CidiLabs\PhpAlly\Rule;
 use DOMElement;
 
 /**
-*  All img elements must have an alt attribute. Duh!
-*	@link http://quail-lib.org/test-info/imgHasAlt
+*  Decorative imgs should not have an alt attribute
 */
-class ImageHasAlt extends BaseRule
+class ImageHasAltDecorative extends BaseRule
 {
     public static $severity = self::SEVERITY_ERROR;
     
@@ -20,15 +19,13 @@ class ImageHasAlt extends BaseRule
     public function check()
     {
         foreach ($this->getAllElements('img') as $img) {
-			if (!$img->hasAttribute('alt')
-				|| $img->getAttribute('alt') == ''
-				|| $img->getAttribute('alt') == ' ') {
-				if(!($img->hasAttribute('data-decorative')
-					&& $img->getAttribute('data-decorative') == 'true')) {
-					$this->setIssue($img);
-				}
+			if($img->hasAttribute('data-decorative')
+				&& $img->getAttribute('data-decorative') == 'true'
+				&& $img->hasAttribute('alt')
+				&& trim($img->getAttribute('alt') != '')) {
+				$this->setIssue($img);
 			}
-        }
+		}
         
         return count($this->issues);
     }
