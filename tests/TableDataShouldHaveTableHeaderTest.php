@@ -31,7 +31,7 @@ class TableDataShouldHaveTableHeaderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new TableDataShouldHaveTableHeader($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
     }
 
     public function testCheckFalse()
@@ -39,9 +39,6 @@ class TableDataShouldHaveTableHeaderTest extends PhpAllyTestCase {
         $html = '
             <table style="width:100%">
                 <tr>
-                    <th scope="row">Firstname</th>
-                    <th scope="row">Lastname</th>
-                    <th scope="row">Age</th>
                 </tr>
                 <tr>
                     <td>Jill</td>
