@@ -6,8 +6,8 @@ class MarqueeIsNotUsedTest extends PhpAllyTestCase {
     public function testCheckTrue()
     {
         $html = '<!DOCTYPE html><body>
-        <marquee direction="down" height="100" width="200" bgcolor="white">Scrolling text</marquee>
         </body>';
+        libxml_use_internal_errors(true);
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new MarqueeIsNotUsed($dom);
@@ -20,6 +20,7 @@ class MarqueeIsNotUsedTest extends PhpAllyTestCase {
         $html = '<!DOCTYPE html><body>
         <marquee direction="down" height="100" width="200" bgcolor="white">Scrolling text</marquee>
         </body>';
+        libxml_use_internal_errors(true);
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new MarqueeIsNotUsed($dom);
