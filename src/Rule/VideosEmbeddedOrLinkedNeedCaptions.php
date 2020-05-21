@@ -27,13 +27,13 @@ class VideoEmbeddedOrLinkedNeedCaptions extends BaseRule
 			if ($video->hasAttribute($attr)) {
 				$attr_val = $video->getAttribute($attr);
 				if ( preg_match($search_youtube, $attr_val) ) {
-					$service = new Youtube();
+					$service = new Youtube(new Client(), $attr_val, $this->googleApiKey);
 				}
 				elseif ( preg_match($search_vimeo, $attr_val) ) {
-					$service = new Vimeo();
+					$service = new Vimeo(new Client(), $attr_val, $this->vimeoApiKey);
 				}
 				if (isset($service)) {
-                    $captionState = $service->captionsMissing($attr_val, $this->course_locale);
+                    $captionState = $service->captionsMissing();
 					if($captionState != 2) {
 						$this->setIssue($video);
 					}
