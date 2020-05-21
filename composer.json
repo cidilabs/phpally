@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=7.2.0"
+        "php": ">=7.2.0",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "scripts": {
         "test": "./vendor/bin/phpunit tests"
