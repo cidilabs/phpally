@@ -59,8 +59,10 @@ class Youtube {
 				// $logger->addError('YouTube API Error: '.$response->body->error->errors[0]->message);
 			}
 
+            $items = json_decode($response->getBody())->items;
+
 			// Looks through the captions and checks if any were not auto-generated
-			foreach ( $response['body']->items as $track ) {
+			foreach ($items as $track ) {
 				if ( $track->snippet->trackKind != 'ASR' ) {
 					return 2;
 				}
