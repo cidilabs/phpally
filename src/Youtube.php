@@ -64,7 +64,7 @@ class Youtube {
 			// Looks through the captions and checks if any were not auto-generated
 			foreach ($items as $track ) {
                 print_r($track);
-				if ( $track->snippet->trackKind != 'ASR' ) {
+				if ( $track->snippet->trackKind != 'asr' ) {
 					return 2;
 				}
 			}
