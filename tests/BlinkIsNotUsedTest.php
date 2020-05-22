@@ -11,7 +11,7 @@ class BlinkIsNotUsedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new BlinkIsNotUsed($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(1, $rule->check(), 'Blink Is Not Used should have one issue.');
     }
 
     public function testCheckFalse()
@@ -23,6 +23,6 @@ class BlinkIsNotUsedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new BlinkIsNotUsed($dom);
 
-        $this->assertEquals(2, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(2, $rule->check(), 'Blink Is Not Used should have two issues.');
     }
 }

@@ -14,7 +14,7 @@ class InputImageNotDecorativeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new InputImageNotDecorative($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Has Long Description should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Input Image Not Decorative should have no issues.');
     }
 
     public function testCheckFalse()
@@ -28,6 +28,6 @@ class InputImageNotDecorativeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new InputImageNotDecorative($dom);
 
-        $this->assertEquals(2, $rule->check(), 'Image Has Long Description should have one issue.');
+        $this->assertEquals(2, $rule->check(), 'Input Image Not Decorative should have two issues.');
     }
 }

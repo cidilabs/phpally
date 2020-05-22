@@ -10,7 +10,7 @@ class ObjectInterfaceIsAccessibleTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ObjectInterfaceIsAccessible($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(1, $rule->check(), 'Object Interface Is Accessible should have no issues.');
     }
 
     public function testCheckTwo()
@@ -21,6 +21,6 @@ class ObjectInterfaceIsAccessibleTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ObjectInterfaceIsAccessible($dom);
 
-        $this->assertEquals(2, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(2, $rule->check(), 'Object Interface Is Accessible should have one issue.');
     }
 }

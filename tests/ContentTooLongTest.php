@@ -10,7 +10,7 @@ class ContentTooLongTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ContentTooLong($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Content Too Long should have no issues.');
     }
 
     public function testCheckTrueMultipleElements()
@@ -20,7 +20,7 @@ class ContentTooLongTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ContentTooLong($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Content Too Long should have no issues.');
     }
 
     public function testCheckFalseOneElement()

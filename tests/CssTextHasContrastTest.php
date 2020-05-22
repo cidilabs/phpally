@@ -10,7 +10,7 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new CssTextHasContrast($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Alt Not Empty should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'CSS Text Has Contrast should have no issues.');
     }
 
     public function testCheckFalse()
@@ -20,6 +20,6 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new CssTextHasContrast($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Image Alt Not Empty should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'CSS Text Has Contrast should have one issue.');
     }
 }

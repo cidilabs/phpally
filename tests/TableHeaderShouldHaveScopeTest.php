@@ -28,7 +28,7 @@ class TableHeaderShouldHaveScopeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new TableHeaderShouldHaveScope($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Table Data Should Have Scope should have no issues.');
     }
 
     public function testCheckFalse()
@@ -56,6 +56,6 @@ class TableHeaderShouldHaveScopeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new TableHeaderShouldHaveScope($dom);
 
-        $this->assertEquals(3, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(3, $rule->check(), 'Table Data Should Have Scope should have one issue.');
     }
 }

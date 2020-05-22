@@ -10,7 +10,7 @@ class ImageAltNotPlaceholderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageAltNotPlaceholder($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Alt Is Different should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Image Alt Not Placeholder should have no issues.');
     }
 
     public function testCheckTrueNoAlt()
@@ -20,7 +20,7 @@ class ImageAltNotPlaceholderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageAltNotPlaceholder($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Alt Is Different should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Image Alt Not Placeholder should have no issues.');
     }
 
     public function testCheckFalseRegExMatch()
@@ -30,7 +30,7 @@ class ImageAltNotPlaceholderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageAltNotPlaceholder($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Image Alt Is Different should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Image Alt Not Placeholder should have one issue.');
     }
 
     public function testCheckFalsePlaceHolderText()
@@ -40,7 +40,7 @@ class ImageAltNotPlaceholderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageAltNotPlaceholder($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Image Alt Is Different should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Image Alt Not Placeholder should have one issue.');
     }
 
     public function testCheckFalsePlaceHolderTextOtherLanguage()
@@ -51,6 +51,6 @@ class ImageAltNotPlaceholderTest extends PhpAllyTestCase {
         $rule = new ImageAltNotPlaceholder($dom);
         $rule->setLanguage('es');
 
-        $this->assertEquals(1, $rule->check(), 'Image Alt Is Different should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Image Alt Not Placeholder should have one issue.');
     }
 }

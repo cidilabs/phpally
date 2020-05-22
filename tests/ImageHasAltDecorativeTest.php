@@ -10,7 +10,7 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Image Has Alt Decorative should have no issues.');
     }
 
     public function testCheckTrueBlankAltText()
@@ -20,7 +20,7 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Image Has Alt Decorative should have no issues.');
     }
 
     public function testCheckTrueNotDecorative()
@@ -30,7 +30,7 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Image Has Alt Decorative should have no issues.');
     }
 
     public function testCheckFalse()
@@ -40,6 +40,6 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Anchor Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Image Has Alt Decorative should have one issue.');
     }
 }

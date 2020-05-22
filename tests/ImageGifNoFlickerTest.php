@@ -10,7 +10,7 @@ class ImageGifNoFlickerTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageGifNoFlicker($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Alt Not Empty should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Image Gif No Flicker should have no issues.');
     }
 
     public function testCheckFalse()
@@ -20,6 +20,6 @@ class ImageGifNoFlickerTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ImageGifNoFlicker($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Alt Not Empty should have one issue.');
+        $this->assertEquals(0, $rule->check(), 'Image Gif No Flicker should have one issue.');
     }
 }

@@ -26,6 +26,6 @@ class EmbedHasAssociatedNoEmbedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new EmbedHasAssociatedNoEmbed($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Embed Has No Associated NoEmbed should have one issue.');
     }
 }

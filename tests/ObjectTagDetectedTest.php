@@ -10,7 +10,7 @@ class ObjectTagDetectedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ObjectTagDetected($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(1, $rule->check(), 'Object Tag Detected should have no issues.');
     }
 
     public function testCheckTwo()
@@ -21,6 +21,6 @@ class ObjectTagDetectedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ObjectTagDetected($dom);
 
-        $this->assertEquals(2, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(2, $rule->check(), 'Object Tag Detected should have one issue.');
     }
 }

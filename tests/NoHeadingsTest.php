@@ -14,7 +14,7 @@ class NoHeadingsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new NoHeadings($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'No Headings Test should have no issues.');
     }
 
     public function testCheckTrueTooShort()
@@ -27,7 +27,7 @@ class NoHeadingsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new NoHeadings($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(0, $rule->check(), 'No Headings Test should have one issue.');
     }
 
     public function testCheckFalse()
@@ -37,6 +37,6 @@ class NoHeadingsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new NoHeadings($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'No Headings Test should have one issue.');
     }
 }

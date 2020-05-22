@@ -10,7 +10,7 @@ class PreShouldNotBeUsedForTabularValuesTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new PreShouldNotBeUsedForTabularValues($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Pre Should Not Be Used For Tabular Values should have no issues.');
     }
 
     public function testCheckFalse()
@@ -25,6 +25,6 @@ class PreShouldNotBeUsedForTabularValuesTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new PreShouldNotBeUsedForTabularValues($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Pre Should Not Be Used For Tabular Values should have one issue.');
     }
 }

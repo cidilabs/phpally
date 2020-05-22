@@ -10,7 +10,7 @@ class VideoProvidesCaptionsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new VideoProvidesCaptions($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Video Embed Check should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Video Provides Captions should have no issues.');
     }
 
     public function testCheckFalseIframe()
@@ -20,6 +20,6 @@ class VideoProvidesCaptionsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new VideoProvidesCaptions($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Video Embed Check should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Video Provides Captions should have one issue.');
     }
 }

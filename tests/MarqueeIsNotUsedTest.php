@@ -12,7 +12,7 @@ class MarqueeIsNotUsedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new MarqueeIsNotUsed($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Marquee Is Not Used should have no issues.');
     }
 
     public function testCheckFalse()
@@ -25,6 +25,6 @@ class MarqueeIsNotUsedTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new MarqueeIsNotUsed($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Marquee Is Not Used should have one issue.');
     }
 }

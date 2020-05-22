@@ -14,7 +14,7 @@ class HeadersHaveTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new HeadersHaveText($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Headers Have Text should have no issues.');
     }
 
     public function testCheckFalse()
@@ -26,6 +26,6 @@ class HeadersHaveTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new HeadersHaveText($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Headers Have Text should have one issue.');
     }
 }

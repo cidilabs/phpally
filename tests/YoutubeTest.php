@@ -11,7 +11,7 @@ class YoutubeTest extends PhpAllyTestCase {
         $client = new Client();
         $youtube = new Youtube($client);
 
-        $this->assertEquals(0, $youtube->captionsMissing($url), 'Video Embed Check should have no issues.');
+        $this->assertEquals(0, $youtube->captionsMissing($url), 'Youtube Test should have no issues.');
     }
 
 }

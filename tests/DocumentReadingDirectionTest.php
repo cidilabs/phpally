@@ -10,7 +10,7 @@ class DocumentReadingDirectionTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new DocumentReadingDirection($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Image Alt Not Empty should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Document Reading Direction should have no issues.');
     }
 
     public function testCheckFalse()
@@ -20,7 +20,7 @@ class DocumentReadingDirectionTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new DocumentReadingDirection($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Image Alt Not Empty should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Document Reading Direction should have one issue.');
     }
 
     public function testCheckFalseComplex()
@@ -31,6 +31,6 @@ class DocumentReadingDirectionTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new DocumentReadingDirection($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Image Alt Not Empty should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Document Reading Direction should have one issue.');
     }
 }

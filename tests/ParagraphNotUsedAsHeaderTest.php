@@ -10,7 +10,7 @@ class ParagraphNotUsedAsHeaderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ParagraphNotUsedAsHeader($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Paragraph Not Used As Header should have no issues.');
     }
 
     public function testCheckTrueParagraphInTableHeader()
@@ -20,7 +20,7 @@ class ParagraphNotUsedAsHeaderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ParagraphNotUsedAsHeader($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(0, $rule->check(), 'Paragraph Not Used As Header should have one issue.');
     }
 
     public function testCheckFalsePUsedAsHeader()
@@ -30,7 +30,7 @@ class ParagraphNotUsedAsHeaderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ParagraphNotUsedAsHeader($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Paragraph Not Used As Header should have one issue.');
     }
 
     public function testCheckFalseBoldUsed()
@@ -40,6 +40,6 @@ class ParagraphNotUsedAsHeaderTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new ParagraphNotUsedAsHeader($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Object Must Contain Text should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Paragraph Not Used As Header should have one issue.');
     }
 }

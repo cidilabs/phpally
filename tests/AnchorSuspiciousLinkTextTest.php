@@ -23,7 +23,7 @@ class AnchorSuspiciousLinkTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorSuspiciousLinkText($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Anchor Must Contain Text has one issue.');
+        $this->assertEquals(1, $rule->check(), 'Anchor Suspicious Link Test should have one issue.');
     }
 
     /**
@@ -37,7 +37,7 @@ class AnchorSuspiciousLinkTextTest extends PhpAllyTestCase {
         $rule = new AnchorSuspiciousLinkText($dom);
         $rule->setLanguage('es');
 
-        $this->assertEquals(1, $rule->check(), 'Anchor Must Contain Text has one issue.');
+        $this->assertEquals(1, $rule->check(), 'Anchor Suspicious Link Test should have one issue.');
     }
 
     /**
@@ -50,6 +50,6 @@ class AnchorSuspiciousLinkTextTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorSuspiciousLinkText($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Anchor Must Contain Text has one issue.');
+        $this->assertEquals(1, $rule->check(), 'Anchor Suspicious Link Test should have one issue.');
     }
 }
