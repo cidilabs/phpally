@@ -20,13 +20,14 @@ class Youtube {
         );
         
     private $search_url = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&fields=items(snippet(trackKind,language))&videoId=';
-    private $client;
+	private $client;
+	private $language;
     private $link_url;
     private $api_key = 'AIzaSyAVQMyhlUnAjeW1bzmNk49agG966Mwl5Ac';
     
     public function __construct($client)
     {
-        $this->client = $client;
+		$this->client = $client;
     }
 
     /**
@@ -63,7 +64,6 @@ class Youtube {
 
 			// Looks through the captions and checks if any were not auto-generated
 			foreach ($items as $track ) {
-                print_r($track);
 				if ( $track->snippet->trackKind != 'asr' ) {
 					return 2;
 				}
@@ -73,7 +73,72 @@ class Youtube {
 		}
 
 		return 2;
-    }
+	}
+	
+	/**
+	*	Checks to see if a video is missing caption information in YouTube
+	*	@param string $link_url The URL to the video or video resource
+	*	@param string $course_locale The locale/language of the Canvas course
+	*	@return int 0 if captions are manual and wrong language, 1 if video is private, 2 if captions are auto-generated or manually generated and correct language
+	*/
+	function captionsLanguage($link_url, $course_locale)
+	{
+		$url = $this->search_url;
+		$api_key = $this->api_key;
+		global $logger;
+
+		$foundManual = false;
+
+		// If the API key is blank, flag the video for manual inspection
+		$key_trimmed = trim($api_key);
+		if( empty($key_trimmed) ){
+			return 1;
+		}
+
+		// If for whatever reason course_locale is blank, set it to English
+		if($course_locale === '') {
+			$course_locale = 'en';
+		}
+
+		if( $youtube_id = $this->isYouTubeVideo($link_url) ) {
+			$url = $url.$youtube_id.'&key='.$api_key;
+			$response = $this->client->request('GET', $url);
+
+			// If the video was pulled due to copyright violations, is unlisted, or is unavailable, the reponse header will be 404
+			if( $response->getStatusCode === 404 ) {
+				return 1;
+			}
+
+			// If the daily limit has been exceeded for our API key or there was some other error
+			if( $response->getStatusCode === 403 ) {
+				// global $logger;
+				// $logger->addError('YouTube API Error: '.$response->body->error->errors[0]->message);
+			}
+
+			$items = json_decode($response->getBody())->items;
+
+			// Looks through the captions and checks if they are of the correct language
+			foreach ( $items as $track) {
+				//If the track was manually generated, set the flag to true
+				print_r($track);
+				if( $track->snippet->trackKind != 'ASR' ){
+					$foundManual = true;
+				}
+
+				if( substr($track->snippet->language,0,2) == $course_locale && $track->snippet->trackKind != 'ASR' ) {
+					return 2;
+				}
+
+			}
+
+			//If we found any manual captions and have not returned, then none are the correct language
+			if( $foundManual === true ){
+				return 0;
+			}
+		}
+
+			return 2;
+	}
     
     /**
 	*	Checks to see if the provided link URL is a YouTube video. If so, it returns
