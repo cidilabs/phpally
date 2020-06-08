@@ -64,7 +64,7 @@ class Youtube {
 
 			// Looks through the captions and checks if any were not auto-generated
 			foreach ($items as $track ) {
-				if ( $track->snippet->trackKind != 'asr' ) {
+				if ( strtolower($track->snippet->trackKind) != 'asr' ) {
 					return 2;
 				}
 			}
@@ -78,15 +78,12 @@ class Youtube {
 	/**
 	*	Checks to see if a video is missing caption information in YouTube
 	*	@param string $link_url The URL to the video or video resource
-	*	@param string $course_locale The locale/language of the Canvas course
 	*	@return int 0 if captions are manual and wrong language, 1 if video is private, 2 if captions are auto-generated or manually generated and correct language
 	*/
-	function captionsLanguage($link_url, $course_locale)
+	function captionsLanguage($link_url)
 	{
 		$url = $this->search_url;
 		$api_key = $this->api_key;
-		global $logger;
-
 		$foundManual = false;
 
 		// If the API key is blank, flag the video for manual inspection
@@ -96,6 +93,7 @@ class Youtube {
 		}
 
 		// If for whatever reason course_locale is blank, set it to English
+		$course_locale = $this->lang;
 		if($course_locale === '') {
 			$course_locale = 'en';
 		}
@@ -119,13 +117,14 @@ class Youtube {
 
 			// Looks through the captions and checks if they are of the correct language
 			foreach ( $items as $track) {
+				$trackKind = strtolower($track->snippet->trackKind);
+
 				//If the track was manually generated, set the flag to true
-				print_r($track);
-				if( $track->snippet->trackKind != 'ASR' ){
+				if( $trackKind != 'asr' ){
 					$foundManual = true;
 				}
 
-				if( substr($track->snippet->language,0,2) == $course_locale && $track->snippet->trackKind != 'ASR' ) {
+				if( substr($track->snippet->language,0,2) == $course_locale && $trackKind != 'asr' ) {
 					return 2;
 				}
 

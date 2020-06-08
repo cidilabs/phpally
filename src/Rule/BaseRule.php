@@ -15,7 +15,7 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $css = '';
     protected $issues = [];
     protected $errors = [];
-    protected $lang = 'en';
+    protected $lang;
     protected $strings = array('en' => '');
 
     const SEVERITY_ERROR = 'error';
