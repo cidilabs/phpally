@@ -2,9 +2,10 @@
 
 namespace CidiLabs\PhpAlly;
 
-class PhpAllyReport {
+class PhpAllyReport implements \JsonSerializable {
     protected $issues = [];
     protected $errors = [];
+    protected $html = '';
 
     public function __construct()
     {
@@ -16,6 +17,11 @@ class PhpAllyReport {
             'issues' => $this->getIssues(),
             'errors' => $this->getErrors(),
         ];
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     public function __toString()

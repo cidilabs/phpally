@@ -5,59 +5,41 @@ namespace CidiLabs\PhpAlly;
 use DOMDocument;
 
 class PhpAlly {
-    protected $report;
-
     public function __construct()
     {
-        $this->report = new PhpAllyReport();
+
     }
 
-    public function checkOne($html, $ruleId, $options = [])
+    public function checkOne($content, $ruleId, $options = [])
     {
-        $className = 'CidiLabs\\PhpAlly\\Rule\\' . $ruleId;
-        if (!class_exists($className)) {
-            $this->report->setError('Rule does not exist.');
-        }
-
-        $document = $this->getDomDocument($html);
-
-        if (!$document) {
-            $this->report->setError('Failed to load HTML document.');
-        }
-        else {
-            $rule = new $className($document, $options);
-            $rule->check();
-
-            $this->report->setIssues($rule->getIssues());
-            $this->report->setErrors($rule->getErrors());
-        }
-
-        return $this->report;
+        return $this->checkMany($content, [$ruleId], $options);
     }
 
     public function checkMany($content, $ruleIds = [], $options = [])
     {
-        $document = $this->getDomDocument($content);
+        try {
+            $report = new PhpAllyReport();
+            $document = $this->getDomDocument($content);
 
-        foreach ($ruleIds as $ruleId) {
-            $className = 'CidiLabs\\PhpAlly\\Rule\\' . $ruleId;
-            if (!class_exists($className)) {
-                $this->report->setError('Rule does not exist.');
-            }           
+            foreach ($ruleIds as $ruleId) {
+                $className = 'CidiLabs\\PhpAlly\\Rule\\' . $ruleId;
+                if (!class_exists($className)) {
+                    $report->setError('Rule does not exist.');
+                    continue;
+                }           
 
-            $rule = new $className($document, $options);
-            $rule->check();
+                $rule = new $className($document, $options);
+                $rule->check();                
 
-            $this->report->setIssues($rule->getIssues());
-            $this->report->setErrors($rule->getErrors());
+                $report->setIssues($rule->getIssues());
+                $report->setErrors($rule->getErrors());
+            }
+        }
+        catch (\Exception $e) {
+            $report->setError($e->getMessage());
         }
 
-        return $this->report;
-    }
-
-    public function getReport($options = [])
-    {
-        return $this->report;
+        return $report;
     }
 
     public function getDomDocument($content)
@@ -66,5 +48,13 @@ class PhpAlly {
         $dom->loadHTML($content);
 
         return $dom;
+    }
+
+    public function getRuleIds()
+    {
+        $path = __DIR__ . '/rules.json';
+        $json = file_get_contents($path);
+
+        return \json_decode($json, true);
     }
 }

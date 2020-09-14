@@ -18,6 +18,8 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $lang;
     protected $strings = array('en' => '');
 
+    public static $severity;
+
     const SEVERITY_ERROR = 'error';
     const SEVERITY_SUGGESTION = 'suggestion';
     const ALT_TEXT_LENGTH_LIMIT = 125;
@@ -56,16 +58,20 @@ class BaseRule implements PhpAllyRuleInterface {
     }
 
     public function getAllElements($tags = null, $options = false, $value = true) {
-		if(!is_array($tags))
-			$tags = array($tags);
+		if(!is_array($tags)) {
+            $tags = array($tags);
+        }
+
 		if($options !== false) {
 			$temp = new htmlElements();
 			$tags = $temp->getElementsByOption($options, $value);
 		}
 		$result = array();
 
-		if(!is_array($tags))
-			return array();
+		if(!is_array($tags)) {
+            return array();
+        }
+
 		foreach($tags as $tag) {
 			$elements = $this->dom->getElementsByTagName($tag);
 			if($elements) {
@@ -73,9 +79,12 @@ class BaseRule implements PhpAllyRuleInterface {
 					$result[] = $element;
 				}
 			}
-		}
-		if(count($result) == 0)
-			return array();
+        }
+        
+		if(count($result) == 0) {
+            return array();
+        }
+
 		return $result;
 	}
 
@@ -104,7 +113,8 @@ class BaseRule implements PhpAllyRuleInterface {
 
     public function setIssue($element)
     {
-        $this->issues[] = new PhpAllyIssue($this->id(), $element, $this->getPreviewElement($element));
+        $ruleId = str_replace('CidiLabs\\PhpAlly\\Rule\\', '', $this->id());
+        $this->issues[] = new PhpAllyIssue($ruleId, static::$severity, $element, $this->getPreviewElement($element));
     }
 
     public function getIssues()

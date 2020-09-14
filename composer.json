@@ -1,6 +1,8 @@
 {
     "name": "cidilabs/phpally",
+    "type": "library",
     "description": "PHP Accessibility (a11y) Testing Library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Chuck Crandall",

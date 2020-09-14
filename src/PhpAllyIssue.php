@@ -4,13 +4,15 @@ namespace CidiLabs\PhpAlly;
 
 use DOMElement;
 
-class PhpAllyIssue {
+class PhpAllyIssue implements \JsonSerializable {
+    protected $ruleId;
     protected $type;
     protected $element;
     protected $previewElement;
 
-    public function __construct($type, DOMElement $element, DOMElement $previewElement = null)
+    public function __construct($ruleId, $type, DOMElement $element, DOMElement $previewElement = null)
     {
+        $this->ruleId = $ruleId;
         $this->type = $type;
         $this->element = $element;
 
@@ -18,7 +20,7 @@ class PhpAllyIssue {
             $this->previewElement = $previewElement;
         }
         else {
-            $this->previewElement = $this->getPreviewElement();        
+            $this->previewElement = $this->element->parentNode;        
         }
     }
 
@@ -29,20 +31,46 @@ class PhpAllyIssue {
 
     public function getPreviewElement()
     {
-        return $this->element->parentNode;
+        return $this->previewElement;
+    }
+
+    public function getRuleId() 
+    {
+        return $this->ruleId;
+    }
+
+    public function getHtml()
+    {
+        return $this->element->ownerDocument->saveXML($this->element);
+    }
+
+    public function getPreview()
+    {
+        return $this->element->ownerDocument->saveXML($this->previewElement);
+    }
+
+    public function getType()
+    {
+        return $this->type;
     }
 
     public function toArray()
     {
         return [
+            'ruleId' => $this->ruleId,
             'type' => $this->type,
-            'html' => $this->element->ownerDocument->saveXML($this->element),
-            'preview' => $this->element->ownerDocument->saveXML($this->previewElement),
+            'html' => $this->getHtml(),
+            'preview' => $this->getPreview(),
         ];
     }
     
     public function __toString()
     {
         return \json_encode($this->toArray());
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }

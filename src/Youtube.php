@@ -50,12 +50,12 @@ class Youtube {
 			$response = $this->client->request('GET', $url);
 
 			// If the video was pulled due to copyright violations, is unlisted, or is unavailable, the reponse header will be 404
-			if( $response->getStatusCode === 404 ) {
+			if( $response->getStatusCode() === 404 ) {
 				return 1;
 			}
 
 			// If the daily limit has been exceeded for our API key or there was some other error
-			if( $response->getStatusCode === 403 ) {
+			if( $response->getStatusCode() === 403 ) {
 				// global $logger;
 				// $logger->addError('YouTube API Error: '.$response->body->error->errors[0]->message);
 			}
@@ -93,7 +93,7 @@ class Youtube {
 		}
 
 		// If for whatever reason course_locale is blank, set it to English
-		$course_locale = $this->lang;
+		$course_locale = $this->language;
 		if($course_locale === '') {
 			$course_locale = 'en';
 		}
@@ -103,12 +103,12 @@ class Youtube {
 			$response = $this->client->request('GET', $url);
 
 			// If the video was pulled due to copyright violations, is unlisted, or is unavailable, the reponse header will be 404
-			if( $response->getStatusCode === 404 ) {
+			if( $response->getStatusCode() === 404 ) {
 				return 1;
 			}
 
 			// If the daily limit has been exceeded for our API key or there was some other error
-			if( $response->getStatusCode === 403 ) {
+			if( $response->getStatusCode() === 403 ) {
 				// global $logger;
 				// $logger->addError('YouTube API Error: '.$response->body->error->errors[0]->message);
 			}

@@ -25,7 +25,6 @@ class TableDataShouldHaveTableHeader extends BaseRule
 					foreach ($child->childNodes as $tr) {
 						if (!is_null($tr->childNodes)) {
 							foreach ($tr->childNodes as $th) {
-								print_r($th);
 								if ($this->propertyIsEqual($th, 'tagName', 'th')) {
 									break 3;
 								} else {

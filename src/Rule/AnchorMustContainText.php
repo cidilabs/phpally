@@ -20,7 +20,8 @@ class AnchorMustContainText extends BaseRule
 
     public function check()
     {
-        foreach ($this->getAllElements('a') as $a) {
+        
+        foreach ($this->getAllElements('a') as $a) {   
             if (!$this->elementContainsReadableText($a) && ($a->hasAttribute('href'))) {
                 $this->setIssue($a);
             }
