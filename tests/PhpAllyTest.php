@@ -26,15 +26,6 @@ class PhpAllyTest extends PhpAllyTestCase {
         $this->phpAllyIssueTest($issue);
     }
 
-    public function testGetReport()
-    {
-        $ally = new PhpAlly();
-        $ally->checkOne($this->getLinkHtml(), 'AnchorMustContainText');
-        $report = $ally->getReport();
-        $this->phpAllyReportTest($report);
-    }
-
-
     
     protected function phpAllyReportTest($report)
     {
