@@ -22,10 +22,12 @@ class ParagraphNotUsedAsHeader extends BaseRule
 
     public function check()
     {
-        foreach ($this->getAllElements('p') as $p) {
-			$parent_tag = $p->parentNode->tagName;
-			if($parent_tag != 'td' && $parent_tag != 'th'){
+		foreach ($this->getAllElements('p') as $p) {
+			$parent_tag = isset($p->parentNode->tagName) ? $p->parentNode->tagName : false;
+			
+			if($parent_tag != 'td' && $parent_tag != 'th') {
 				if (isset($p->nodeValue) && isset($p->firstChild->nodeValue)) {
+					
 					if (($p->nodeValue == $p->firstChild->nodeValue)
 						&& is_object($p->firstChild)
 						&& property_exists($p->firstChild, 'tagName')
@@ -45,6 +47,7 @@ class ParagraphNotUsedAsHeader extends BaseRule
 				}
 			}
 		}
+
         
         return count($this->issues);
     }

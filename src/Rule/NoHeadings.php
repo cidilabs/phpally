@@ -21,35 +21,16 @@ class NoHeadings extends BaseRule
     public function check()
     {
         $doc_length = self::DOC_LENGTH;
-
-		$elements = $this->getAllElements('p');
-
-		$document_string = "";
-
-		foreach ($elements as $element) {
-			$document_string .= $element->textContent;
-		}
-
+		$document_string = $this->dom->textContent;
+		
 		if (strlen($document_string) > $doc_length){
-
-			$no_headings = 0;
-
 			if (!$this->getAllElements('h1')
 				&& !$this->getAllElements('h2')
 				&& !$this->getAllElements('h3')
 				&& !$this->getAllElements('h4')
 				&& !$this->getAllElements('h5')
 				&& !$this->getAllElements('h6')) {
-				$no_headings = true;
-			} else {
-				$no_headings = false;
-			}
-
-            // TODO: Figure out a better way to do this
-			if ($no_headings) {
-				$body = $this->getAllElements('body');
-
-		        $this->setIssue($body[0]);
+				$this->setIssue(null);
 			}
 		}
         

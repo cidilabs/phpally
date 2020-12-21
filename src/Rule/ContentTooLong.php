@@ -31,11 +31,8 @@ class ContentTooLong extends BaseRule
 		}
         $wordCount = str_word_count($pageText);
 
-		if($wordCount > 3000){
-            // TODO: This is still iffy, not sure what element to send
-            $body = $this->getAllElements('body');
-
-			$this->setIssue($body[0]);
+		if($wordCount > SELF::MAX_WORD_COUNT) {
+			$this->setIssue(null);
 		}
 
         return count($this->issues);

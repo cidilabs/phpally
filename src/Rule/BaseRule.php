@@ -24,6 +24,7 @@ class BaseRule implements PhpAllyRuleInterface {
     const SEVERITY_SUGGESTION = 'suggestion';
     const ALT_TEXT_LENGTH_LIMIT = 125;
     const DOC_LENGTH = 1500;
+    const MAX_WORD_COUNT = 3000;
 
     public function __construct(DOMDocument $dom, $css = '', $language_domain = 'en')
     {

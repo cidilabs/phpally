@@ -10,7 +10,7 @@ class PhpAllyIssue implements \JsonSerializable {
     protected $element;
     protected $previewElement;
 
-    public function __construct($ruleId, $type, DOMElement $element, DOMElement $previewElement = null)
+    public function __construct($ruleId, $type, DOMElement $element = null, DOMElement $previewElement = null)
     {
         $this->ruleId = $ruleId;
         $this->type = $type;
@@ -20,7 +20,9 @@ class PhpAllyIssue implements \JsonSerializable {
             $this->previewElement = $previewElement;
         }
         else {
-            $this->previewElement = $this->element->parentNode;        
+            if ($this->element) {
+                $this->previewElement = $this->element->parentNode;        
+            }
         }
     }
 
@@ -41,11 +43,21 @@ class PhpAllyIssue implements \JsonSerializable {
 
     public function getHtml()
     {
+        if (!$this->element) {
+            return '';
+        }
+
+        //return $this->element->ownerDocument->saveHTML($this->element);
         return $this->element->ownerDocument->saveXML($this->element);
     }
 
     public function getPreview()
     {
+        if (!$this->element) {
+            return '';
+        }
+
+        //return $this->element->ownerDocument->saveHTML($this->previewElement);
         return $this->element->ownerDocument->saveXML($this->previewElement);
     }
 

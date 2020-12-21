@@ -17,11 +17,11 @@ class PhpAlly {
 
     public function checkMany($content, $ruleIds = [], $options = [])
     {
-        try {
-            $report = new PhpAllyReport();
-            $document = $this->getDomDocument($content);
+        $report = new PhpAllyReport();
+        $document = $this->getDomDocument($content);
 
-            foreach ($ruleIds as $ruleId) {
+        foreach ($ruleIds as $ruleId) {
+            try {
                 $className = 'CidiLabs\\PhpAlly\\Rule\\' . $ruleId;
                 if (!class_exists($className)) {
                     $report->setError('Rule does not exist.');
@@ -33,10 +33,9 @@ class PhpAlly {
 
                 $report->setIssues($rule->getIssues());
                 $report->setErrors($rule->getErrors());
+            } catch (\Exception $e) {
+                $report->setError($e->getMessage());
             }
-        }
-        catch (\Exception $e) {
-            $report->setError($e->getMessage());
         }
 
         return $report;
@@ -45,7 +44,7 @@ class PhpAlly {
     public function getDomDocument($content)
     {
         $dom = new DOMDocument('1.0', 'utf-8');
-        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED);
 
         return $dom;
     }
