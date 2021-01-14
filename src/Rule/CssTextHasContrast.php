@@ -265,4 +265,10 @@ class CssTextHasContrast extends BaseRule
 		$results = array('r' => hexdec($c[0]), 'g' => hexdec($c[1]), 'b' => hexdec($c[2]));
 		return $results;
 	}
+
+	function outerHTML($e) {
+		$doc = new DOMDocument();
+		$doc->appendChild($doc->importNode($e, true));
+		return $doc->saveHTML();
+   }
 }
