@@ -97,7 +97,7 @@ class CssTextHasContrast extends BaseRule
 					if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $font_size >= 18 || $font_size >= 14 && $bold) {
 						if ($luminosity < 3) {
 							$tagName = $element->tagName;
-							$html = $this->outerHTML($element);
+							$html = $this->dom->saveHTML($element);
 
 							$html = preg_replace('/background:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
 							$html = preg_replace('/background-color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
@@ -112,7 +112,7 @@ class CssTextHasContrast extends BaseRule
 					} else {
 						if ($luminosity < 4.5) {
 							$tagName = $element->tagName;
-							$html = $this->outerHTML($element);
+							$html = $this->dom->saveHTML($element);
 
 							$html = preg_replace('/background:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
 							$html = preg_replace('/background-color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
@@ -265,10 +265,4 @@ class CssTextHasContrast extends BaseRule
 		$results = array('r' => hexdec($c[0]), 'g' => hexdec($c[1]), 'b' => hexdec($c[2]));
 		return $results;
 	}
-
-	function outerHTML($e) {
-		$doc = new DOMDocument();
-		$doc->appendChild($doc->importNode($e, true));
-		return $doc->saveHTML();
-   }
 }
