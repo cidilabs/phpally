@@ -96,12 +96,32 @@ class CssTextHasContrast extends BaseRule
 
 					if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $font_size >= 18 || $font_size >= 14 && $bold) {
 						if ($luminosity < 3) {
-							$message = 'heading: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
+							$tagName = $element->tagName;
+							$html = $this->dom->saveHTML($element);
+
+							$html = preg_replace('/background:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
+							$html = preg_replace('/background-color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
+							$html = preg_replace('/color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
+							$html = preg_replace('/style="/', 'style="background-color: '.$background.'; color: '.$style["color"].';', $html);
+							
+							$dom = new \DOMDocument('1.0', 'utf-8');
+							$dom->loadHTML($html);
+							$element = $dom->getElementsByTagName($tagName)[0];
 							$this->setIssue($element);
 						}
 					} else {
 						if ($luminosity < 4.5) {
-							$message = 'text: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
+							$tagName = $element->tagName;
+							$html = $this->dom->saveHTML($element);
+
+							$html = preg_replace('/background:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
+							$html = preg_replace('/background-color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
+							$html = preg_replace('/color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
+							$html = preg_replace('/style="/', 'style="background-color: '.$background.'; color: '.$style["color"].';', $html);
+							
+							$dom = new \DOMDocument('1.0', 'utf-8');
+							$dom->loadHTML($html);
+							$element = $dom->getElementsByTagName($tagName)[0];
 							$this->setIssue($element);
 						}
 					}

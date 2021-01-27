@@ -23,7 +23,7 @@ class Youtube {
 	private $client;
 	private $language;
     private $link_url;
-    private $api_key = 'AIzaSyAVQMyhlUnAjeW1bzmNk49agG966Mwl5Ac';
+    private $api_key = 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c';
     
     public function __construct($client)
     {
