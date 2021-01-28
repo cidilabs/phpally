@@ -9,7 +9,7 @@ use DOMElement;
 */
 class VideoProvidesCaptions extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -42,8 +42,4 @@ class VideoProvidesCaptions extends BaseRule
 		return false;
 	}
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

@@ -10,7 +10,7 @@ use DOMXPath;
 */
 class CssTextHasContrast extends BaseRule
 {
-	public static $severity = self::SEVERITY_ERROR;
+	
 	
     public $default_background = '#ffffff';
     

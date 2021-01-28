@@ -11,7 +11,7 @@ use DOMElement;
 */
 class NoHeadings extends BaseRule
 {
-    public static $severity = self::SEVERITY_SUGGESTION;
+    
     
     public function id()
     {
@@ -20,10 +20,9 @@ class NoHeadings extends BaseRule
 
     public function check()
     {
-        $doc_length = self::DOC_LENGTH;
-		$document_string = $this->dom->textContent;
+        $document_string = $this->dom->textContent;
 		
-		if (strlen($document_string) > $doc_length){
+		if (strlen($document_string) > $this->minDocLengthForHeaders){
 			if (!$this->getAllElements('h1')
 				&& !$this->getAllElements('h2')
 				&& !$this->getAllElements('h3')
@@ -37,8 +36,4 @@ class NoHeadings extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

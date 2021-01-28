@@ -10,7 +10,7 @@ use DOMElement;
 */
 class ImageGifNoFlicker extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -50,8 +50,4 @@ class ImageGifNoFlicker extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

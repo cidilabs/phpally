@@ -9,7 +9,7 @@ use DOMElement;
 */
 class HeadersHaveText extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -27,8 +27,4 @@ class HeadersHaveText extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

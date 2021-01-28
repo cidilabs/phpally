@@ -11,7 +11,7 @@ use DOMElement;
 */
 class ImageAltNotEmptyInAnchor extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -33,8 +33,4 @@ class ImageAltNotEmptyInAnchor extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

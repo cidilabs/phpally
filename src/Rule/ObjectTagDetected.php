@@ -10,7 +10,7 @@ use DOMElement;
 */
 class ObjectTagDetected extends BaseRule
 {
-    public static $severity = self::SEVERITY_SUGGESTION;
+    
     
     public function id()
     {

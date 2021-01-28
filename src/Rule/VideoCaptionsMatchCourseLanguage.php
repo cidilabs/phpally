@@ -13,7 +13,7 @@ use GuzzleHttp\Client;
 */
 class VideoCaptionsMatchCourseLanguage extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -47,8 +47,4 @@ class VideoCaptionsMatchCourseLanguage extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

@@ -18,19 +18,27 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $lang;
     protected $strings = array('en' => '');
 
-    public static $severity;
-
-    const SEVERITY_ERROR = 'error';
-    const SEVERITY_SUGGESTION = 'suggestion';
     const ALT_TEXT_LENGTH_LIMIT = 125;
     const DOC_LENGTH = 1500;
     const MAX_WORD_COUNT = 3000;
 
-    public function __construct(DOMDocument $dom, $css = '', $language_domain = 'en')
+    protected $altTextLengthLimit;
+    protected $minDocLengthForHeaders;
+    protected $maxWordCount;
+
+    public function __construct(DOMDocument $dom, $options = [])
     {
         $this->dom = $dom;
-        $this->css = $css;
-        $this->lang = $language_domain;
+        $this->options = $options;
+        $this->lang = isset($options['lang']) ? $options['lang'] : 'en';
+        $this->css = isset($options['css']) ? $options['css'] : '';
+
+        $this->altTextLengthLimit = isset($options['altTextLengthLimit']) 
+            ? $options['alttextLengthLimit'] : self::ALT_TEXT_LENGTH_LIMIT;
+        $this->minDocLengthForHeaders = isset($options['minDocLengthForHeaders']) 
+            ? $options['minDocLengthForHeaders'] : self::DOC_LENGTH;
+        $this->maxWordCount = isset($options['maxWordCount']) 
+            ? $options['maxWordCount'] : self::MAX_WORD_COUNT;
     }
 
     public function id()
@@ -40,12 +48,12 @@ class BaseRule implements PhpAllyRuleInterface {
 
     public function getCss()
     {
-
+        return $this->css;
     }
 
     public function setCss($css)
     {
-
+        $this->css = $css;
     }
 
     public function check()
@@ -115,7 +123,7 @@ class BaseRule implements PhpAllyRuleInterface {
     public function setIssue($element)
     {
         $ruleId = str_replace('CidiLabs\\PhpAlly\\Rule\\', '', $this->id());
-        $this->issues[] = new PhpAllyIssue($ruleId, static::$severity, $element, $this->getPreviewElement($element));
+        $this->issues[] = new PhpAllyIssue($ruleId, $element, $this->getPreviewElement($element));
     }
 
     public function getIssues()

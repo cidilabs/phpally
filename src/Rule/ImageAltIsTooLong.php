@@ -11,7 +11,7 @@ use DOMElement;
 */
 class ImageAltIsTooLong extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -20,19 +20,13 @@ class ImageAltIsTooLong extends BaseRule
 
     public function check()
     {
-        $limit = self::ALT_TEXT_LENGTH_LIMIT;
-
         foreach ($this->getAllElements('img') as $img) {
-			global $alt_text_length_limit;
-			if ($img->hasAttribute('alt') && strlen($img->getAttribute('alt')) > $limit)
-				$this->setIssue($img);
+			if ($img->hasAttribute('alt') && (strlen($img->getAttribute('alt')) > $this->altTextLengthLimit)) {
+                $this->setIssue($img);
+            }
 		}
         
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

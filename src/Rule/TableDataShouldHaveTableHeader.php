@@ -10,7 +10,7 @@ use DOMElement;
  */
 class TableDataShouldHaveTableHeader extends BaseRule
 {
-	public static $severity = self::SEVERITY_ERROR;
+	
 
 	public function id()
 	{
@@ -39,6 +39,9 @@ class TableDataShouldHaveTableHeader extends BaseRule
 					}
 				} elseif ($this->propertyIsEqual($child, 'tagName', 'tr')) {
 					foreach ($child->childNodes as $th) {
+						if ($th->nodeType === XML_TEXT_NODE) {
+							continue;
+						}
 						if ($this->propertyIsEqual($th, 'tagName', 'th')) {
 							break 2;
 						} else {

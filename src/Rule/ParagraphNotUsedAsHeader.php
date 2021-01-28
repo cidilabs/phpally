@@ -11,7 +11,7 @@ use DOMElement;
 */
 class ParagraphNotUsedAsHeader extends BaseRule
 {
-	public static $severity = self::SEVERITY_SUGGESTION;
+	
 	
 	var $head_tags = array('strong', 'font', 'b', 'u');
     

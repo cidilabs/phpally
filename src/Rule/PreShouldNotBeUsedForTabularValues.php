@@ -10,7 +10,7 @@ use DOMElement;
 */
 class PreShouldNotBeUsedForTabularValues extends BaseRule
 {
-    public static $severity = self::SEVERITY_SUGGESTION;
+    
     
     public function id()
     {
@@ -28,8 +28,4 @@ class PreShouldNotBeUsedForTabularValues extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

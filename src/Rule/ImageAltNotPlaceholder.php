@@ -11,7 +11,7 @@ use DOMElement;
 */
 class ImageAltNotPlaceholder extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     var $strings = array('en' => array('nbsp', '&nbsp;', 'spacer', 'image', 'img', 'photo'),
 	'es' => array('nbsp', '&nbsp;', 'spacer', 'espacio', 'imagen', 'img', 'foto'));
     
@@ -39,8 +39,4 @@ class ImageAltNotPlaceholder extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

@@ -6,14 +6,12 @@ use DOMElement;
 
 class PhpAllyIssue implements \JsonSerializable {
     protected $ruleId;
-    protected $type;
     protected $element;
     protected $previewElement;
 
-    public function __construct($ruleId, $type, DOMElement $element = null, DOMElement $previewElement = null)
+    public function __construct($ruleId, DOMElement $element = null, DOMElement $previewElement = null)
     {
         $this->ruleId = $ruleId;
-        $this->type = $type;
         $this->element = $element;
 
         if (!empty($previewElement)) {
@@ -61,16 +59,10 @@ class PhpAllyIssue implements \JsonSerializable {
         return $this->element->ownerDocument->saveXML($this->previewElement);
     }
 
-    public function getType()
-    {
-        return $this->type;
-    }
-
     public function toArray()
     {
         return [
             'ruleId' => $this->ruleId,
-            'type' => $this->type,
             'html' => $this->getHtml(),
             'preview' => $this->getPreview(),
         ];

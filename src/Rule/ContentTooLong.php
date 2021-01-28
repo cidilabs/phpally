@@ -11,7 +11,7 @@ use DOMElement;
 */
 class ContentTooLong extends BaseRule
 {
-    public static $severity = self::SEVERITY_SUGGESTION;
+    
     
     public function id()
     {
@@ -31,7 +31,7 @@ class ContentTooLong extends BaseRule
 		}
         $wordCount = str_word_count($pageText);
 
-		if($wordCount > SELF::MAX_WORD_COUNT) {
+		if($wordCount > $this->maxWordCount) {
 			$this->setIssue(null);
 		}
 
@@ -40,6 +40,6 @@ class ContentTooLong extends BaseRule
 
     public function getPreviewElement(DOMElement $a = null)
     {
-        return $a->parentNode;
+        return $a;
     }
 }

@@ -9,7 +9,7 @@ use DOMElement;
 */
 class BaseFontIsNotUsed extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -25,8 +25,4 @@ class BaseFontIsNotUsed extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }

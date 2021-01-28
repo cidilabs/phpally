@@ -9,7 +9,7 @@ use DOMElement;
 */
 class VideoEmbedCheck extends BaseRule
 {
-    public static $severity = self::SEVERITY_ERROR;
+    
     
     public function id()
     {
@@ -41,8 +41,4 @@ class VideoEmbedCheck extends BaseRule
         return count($this->issues);
     }
 
-    // public function getPreviewElement(DOMElement $a = null)
-    // {
-    //     return $a->parentNode;
-    // }
 }
