@@ -41,10 +41,14 @@ class PhpAlly {
         return $report;
     }
 
-    public function getDomDocument($content)
+    public function getDomDocument($html)
     {
         $dom = new DOMDocument('1.0', 'utf-8');
-        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED);
+        if (strpos($html, '<?xml encoding="utf-8"') !== false) {
+            $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        } else {
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        }
 
         return $dom;
     }

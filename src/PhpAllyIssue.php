@@ -45,8 +45,7 @@ class PhpAllyIssue implements \JsonSerializable {
             return '';
         }
 
-        //return $this->element->ownerDocument->saveHTML($this->element);
-        return $this->element->ownerDocument->saveXML($this->element);
+        return $this->element->ownerDocument->saveHTML($this->element);
     }
 
     public function getPreview()
@@ -55,8 +54,7 @@ class PhpAllyIssue implements \JsonSerializable {
             return '';
         }
 
-        //return $this->element->ownerDocument->saveHTML($this->previewElement);
-        return $this->element->ownerDocument->saveXML($this->previewElement);
+        return $this->element->ownerDocument->saveHTML($this->previewElement);
     }
 
     public function toArray()
