@@ -6,33 +6,34 @@ use DOMElement;
 use DOMXPath;
 
 /**
-*	Checks that all color and background elements are also bold or italicized
-*/
+ *	Checks that all color and background elements are also bold or italicized
+ */
 class CssTextStyleEmphasize extends BaseRule
 {
-	
-	
-    public $default_background = '#ffffff';
-    
-	public $default_color = '#000000';
-    
-    public function id()
-    {
-        return self::class;
-    }
+	public $default_background = '#ffffff';
 
-    public function check()
-    {
-        $xpath   = new DOMXPath($this->dom);
+	public $default_color = '#000000';
+
+	public function id()
+	{
+		return self::class;
+	}
+
+	public function check()
+	{
+		$xpath   = new DOMXPath($this->dom);
 		/**
-		* Selects all nodes that have a style attribute OR 'strong' OR 'em' elements that:
-		* Contain only the text in their text nodes
-		* OR 	 Have text nodes AND text nodes that are not equal to the string-value of the context node
-		* OR 	 Have a text node descendant that equals the string-value of the context node and has no style attributes
-		*/
+		 * Selects all nodes that have a style attribute OR 'strong' OR 'em' elements that:
+		 * Contain only the text in their text nodes
+		 * OR 	 Have text nodes AND text nodes that are not equal to the string-value of the context node
+		 * OR 	 Have a text node descendant that equals the string-value of the context node and has no style attributes
+		 */
 		$entries = $xpath->query('//*[(text() = . or ( ./*[text() != .]) or (.//*[text() = . and not(@style)])) and ((@style) or (name() = "strong") or (name() = "em"))]');
 
 		foreach ($entries as $element) {
+			if ($element->nodeType !== XML_ELEMENT_NODE) {
+				continue;
+			}
 
 			$style = $this->parseCSS($element->getAttribute('style'));
 
@@ -73,14 +74,16 @@ class CssTextStyleEmphasize extends BaseRule
 							}
 						}
 					}
-				} else if ($element->tagName === "strong"
+				} else if (
+					$element->tagName === "strong"
 					|| $this->getElementAncestor($element, 'strong')
 					|| (isset($element->nodeValue)
 						&& isset($element->firstChild->nodeValue)
 						&& $element->nodeValue == $element->firstChild->nodeValue
 						&& is_object($element->firstChild)
 						&& property_exists($element->firstChild, 'tagName')
-						&& $element->firstChild->tagName === 'strong')) {
+						&& $element->firstChild->tagName === 'strong')
+				) {
 					$bold = true;
 					$style['font-weight'] = "bold";
 				} else {
@@ -88,7 +91,7 @@ class CssTextStyleEmphasize extends BaseRule
 				}
 
 				if (isset($style['font-style'])) {
-					if($style['font-style'] === "italic") {
+					if ($style['font-style'] === "italic") {
 						$italic = true;
 					}
 				} else if ($element->tagName === "em") {
@@ -111,25 +114,26 @@ class CssTextStyleEmphasize extends BaseRule
 				}
 			}
 		}
-        
-        return count($this->issues);
-    }
 
-    // Helpers
+		return count($this->issues);
+	}
 
-    /**
-	*	Returns the first ancestor reached of a tag, or false if it hits
-	*	the document root or a given tag.
-	*	@param object $element A DOMElement object
-	*	@param string $ancestor_tag The name of the tag we are looking for
-	*	@param string $limit_tag Where to stop searching
-	*/
-	function getElementAncestor($element, $ancestor_tag, $limit_tag = 'body') {
-		while(property_exists($element, 'parentNode')) {
-			if($element->parentNode->tagName == $ancestor_tag) {
+	// Helpers
+
+	/**
+	 *	Returns the first ancestor reached of a tag, or false if it hits
+	 *	the document root or a given tag.
+	 *	@param object $element A DOMElement object
+	 *	@param string $ancestor_tag The name of the tag we are looking for
+	 *	@param string $limit_tag Where to stop searching
+	 */
+	function getElementAncestor($element, $ancestor_tag, $limit_tag = 'body')
+	{
+		while (property_exists($element, 'parentNode')) {
+			if ($element->parentNode->tagName == $ancestor_tag) {
 				return $element->parentNode;
 			}
-			if($element->parentNode->tagName == $limit_tag) {
+			if ($element->parentNode->tagName == $limit_tag) {
 				return false;
 			}
 			$element = $element->parentNode;
@@ -137,9 +141,10 @@ class CssTextStyleEmphasize extends BaseRule
 		return false;
 	}
 
-    // CSS Helpers
+	// CSS Helpers
 
-	public function parseCSS($css) {
+	public function parseCSS($css)
+	{
 		$results = array();
 		preg_match_all("/([\w-]+)\s*:\s*([^;]+)\s*;?/", $css, $matches, PREG_SET_ORDER);
 		foreach ($matches as $match) {
@@ -147,126 +152,136 @@ class CssTextStyleEmphasize extends BaseRule
 		}
 
 		return $results;
-    }
-    
-    /**
-	*	Converts multiple color or background styles into a simple hex string
-	*	@param string $color The color attribute to convert (this can also be a multi-value css background value)
-	*	@return string A standard CSS hex value for the color
-	*/
-	public function convertColor($color) {
+	}
+
+	/**
+	 *	Converts multiple color or background styles into a simple hex string
+	 *	@param string $color The color attribute to convert (this can also be a multi-value css background value)
+	 *	@return string A standard CSS hex value for the color
+	 */
+	public function convertColor($color)
+	{
 		$color = trim($color);
-		if(strpos($color, ' ') !== false) {
+		if (strpos($color, ' ') !== false) {
 			$colors = explode(' ', $color);
-			foreach($colors as $background_part) {
-				if(substr(trim($background_part), 0, 1) == '#' ||
+			foreach ($colors as $background_part) {
+				if (
+					substr(trim($background_part), 0, 1) == '#' ||
 					in_array(trim($background_part), array_keys($this->color_names)) ||
-					strtolower(substr(trim($background_part), 0, 3)) == 'rgb') {
-						$color = $background_part;
-					}
+					strtolower(substr(trim($background_part), 0, 3)) == 'rgb'
+				) {
+					$color = $background_part;
+				}
 			}
 		}
 		//Normal hex color
-		if(substr($color, 0, 1) == '#') {
-			if(strlen($color) == 7) {
+		if (substr($color, 0, 1) == '#') {
+			if (strlen($color) == 7) {
 				return str_replace('#', '', $color);
-			}
-			elseif (strlen($color) == 4) {
-				return substr($color, 1, 1).substr($color, 1, 1).
-					   substr($color, 2, 1).substr($color, 2, 1).
-					   substr($color, 3, 1).substr($color, 3, 1);
+			} elseif (strlen($color) == 4) {
+				return substr($color, 1, 1) . substr($color, 1, 1) .
+					substr($color, 2, 1) . substr($color, 2, 1) .
+					substr($color, 3, 1) . substr($color, 3, 1);
 			} else {
 				return "000000";
 			}
 		}
 		//Named Color
-		if(in_array($color, array_keys($this->color_names))) {
+		if (in_array($color, array_keys($this->color_names))) {
 			return $this->color_names[$color];
 		}
 		//rgb values
-		if(strtolower(substr($color, 0, 3)) == 'rgb') {
+		if (strtolower(substr($color, 0, 3)) == 'rgb') {
 			$colors = explode(',', trim(str_replace('rgb(', '', $color), '()'));
-			if(!count($colors) != 3) {
+			if (!count($colors) != 3) {
 				return false;
 			}
 			$r = intval($colors[0]);
 			$g = intval($colors[1]);
-		    $b = intval($colors[2]);
+			$b = intval($colors[2]);
 
-		    $r = dechex($r<0?0:($r>255?255:$r));
-		    $g = dechex($g<0?0:($g>255?255:$g));
-		    $b = dechex($b<0?0:($b>255?255:$b));
+			$r = dechex($r < 0 ? 0 : ($r > 255 ? 255 : $r));
+			$g = dechex($g < 0 ? 0 : ($g > 255 ? 255 : $g));
+			$b = dechex($b < 0 ? 0 : ($b > 255 ? 255 : $b));
 
-		    $color = (strlen($r) < 2?'0':'').$r;
-		    $color .= (strlen($g) < 2?'0':'').$g;
-		    $color .= (strlen($b) < 2?'0':'').$b;
-		    return $color;
+			$color = (strlen($r) < 2 ? '0' : '') . $r;
+			$color .= (strlen($g) < 2 ? '0' : '') . $g;
+			$color .= (strlen($b) < 2 ? '0' : '') . $b;
+			return $color;
 		}
-    }
-    
-    /**
-	*	Helper method that finds the luminosity between the provided
-	*	foreground and background parameters.
-	*	@param string $foreground The HEX value of the foreground color
-	*	@param string $background The HEX value of the background color
-	*	@return float The luminosity contrast ratio between the colors
-	*/
-	public function getLuminosity($foreground, $background) {
-		if($foreground == $background) return 0;
-		$fore_rgb = $this->getRGB($foreground);
-		$back_rgb = $this->getRGB($background);
-		return $this->luminosity($fore_rgb['r'], $back_rgb['r'],
-							    $fore_rgb['g'], $back_rgb['g'],
-							    $fore_rgb['b'], $back_rgb['b']);
 	}
 
 	/**
-	*	Returns the luminosity between two colors
-	*	@param string $r The first Red value
-	*	@param string $r2 The second Red value
-	*	@param string $g The first Green value
-	*	@param string $g2 The second Green value
-	*	@param string $b The first Blue value
-	*	@param string $b2 The second Blue value
-	*	@return float The luminosity contrast ratio between the colors
-	*/
-	public function luminosity($r,$r2,$g,$g2,$b,$b2) {
-		$RsRGB = $r/255;
-		$GsRGB = $g/255;
-		$BsRGB = $b/255;
-		$R = ($RsRGB <= 0.03928) ? $RsRGB/12.92 : pow(($RsRGB+0.055)/1.055, 2.4);
-		$G = ($GsRGB <= 0.03928) ? $GsRGB/12.92 : pow(($GsRGB+0.055)/1.055, 2.4);
-		$B = ($BsRGB <= 0.03928) ? $BsRGB/12.92 : pow(($BsRGB+0.055)/1.055, 2.4);
+	 *	Helper method that finds the luminosity between the provided
+	 *	foreground and background parameters.
+	 *	@param string $foreground The HEX value of the foreground color
+	 *	@param string $background The HEX value of the background color
+	 *	@return float The luminosity contrast ratio between the colors
+	 */
+	public function getLuminosity($foreground, $background)
+	{
+		if ($foreground == $background) return 0;
+		$fore_rgb = $this->getRGB($foreground);
+		$back_rgb = $this->getRGB($background);
+		return $this->luminosity(
+			$fore_rgb['r'],
+			$back_rgb['r'],
+			$fore_rgb['g'],
+			$back_rgb['g'],
+			$fore_rgb['b'],
+			$back_rgb['b']
+		);
+	}
 
-		$RsRGB2 = $r2/255;
-		$GsRGB2 = $g2/255;
-		$BsRGB2 = $b2/255;
-		$R2 = ($RsRGB2 <= 0.03928) ? $RsRGB2/12.92 : pow(($RsRGB2+0.055)/1.055, 2.4);
-		$G2 = ($GsRGB2 <= 0.03928) ? $GsRGB2/12.92 : pow(($GsRGB2+0.055)/1.055, 2.4);
-		$B2 = ($BsRGB2 <= 0.03928) ? $BsRGB2/12.92 : pow(($BsRGB2+0.055)/1.055, 2.4);
+	/**
+	 *	Returns the luminosity between two colors
+	 *	@param string $r The first Red value
+	 *	@param string $r2 The second Red value
+	 *	@param string $g The first Green value
+	 *	@param string $g2 The second Green value
+	 *	@param string $b The first Blue value
+	 *	@param string $b2 The second Blue value
+	 *	@return float The luminosity contrast ratio between the colors
+	 */
+	public function luminosity($r, $r2, $g, $g2, $b, $b2)
+	{
+		$RsRGB = $r / 255;
+		$GsRGB = $g / 255;
+		$BsRGB = $b / 255;
+		$R = ($RsRGB <= 0.03928) ? $RsRGB / 12.92 : pow(($RsRGB + 0.055) / 1.055, 2.4);
+		$G = ($GsRGB <= 0.03928) ? $GsRGB / 12.92 : pow(($GsRGB + 0.055) / 1.055, 2.4);
+		$B = ($BsRGB <= 0.03928) ? $BsRGB / 12.92 : pow(($BsRGB + 0.055) / 1.055, 2.4);
 
-		if ($r+$g+$b <= $r2+$g2+$b2) {
-		$l2 = (.2126 * $R + 0.7152 * $G + 0.0722 * $B);
-		$l1 = (.2126 * $R2 + 0.7152 * $G2 + 0.0722 * $B2);
+		$RsRGB2 = $r2 / 255;
+		$GsRGB2 = $g2 / 255;
+		$BsRGB2 = $b2 / 255;
+		$R2 = ($RsRGB2 <= 0.03928) ? $RsRGB2 / 12.92 : pow(($RsRGB2 + 0.055) / 1.055, 2.4);
+		$G2 = ($GsRGB2 <= 0.03928) ? $GsRGB2 / 12.92 : pow(($GsRGB2 + 0.055) / 1.055, 2.4);
+		$B2 = ($BsRGB2 <= 0.03928) ? $BsRGB2 / 12.92 : pow(($BsRGB2 + 0.055) / 1.055, 2.4);
+
+		if ($r + $g + $b <= $r2 + $g2 + $b2) {
+			$l2 = (.2126 * $R + 0.7152 * $G + 0.0722 * $B);
+			$l1 = (.2126 * $R2 + 0.7152 * $G2 + 0.0722 * $B2);
 		} else {
-		$l1 = (.2126 * $R + 0.7152 * $G + 0.0722 * $B);
-		$l2 = (.2126 * $R2 + 0.7152 * $G2 + 0.0722 * $B2);
+			$l1 = (.2126 * $R + 0.7152 * $G + 0.0722 * $B);
+			$l2 = (.2126 * $R2 + 0.7152 * $G2 + 0.0722 * $B2);
 		}
 
-		$luminosity = round(($l1 + 0.05)/($l2 + 0.05),2);
+		$luminosity = round(($l1 + 0.05) / ($l2 + 0.05), 2);
 		return $luminosity;
 	}
 
 
 	/**
-	*	Returns the decimal equivalents for a HEX color
-	*	@param string $color The hex color value
-	*	@return array An array where 'r' is the Red value, 'g' is Green, and 'b' is Blue
-	*/
-	function getRGB($color) {
+	 *	Returns the decimal equivalents for a HEX color
+	 *	@param string $color The hex color value
+	 *	@return array An array where 'r' is the Red value, 'g' is Green, and 'b' is Blue
+	 */
+	function getRGB($color)
+	{
 		$color =  $this->convertColor($color);
 		$c = str_split($color, 2);
-		if(count($c) != 3) {
+		if (count($c) != 3) {
 			return false;
 		}
 		$results = array('r' => hexdec($c[0]), 'g' => hexdec($c[1]), 'b' => hexdec($c[2]));
