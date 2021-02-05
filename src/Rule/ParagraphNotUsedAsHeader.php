@@ -22,7 +22,7 @@ class ParagraphNotUsedAsHeader extends BaseRule
 	{
 		foreach ($this->getAllElements('p') as $p) {
 			if ($p->parentNode && ($p->parentNode->nodeType === XML_ELEMENT_NODE)) {
-				if (in_array($p->parentNode->tagName, ['td', 'td'])) {
+				if (in_array($p->parentNode->tagName, ['td', 'th'])) {
 					continue;
 				}
 			}
