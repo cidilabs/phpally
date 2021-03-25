@@ -94,7 +94,7 @@ class Youtube {
 
 		// If for whatever reason course_locale is blank, set it to English
 		$course_locale = $this->language;
-		if($course_locale === '') {
+		if($course_locale === '' || is_null($course_locale)) {
 			$course_locale = 'en';
 		}
 

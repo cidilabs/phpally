@@ -23,13 +23,21 @@ class YoutubeTest extends PhpAllyTestCase {
         $this->assertEquals(2, $youtube->captionsMissing($url), 'Youtube Test should return a 2 to indicate that captions were found');
     }
 
-    public function testCaptionsLanguageAsrTrack()
-    {
-        $url = 'https://www.youtube.com/watch?v=liJVSwOiiwg';
+    // public function testCaptionsLanguageAsrTrack()
+    // {
+    //     $url = 'https://www.youtube.com/watch?v=liJVSwOiiwg';
+    //     $client = new Client();
+    //     $youtube = new Youtube($client);
+
+    //     $this->assertEquals(2, $youtube->captionsLanguage($url), 'Youtube Test should return a 0 to indicate missing captions');
+    // }
+
+    public function testCaptionsLanguage(){
+        $url = 'https://www.youtube.com/watch?v=vFF0uV9AOB8';
         $client = new Client();
         $youtube = new Youtube($client);
 
-        $this->assertEquals(2, $youtube->captionsLanguage($url), 'Youtube Test should return a 0 to indicate missing captions');
+        $this->assertEquals(0, $youtube->captionsLanguage($url), 'Youtube Test should return a 0 to indicate missing captions');
     }
 
 }

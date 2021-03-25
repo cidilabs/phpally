@@ -46,5 +46,4 @@ class VideoCaptionsMatchCourseLanguage extends BaseRule
         
         return count($this->issues);
     }
-
 }
