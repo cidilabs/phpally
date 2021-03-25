@@ -50,7 +50,7 @@ class PhpAllyIssue implements \JsonSerializable {
 
     public function getPreview()
     {
-        if (!$this->element) {
+        if (!$this->previewElement) {
             return '';
         }
 

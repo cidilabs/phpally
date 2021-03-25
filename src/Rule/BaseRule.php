@@ -123,6 +123,14 @@ class BaseRule implements PhpAllyRuleInterface {
     public function setIssue($element)
     {
         $ruleId = str_replace('CidiLabs\\PhpAlly\\Rule\\', '', $this->id());
+
+        if ($element) {
+            $elementClasses = $element->getAttribute('class');
+            if ($elementClasses && (strpos($elementClasses, 'phpally-ignore') !== false)) {
+                return;
+            }
+        }
+
         $this->issues[] = new PhpAllyIssue($ruleId, $element, $this->getPreviewElement($element));
     }
 
