@@ -25,9 +25,10 @@ class Youtube {
     private $link_url;
     private $api_key = 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c';
     
-    public function __construct($client)
+    public function __construct($client, $language = 'en')
     {
 		$this->client = $client;
+		$this->language = $language;
     }
 
     /**

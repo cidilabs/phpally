@@ -11,11 +11,13 @@ class Vimeo {
 	private $regex = '@vimeo\.com/[^0-9]*([0-9]{7,9})@i';
     private $search_url = 'https://api.vimeo.com/videos/';
     private $client;
+	private $language;
     private $api_key = 'bef37736cfb26b6dc52986d8f531d0ad';
     
-    public function __construct($client)
+    public function __construct($client, $language = 'en')
     {
         $this->client = $client;
+		$this->language = $language;
     }
     
     /**
@@ -69,8 +71,8 @@ class Vimeo {
 			return 1;
 		}
 		// If for whatever reason course_locale is blank, set it to English
-		$course_locale = $this->lang;
-		if($course_locale === '') {
+		$course_locale = $this->language;
+		if($course_locale === '' || is_null($course_locale)) {
 			$course_locale = 'en';
 		}
 

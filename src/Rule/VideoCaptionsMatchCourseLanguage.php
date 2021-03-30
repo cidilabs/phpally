@@ -14,7 +14,6 @@ use GuzzleHttp\Client;
 class VideoCaptionsMatchCourseLanguage extends BaseRule
 {
     
-    
     public function id()
     {
         return self::class;
