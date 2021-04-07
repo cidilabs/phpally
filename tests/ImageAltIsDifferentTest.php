@@ -33,7 +33,7 @@ class ImageAltIsDifferentTest extends PhpAllyTestCase {
         $this->assertEquals(1, $rule->check(), 'Image Alt Is Different should have one issue.');
     }
 
-    public function testCheckFalseAltHasFilename()
+    public function testCheckFalseAltHasFilenameExtension()
     {
         $html = '<div><img src="validImage.png" alt="anotherImage.png"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');

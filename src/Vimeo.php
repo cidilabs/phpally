@@ -63,13 +63,12 @@ class Vimeo {
 	function captionsLanguage($link_url)
 	{
 		$url = $this->search_url;
-		$api_key = constant( 'VIMEO_API_KEY' );
-
 		// If the API key is blank, flag the video for manual inspection
 		$key_trimmed = trim($this->api_key);
 		if( empty($key_trimmed) ){
 			return 1;
 		}
+
 		// If for whatever reason course_locale is blank, set it to English
 		$course_locale = $this->language;
 		if($course_locale === '' || is_null($course_locale)) {

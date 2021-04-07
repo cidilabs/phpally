@@ -29,10 +29,10 @@ class VideoCaptionsMatchCourseLanguage extends BaseRule
 			if ($video->hasAttribute($attr)) {
 				$attr_val = $video->getAttribute($attr);
 				if ( preg_match($search_youtube, $attr_val) ) {
-					$service = new Youtube(new Client());
+					$service = new Youtube(new Client(), $this->lang);
 				}
 				elseif ( preg_match($search_vimeo, $attr_val) ) {
-					$service = new Vimeo(new Client());
+					$service = new Vimeo(new Client(), $this->lang);
 				}
 				if (isset($service)) {
                     $captionState = $service->captionsLanguage($attr_val);

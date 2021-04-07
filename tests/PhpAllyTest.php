@@ -11,30 +11,31 @@ class PhpAllyTest extends PhpAllyTestCase {
         $issues = $report->getIssues();
         $issue = reset($issues);
 
-        $this->phpAllyReportTest($report);
+        $this->assertCount(2, $issues, 'Testcheckone should have 2 issues.');
         $this->phpAllyIssueTest($issue);
+        $this->phpAllyReportTest($report);
     }
 
     public function testCheckMany() 
     {
         $ally = new PhpAlly();
-        $report = $ally->checkMany($this->getLinkHtml(), ['AnchorMustContainText']);
+        $report = $ally->checkMany($this->getManyHtml(), $ally->getRuleIds());
         $issues = $report->getIssues();
         $issue = reset($issues);
-
-        $this->phpAllyReportTest($report);
+        
+        $this->assertCount(5, $issues, 'Total report should have 5 issues.');
         $this->phpAllyIssueTest($issue);
+        $this->phpAllyReportTest($report);
     }
 
     
     protected function phpAllyReportTest($report)
     {
         $issues = $report->getIssues();
-        $this->assertCount(2, $issues, 'AnchorMustContainText test has two issues.');
-
-        $this->assertCount(0, $report->getErrors(), 'AnchorMustContainText test has no errors');
-        $report->setError('Testing error');
-        $this->assertCount(1, $report->getErrors(), 'Report now has an error.');
+        
+        foreach($issues as $issue) {
+            $this->phpAllyIssueTest($issue);
+        }
     }
 
     protected function phpAllyIssueTest(PhpAllyIssue $issue)
