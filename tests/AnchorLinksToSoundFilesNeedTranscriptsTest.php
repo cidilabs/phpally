@@ -10,7 +10,7 @@ class AnchorLinksToSoundFilesNeedTranscriptsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorLinksToSoundFilesNeedTranscripts($dom);
 
-        $this->assertEquals(0, $rule->check(), 'Anchor Links To Sound Files Links Transcript should have no issues.');
+        $this->assertEquals(0, $rule->check(), 'Anchor Links To Sound Files Need Transcript should have no issues.');
     }
 
     public function testCheckFalse()
@@ -20,6 +20,6 @@ class AnchorLinksToSoundFilesNeedTranscriptsTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new AnchorLinksToSoundFilesNeedTranscripts($dom);
 
-        $this->assertEquals(1, $rule->check(), 'Anchor Links To Sound Files Links Transcript should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Anchor Links To Sound Files Need Transcript should have one issue.');
     }
 }

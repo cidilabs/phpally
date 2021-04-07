@@ -28,4 +28,16 @@ class HeadersHaveTextTest extends PhpAllyTestCase {
 
         $this->assertEquals(1, $rule->check(), 'Headers Have Text should have one issue.');
     }
+
+    public function testCheckFalseSpace()
+    {
+        $html = '<!DOCTYPE html><body>
+        <h1>   </h1>
+        </body>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new HeadersHaveText($dom);
+
+        $this->assertEquals(1, $rule->check(), 'Headers Have Text should have one issue.');
+    }
 }
