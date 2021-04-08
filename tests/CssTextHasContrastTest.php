@@ -22,4 +22,14 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
 
         $this->assertEquals(1, $rule->check(), 'CSS Text Has Contrast should have one issue.');
     }
+
+    public function testCheckTrueRGB() 
+    {
+        $html = $this->getGoodColorContrastRGBHtml();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new CssTextHasContrast($dom);
+
+        $this->assertEquals(0, $rule->check(), 'CSS Text Has Contrast should have one issue.');
+    }
 }

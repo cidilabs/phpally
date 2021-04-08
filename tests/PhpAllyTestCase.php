@@ -53,6 +53,10 @@ class PhpAllyTestCase extends TestCase {
         </div>';
     }
 
+    protected function getGoodColorContrastRGBHtml(){
+        return '<p style="background-color: rgb(64, 0, 100); color: rgb(169, 169, 169);">Paragraph text does not have enough contrast.</p>';
+    }
+
     protected function getVideoTagHtml()
     {
         return '<div style="background-color: #444">

@@ -191,14 +191,30 @@ class CssTextHasContrast extends BaseRule
 
 				if ((isset($style['background']) || isset($style['background-color'])) && isset($style['color']) && $element->nodeValue) {
 					$background = (isset($style['background-color'])) ? $style['background-color'] : $style['background'];
+
 					if (!$background) {
 						$background = $this->default_background;
 					}
 
-					$style['color'] = '#' . $this->convertColor($style['color']);
-					$style['background-color'] = '#' . $this->convertColor($background);
+					if(strtolower(substr($style['color'], 0, 3)) == 'rgb') {
+						// Explode the match (0,0,0 for example) into an array
+						$colors = explode(',', $style['color']);
+						// Use sprintf for the conversion
+						$style['color'] = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
+					} else {
+						$style['color'] = '#' . $this->convertColor($style['color']);
+					}
 
-					$luminosity = $this->getLuminosity($style['color'], $background);
+					if(strtolower(substr($background, 0, 3)) == 'rgb') {
+						// Explode the match (0,0,0 for example) into an array
+						$colors = explode(',', $background);
+						// Use sprintf for the conversion
+						$style['background-color'] = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
+					} else {
+						$style['background-color'] = '#' . $this->convertColor($background);
+					}
+
+					$luminosity = $this->getLuminosity($style['color'], $style['background-color']);
 					$font_size = 0;
 					$bold = false;
 					$italic = false;
