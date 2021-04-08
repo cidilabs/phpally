@@ -174,7 +174,7 @@ class CssTextStyleEmphasize extends BaseRule
 		 */
 		$entries = $xpath->query('//*[(text() = . or ( ./*[text() != .]) or (.//*[text() = . and not(@style)])) and ((@style) or (name() = "strong") or (name() = "em"))]');
 
-		foreach ($entries as $element) {
+		foreach ($entries as $element) { 
 			if ($element->nodeType !== XML_ELEMENT_NODE) {
 				continue;
 			}
@@ -184,7 +184,6 @@ class CssTextStyleEmphasize extends BaseRule
 			if (!isset($style['background-color'])) {
 				$style['background-color'] = $this->default_background;
 			}
-
 
 			if ((isset($style['background']) || isset($style['background-color'])) && isset($style['color']) && $element->nodeValue) {
 				$background = (isset($style['background-color'])) ? $style['background-color'] : $style['background'];
@@ -293,7 +292,7 @@ class CssTextStyleEmphasize extends BaseRule
 	 */
 	function getElementAncestor($element, $ancestor_tag, $limit_tag = 'body')
 	{
-		while (property_exists($element, 'parentNode')) {
+		while (property_exists($element->parentNode, 'tagName')) {
 			if ($element->parentNode->tagName == $ancestor_tag) {
 				return $element->parentNode;
 			}

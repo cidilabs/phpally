@@ -8,7 +8,7 @@ class VimeoTest extends PhpAllyTestCase {
     public function testCaptionsMissing()
     {
         $url = 'https://vimeo.com/205755088';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $vimeo = new Vimeo($client);
 
         $this->assertEquals(0, $vimeo->captionsMissing($url), 'Vimeo Test should return a 0 to indicate missing captions');
@@ -17,7 +17,7 @@ class VimeoTest extends PhpAllyTestCase {
     public function testCaptionsMissingHasCaptions()
     {
         $url = 'https://vimeo.com/83595709';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $vimeo = new Vimeo($client);
 
         $this->assertEquals(2, $vimeo->captionsMissing($url), 'Vimeo Test should return a 2 to indicate that the video has captions');
@@ -26,7 +26,7 @@ class VimeoTest extends PhpAllyTestCase {
     public function testCaptionsLanguage()
     {
         $url = 'https://vimeo.com/83595709';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $vimeo = new Vimeo($client);
 
         $this->assertEquals(2, $vimeo->captionsLanguage($url), 'Vimeo Test should return a 2 to indicate that the video has captions in the correct language');
@@ -35,7 +35,7 @@ class VimeoTest extends PhpAllyTestCase {
     public function testCaptionsLanguageFailure()
     {
         $url = 'https://vimeo.com/83595709';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $vimeo = new Vimeo($client, 'es');
 
         $this->assertEquals(0, $vimeo->captionsLanguage($url), 'Vimeo Test should return a 0 to indicate that the video has captions in the correct language');

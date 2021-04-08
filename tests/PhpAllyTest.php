@@ -4,11 +4,13 @@ use CidiLabs\PhpAlly\PhpAlly;
 use CidiLabs\PhpAlly\PhpAllyIssue;
 
 class PhpAllyTest extends PhpAllyTestCase {
+
     public function testCheckOne()
     {
         $ally = new PhpAlly();
-        $report = $ally->checkOne($this->getLinkHtml(), 'AnchorMustContainText');
+        $report = $ally->checkOne($this->getColorContrastHtml(), 'CssTextStyleEmphasize');
         $issues = $report->getIssues();
+        $errors = $report->getErrors();
         $issue = reset($issues);
 
         $this->assertCount(2, $issues, 'Testcheckone should have 2 issues.');

@@ -59,6 +59,7 @@ class Youtube {
 			if( $response->getStatusCode() === 403 ) {
 				// global $logger;
 				// $logger->addError('YouTube API Error: '.$response->body->error->errors[0]->message);
+				return 1;
 			}
 
             $items = json_decode($response->getBody())->items;
@@ -112,6 +113,7 @@ class Youtube {
 			if( $response->getStatusCode() === 403 ) {
 				// global $logger;
 				// $logger->addError('YouTube API Error: '.$response->body->error->errors[0]->message);
+				return 1;
 			}
 
 			$items = json_decode($response->getBody())->items;

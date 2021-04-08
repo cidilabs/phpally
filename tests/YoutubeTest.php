@@ -8,7 +8,7 @@ class YoutubeTest extends PhpAllyTestCase {
     public function testCaptionsMissingAsrTrack()
     {
         $url = 'https://www.youtube.com/watch?v=liJVSwOiiwg';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $youtube = new Youtube($client);
 
         $this->assertEquals(0, $youtube->captionsMissing($url), 'Youtube Test should return a 0 to indicate missing captions');
@@ -17,7 +17,7 @@ class YoutubeTest extends PhpAllyTestCase {
     public function testCaptionsMissingHasCaptions()
     {
         $url = 'https://www.youtube.com/watch?v=qfJthDvcZ08';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $youtube = new Youtube($client);
 
         $this->assertEquals(2, $youtube->captionsMissing($url), 'Youtube Test should return a 2 to indicate that captions were found');
@@ -25,7 +25,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
     public function testCaptionsLanguageFail(){
         $url = 'https://www.youtube.com/watch?v=vFF0uV9AOB8';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $youtube = new Youtube($client);
 
         $this->assertEquals(0, $youtube->captionsLanguage($url), 'Youtube Test should return a 0 to indicate missing captions');
@@ -33,7 +33,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
     public function testCaptionsLanguageSuccess(){
         $url = 'https://www.youtube.com/watch?v=vFF0uV9AOB8';
-        $client = new Client();
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $youtube = new Youtube($client, 'es');
 
         $this->assertEquals(2, $youtube->captionsLanguage($url), 'Youtube Test should return a 2 to indicate captions are correct language');
