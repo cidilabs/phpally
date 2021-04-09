@@ -13,7 +13,7 @@ class PhpAllyTest extends PhpAllyTestCase {
         $errors = $report->getErrors();
         $issue = reset($issues);
 
-        $this->assertCount(2, $issues, 'Testcheckone should have 2 issues.');
+        $this->assertCount(1, $issues, 'Testcheckone should have 1 issues.');
         $this->phpAllyIssueTest($issue);
         $this->phpAllyReportTest($report);
     }
@@ -25,7 +25,7 @@ class PhpAllyTest extends PhpAllyTestCase {
         $issues = $report->getIssues();
         $issue = reset($issues);
         
-        $this->assertCount(5, $issues, 'Total report should have 5 issues.');
+        $this->assertCount(8, $issues, 'Total report should have 5 issues.');
         $this->phpAllyIssueTest($issue);
         $this->phpAllyReportTest($report);
     }

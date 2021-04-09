@@ -20,6 +20,6 @@ class CssTextStyleEmphasizeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new CssTextStyleEmphasize($dom);
 
-        $this->assertEquals(2, $rule->check(), 'Css Text Style Emphasize should have two issues.');
+        $this->assertEquals(1, $rule->check(), 'Css Text Style Emphasize should have two issues.');
     }
 }
