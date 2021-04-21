@@ -29,7 +29,7 @@ class NoHeadings extends BaseRule
 				&& !$this->getAllElements('h4')
 				&& !$this->getAllElements('h5')
 				&& !$this->getAllElements('h6')) {
-				$this->setIssue(null);
+				$this->setIssue($this->dom->documentElement);
 			}
 		}
         
