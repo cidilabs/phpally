@@ -15,7 +15,7 @@ class PhpAllyIssue implements \JsonSerializable {
         $this->element = $element;
         $this->messages = $messages;
 
-        if (!empty($previewElement)) {
+        if (!is_null($previewElement)) {
             $this->previewElement = $previewElement;
         }
         else {

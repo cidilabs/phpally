@@ -269,8 +269,7 @@ class CssTextHasContrast extends BaseRule
 							// $element = $dom->getElementsByTagName($tagName)[0];
 							// $this->setIssue($element);
 							$message = 'heading: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
-							$this->setIssue($element, $message);
-
+							$this->setIssue($element);
 						}
 					} else {
 						if ($luminosity < 4.5) {
@@ -288,7 +287,7 @@ class CssTextHasContrast extends BaseRule
 							// $this->setIssue($element);
 
 							$message = 'text: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
-							$this->setIssue($element, $message);
+							$this->setIssue($element);
 						}
 					}
 				}
