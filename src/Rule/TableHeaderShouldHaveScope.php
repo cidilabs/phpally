@@ -33,7 +33,7 @@ class TableHeaderShouldHaveScope extends BaseRule
 
     public function getPreviewElement(DOMElement $a = null)
     {   
-        while(property_exists($a, 'parentNode') && in_array($a->parentNode->tagName, ['tr', 'th', 'table'])){
+        while(property_exists($a, 'parentNode') && in_array($a->parentNode->tagName, ['tr', 'th', 'table', 'thead'])){
             $a = $a->parentNode;
 
             if(property_exists($a, 'tagName')) {
