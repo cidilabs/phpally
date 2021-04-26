@@ -40,6 +40,6 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new CssTextHasContrast($dom);
 
-        $this->assertEquals(4, $rule->check(), 'CSS Text Has Contrast should have four issues.');
+        $this->assertEquals(6, $rule->check(), 'CSS Text Has Contrast should have four issues.');
     }
 }
