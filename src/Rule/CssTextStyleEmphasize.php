@@ -205,9 +205,9 @@ class CssTextStyleEmphasize extends BaseRule
 					// Explode the match (0,0,0 for example) into an array
 					$colors = explode(',', $background);
 					// Use sprintf for the conversion
-					$style['background-color'] = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
+					$background = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
 				} else {
-					$style['background-color'] = '#' . $this->convertColor($background);
+					$background = '#' . $this->convertColor($background);
 				}
 
 				$luminosity = $this->getLuminosity($style['color'], $background);
@@ -265,17 +265,6 @@ class CssTextStyleEmphasize extends BaseRule
 					}
 				} else {
 					if ($luminosity >= 4.5 && !$bold && !$italic) {
-						$tagName = $element->tagName;
-							$html = $this->dom->saveHTML($element);
-
-							$html = preg_replace('/background:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
-							$html = preg_replace('/background-color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
-							$html = preg_replace('/color:\s*([#a-z0-9]*)\s*;*\s*/', '', $html);
-							$html = preg_replace('/style="/', 'style="background-color: '.$background.'; color: '.$style["color"].';', $html);
-							
-							$dom = new \DOMDocument('1.0', 'utf-8');
-							$dom->loadHTML($html);
-							$element = $dom->getElementsByTagName($tagName)[0];
 							$this->setIssue($element);
 					}
 				}
@@ -454,4 +443,6 @@ class CssTextStyleEmphasize extends BaseRule
 		$results = array('r' => hexdec($c[0]), 'g' => hexdec($c[1]), 'b' => hexdec($c[2]));
 		return $results;
 	}
+
+
 }
