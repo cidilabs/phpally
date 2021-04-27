@@ -209,12 +209,12 @@ class CssTextHasContrast extends BaseRule
 						// Explode the match (0,0,0 for example) into an array
 						$colors = explode(',', $background);
 						// Use sprintf for the conversion
-						$style['background-color'] = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
+						$background = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
 					} else {
-						$style['background-color'] = '#' . $this->convertColor($background);
+						$background = '#' . $this->convertColor($background);
 					}
 
-					$luminosity = $this->getLuminosity($style['color'], $style['background-color']);
+					$luminosity = $this->getLuminosity($style['color'], $background);
 					$font_size = 0;
 					$bold = false;
 					$italic = false;
@@ -256,11 +256,13 @@ class CssTextHasContrast extends BaseRule
 
 					if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $font_size >= 18 || $font_size >= 14 && $bold) {
 						if ($luminosity < 3) {
-							$this->setIssue($element);
+							$message = 'heading: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
+							$this->setIssue($element, null, $message);
 						}
 					} else {
 						if ($luminosity < 4.5) {
-							$this->setIssue($element);
+							$message = 'heading: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
+							$this->setIssue($element, null, $message);
 						}
 					}
 				}

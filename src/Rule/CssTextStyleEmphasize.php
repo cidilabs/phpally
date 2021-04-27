@@ -261,11 +261,13 @@ class CssTextStyleEmphasize extends BaseRule
 
 				if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $font_size >= 18 || $font_size >= 14 && $bold) {
 					if ($luminosity >= 3 && !$bold && !$italic) {
-							$this->setIssue($element);
+							$message = 'heading: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
+							$this->setIssue($element, null, $message);
 					}
 				} else {
 					if ($luminosity >= 4.5 && !$bold && !$italic) {
-							$this->setIssue($element);
+							$message = 'heading: background-color: ' . $background . '; color:' . $style["color"] . '; font-style: ' . $style['font-style'] . '; font-weight: '  . $style['font-weight'] . '; ';
+							$this->setIssue($element, null, $message);
 					}
 				}
 			}
