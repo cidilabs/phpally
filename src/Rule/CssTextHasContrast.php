@@ -263,18 +263,18 @@ class CssTextHasContrast extends BaseRule
 
 					if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $font_size >= 18 || $font_size >= 14 && $bold) {
 						if ($luminosity < 3) {
-							$this->message["background-color"] = $background;
+							$this->message["backgroundColor"] = $background;
 							$this->message["color"] = $style["color"];
-							$this->message["font-style"] = $style["font-style"];
-							$this->message["font-weight"] = $style["font-weight"];
+							$this->message["fontStyle"] = $style["font-style"];
+							$this->message["fontWeight"] = $style["font-weight"];
 							$this->setIssue($element, null, json_encode($this->message));
 						}
 					} else {
 						if ($luminosity < 4.5) {
-							$this->message["background-color"] = $background;
+							$this->message["backgroundColor"] = $background;
 							$this->message["color"] = $style["color"];
-							$this->message["font-style"] = $style["font-style"];
-							$this->message["font-weight"] = $style["font-weight"];
+							$this->message["fontStyle"] = $style["font-style"];
+							$this->message["fontWeight"] = $style["font-weight"];
 							$this->setIssue($element, null, json_encode($this->message));
 						}
 					}
