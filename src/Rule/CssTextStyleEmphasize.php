@@ -159,10 +159,10 @@ class CssTextStyleEmphasize extends BaseRule
 		);
 
 	public $message = array(
-		'background-color' => '',
+		'backgroundColor' => '',
 		'color' => '',
-		'font-style' => '',
-		'font-weight' => '',
+		'fontStyle' => '',
+		'fontWeight' => '',
 	);
 
 	public function id()
