@@ -237,7 +237,7 @@ class BaseRule implements PhpAllyRuleInterface {
         return false;
     }
 
-    public function setIssue($element, $previewHtml = null, $messages = null)
+    public function setIssue($element, $previewHtml = null, $metadata = null)
     {
         $ruleId = str_replace('CidiLabs\\PhpAlly\\Rule\\', '', $this->id());
 
@@ -252,7 +252,7 @@ class BaseRule implements PhpAllyRuleInterface {
             }
         }
 
-        $this->issues[] = new PhpAllyIssue($ruleId, $element, $previewHtml, $messages);
+        $this->issues[] = new PhpAllyIssue($ruleId, $element, $previewHtml, $metadata);
     }
 
     public function getIssues()

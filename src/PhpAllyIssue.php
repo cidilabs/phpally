@@ -9,11 +9,11 @@ class PhpAllyIssue implements \JsonSerializable {
     protected $element;
     protected $previewElement;
 
-    public function __construct($ruleId, DOMElement $element = null, DOMElement $previewElement = null, $messages = null)
+    public function __construct($ruleId, DOMElement $element = null, DOMElement $previewElement = null, $metadata = null)
     {
         $this->ruleId = $ruleId;
         $this->element = $element;
-        $this->messages = $messages;
+        $this->metadata = $metadata;
 
         if (!is_null($previewElement)) {
             $this->previewElement = $previewElement;
@@ -40,13 +40,13 @@ class PhpAllyIssue implements \JsonSerializable {
         return $this->ruleId;
     }
 
-    public function getMessages()
+    public function getMetadata()
     {
-        if (!$this->messages) {
+        if (!$this->metadata) {
             return '';
         }
 
-        return $this->messages;
+        return $this->metadata;
     }
 
     public function getHtml()
@@ -73,7 +73,7 @@ class PhpAllyIssue implements \JsonSerializable {
             'ruleId' => $this->ruleId,
             'html' => $this->getHtml(),
             'preview' => $this->getPreview(),
-            'messages' => $this->getMessages(),
+            'metadata' => $this->getMetadata(),
         ];
     }
     
