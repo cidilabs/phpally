@@ -11,7 +11,7 @@ use DOMElement;
 class BaseRule implements PhpAllyRuleInterface {
 
     protected $dom;
-    protected $previewHtml = null;
+    protected $previewElement = null;
     protected $css = '';
     protected $issues = [];
     protected $errors = [];
@@ -68,7 +68,7 @@ class BaseRule implements PhpAllyRuleInterface {
 
 	public function setPreviewElement(DOMElement $elem = null)
 	{
-		$this->previewHtml = $elem;
+		$this->previewElement = $elem;
 	}
 
     public function getAllElements($tags = null, $options = false, $value = true) {
@@ -237,12 +237,12 @@ class BaseRule implements PhpAllyRuleInterface {
         return false;
     }
 
-    public function setIssue($element, $previewHtml = null, $metadata = null)
+    public function setIssue($element, $previewElement = null, $metadata = null)
     {
         $ruleId = str_replace('CidiLabs\\PhpAlly\\Rule\\', '', $this->id());
 
-		if (!$previewHtml) {
-			$previewHtml = $this->previewHtml;
+		if (!$previewElement) {
+			$previewElement = $this->previewElement;
 		}
 
         if ($element) {
@@ -252,7 +252,7 @@ class BaseRule implements PhpAllyRuleInterface {
             }
         }
 
-        $this->issues[] = new PhpAllyIssue($ruleId, $element, $previewHtml, $metadata);
+        $this->issues[] = new PhpAllyIssue($ruleId, $element, $previewElement, $metadata);
     }
 
     public function getIssues()
