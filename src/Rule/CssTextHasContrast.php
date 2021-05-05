@@ -267,7 +267,7 @@ class CssTextHasContrast extends BaseRule
 							$this->message["color"] = $style["color"];
 							$this->message["fontStyle"] = $style["font-style"];
 							$this->message["fontWeight"] = $style["font-weight"];
-							$this->setIssue($element, null, json_encode($this->message));
+							$this->setIssue($element, null, $this->message);
 						}
 					} else {
 						if ($luminosity < 4.5) {
@@ -275,7 +275,7 @@ class CssTextHasContrast extends BaseRule
 							$this->message["color"] = $style["color"];
 							$this->message["fontStyle"] = $style["font-style"];
 							$this->message["fontWeight"] = $style["font-weight"];
-							$this->setIssue($element, null, json_encode($this->message));
+							$this->setIssue($element, null, $this->message);
 						}
 					}
 				}
