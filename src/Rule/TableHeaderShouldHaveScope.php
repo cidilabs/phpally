@@ -21,10 +21,12 @@ class TableHeaderShouldHaveScope extends BaseRule
         foreach ($this->getAllElements('th') as $th) {
 			if ($th->hasAttribute('scope')) {
 				if ($th->getAttribute('scope') != 'col' && $th->getAttribute('scope') != 'row') {
-					$this->setIssue($th, $this->getPreviewElement($th));
+                    $this->getPreviewElement($th);
+					$this->setIssue($th);
 				}
 			} else {
-				$this->setIssue($th, $this->getPreviewElement($th));
+                $this->getPreviewElement($th);
+				$this->setIssue($th);
 			}
 		}
         
@@ -44,7 +46,7 @@ class TableHeaderShouldHaveScope extends BaseRule
             
         }
         
-        return $a;
+        $this->setPreviewElement($a);
     }
 
 }

@@ -158,6 +158,13 @@ class CssTextStyleEmphasize extends BaseRule
 		'yellowgreen' => '9acd32'
 		);
 
+	public $message = array(
+		'backgroundColor' => '',
+		'color' => '',
+		'fontStyle' => '',
+		'fontWeight' => '',
+	);
+
 	public function id()
 	{
 		return self::class;
@@ -261,11 +268,19 @@ class CssTextStyleEmphasize extends BaseRule
 
 				if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $font_size >= 18 || $font_size >= 14 && $bold) {
 					if ($luminosity >= 3 && !$bold && !$italic) {
-							$this->setIssue($element);
+						$this->message["backgroundColor"] = $background;
+						$this->message["color"] = $style["color"];
+						$this->message["fontStyle"] = $style["font-style"];
+						$this->message["fontWeight"] = $style["font-weight"];
+						$this->setIssue($element, null, json_encode($this->message));
 					}
 				} else {
 					if ($luminosity >= 4.5 && !$bold && !$italic) {
-							$this->setIssue($element);
+						$this->message["backgroundColor"] = $background;
+						$this->message["color"] = $style["color"];
+						$this->message["fontStyle"] = $style["font-style"];
+						$this->message["fontWeight"] = $style["font-weight"];
+						$this->setIssue($element, null, json_encode($this->message));
 					}
 				}
 			}
