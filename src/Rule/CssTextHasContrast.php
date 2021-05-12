@@ -205,15 +205,17 @@ class CssTextHasContrast extends BaseRule
 
 					if(strtolower(substr($style['color'], 0, 3)) == 'rgb') {
 						// Explode the match (0,0,0 for example) into an array
+						$style['color'] = substr($style['color'], 4, -1);
 						$colors = explode(',', $style['color']);
 						// Use sprintf for the conversion
 						$style['color'] = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
 					} else {
 						$style['color'] = '#' . $this->convertColor($style['color']);
 					}
-
+	
 					if(strtolower(substr($background, 0, 3)) == 'rgb') {
 						// Explode the match (0,0,0 for example) into an array
+						$background = substr($background, 4, -1);
 						$colors = explode(',', $background);
 						// Use sprintf for the conversion
 						$background = sprintf("#%02x%02x%02x", $colors[0], $colors[1], $colors[2]);
