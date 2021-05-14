@@ -56,7 +56,7 @@ class TableHeaderShouldHaveScopeTest extends PhpAllyTestCase {
         $dom->loadHTML($html);
         $rule = new TableHeaderShouldHaveScope($dom);
 
-        $this->assertEquals(3, $rule->check(), 'Table Data Should Have Scope should have one issue.');
+        $this->assertEquals(1, $rule->check(), 'Table Data Should Have Scope should have one issue.');
     }
 
     public function testCheckFalseFullTable()
