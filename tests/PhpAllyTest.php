@@ -8,7 +8,11 @@ class PhpAllyTest extends PhpAllyTestCase {
     public function testCheckOne()
     {
         $ally = new PhpAlly();
-        $report = $ally->checkOne($this->getColorContrastHtml(), 'CssTextStyleEmphasize');
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+        $report = $ally->checkOne($this->getColorContrastHtml(), 'CssTextStyleEmphasize', $options);
         $issues = $report->getIssues();
         $errors = $report->getErrors();
         $issue = reset($issues);
@@ -21,7 +25,11 @@ class PhpAllyTest extends PhpAllyTestCase {
     public function testCheckMany() 
     {
         $ally = new PhpAlly();
-        $report = $ally->checkMany($this->getManyHtml(), $ally->getRuleIds());
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+        $report = $ally->checkMany($this->getManyHtml(), $ally->getRuleIds(), $options);
         $issues = $report->getIssues();
         $issue = reset($issues);
         

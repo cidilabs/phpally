@@ -189,14 +189,14 @@ class CssTextStyleEmphasize extends BaseRule
 			$style = $this->getStyle($element);
 
 			if (!isset($style['background-color'])) {
-				$style['background-color'] = $this->default_background;
+				$style['background-color'] = $default_background;
 			}
 
 			if ((isset($style['background']) || isset($style['background-color'])) && isset($style['color']) && $element->nodeValue) {
 				$background = (isset($style['background-color'])) ? $style['background-color'] : $style['background'];
 
 				if (!$background) {
-					$background = $this->default_background;
+					$background = $default_background;
 				}
 
 				if(strtolower(substr($style['color'], 0, 3)) == 'rgb') {
