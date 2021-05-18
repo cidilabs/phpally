@@ -10,12 +10,6 @@ use DOMXPath;
 */
 class CssTextHasContrast extends BaseRule
 {
-	
-	
-    public $default_background = '#ffffff';
-    
-	public $default_color = '#000000';
-
 	public $color_names = array(
 		'aliceblue' => 'f0f8ff',
 		'antiquewhite' => 'faebd7',
@@ -183,6 +177,9 @@ class CssTextHasContrast extends BaseRule
 		*/
 		$entries = $xpath->query('//*[(text() = . or ( ./*[text() != .]) or (.//*[text() = . and not(@style)])) and ((@style) or (name() = "strong") or (name() = "em"))]');
 
+		$options = $this->getOptions();
+		$default_background = $options['backgroundColor'];
+		$default_color = $options['textColor'];
 
 		foreach ($entries as $element) {
             $style = $this->getStyle($element);

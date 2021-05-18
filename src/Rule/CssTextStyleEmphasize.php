@@ -10,10 +10,6 @@ use DOMXPath;
  */
 class CssTextStyleEmphasize extends BaseRule
 {
-	public $default_background = '#ffffff';
-
-	public $default_color = '#000000';
-
 	public $color_names = array(
 		'aliceblue' => 'f0f8ff',
 		'antiquewhite' => 'faebd7',
@@ -180,6 +176,10 @@ class CssTextStyleEmphasize extends BaseRule
 		 * OR 	 Have a text node descendant that equals the string-value of the context node and has no style attributes
 		 */
 		$entries = $xpath->query('//*[(text() = . or ( ./*[text() != .]) or (.//*[text() = . and not(@style)])) and ((@style) or (name() = "strong") or (name() = "em"))]');
+
+		$options = $this->getOptions();
+		$default_background = $options['backgroundColor'];
+		$default_color = $options['textColor'];
 
 		foreach ($entries as $element) { 
 			if ($element->nodeType !== XML_ELEMENT_NODE) {
