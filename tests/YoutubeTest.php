@@ -7,7 +7,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
     public function testCaptionsMissingAsrTrack()
     {
-        $url = 'https://www.youtube.com/watch?v=liJVSwOiiwg';
+        $url = 'https://www.youtube.com/watch?v=1xZxxVlu7BM';
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $youtube = new Youtube($client);
 
