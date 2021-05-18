@@ -26,12 +26,12 @@ class Youtube
 	private $search_url = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&fields=items(snippet(trackKind,language))&videoId=';
 	private $client;
 	private $language;
-	private $api_key = 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c';
 
-	public function __construct(Client $client, $language = 'en')
+	public function __construct(Client $client, $language = 'en', $api_key)
 	{
 		$this->client = $client;
 		$this->language = $language;
+		$this->api_key = $api_key;
 	}
 
 	/**

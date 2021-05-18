@@ -10,7 +10,9 @@ class PhpAllyTest extends PhpAllyTestCase {
         $ally = new PhpAlly();
         $options = [
             'backgroundColor' => '#ffffff',
-            'textColor' => '#2D3B45'
+            'textColor' => '#2D3B45',
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
+            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
         ];
         $report = $ally->checkOne($this->getColorContrastHtml(), 'CssTextStyleEmphasize', $options);
         $issues = $report->getIssues();
@@ -27,7 +29,9 @@ class PhpAllyTest extends PhpAllyTestCase {
         $ally = new PhpAlly();
         $options = [
             'backgroundColor' => '#ffffff',
-            'textColor' => '#2D3B45'
+            'textColor' => '#2D3B45',
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
+            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
         ];
         $report = $ally->checkMany($this->getManyHtml(), $ally->getRuleIds(), $options);
         $issues = $report->getIssues();

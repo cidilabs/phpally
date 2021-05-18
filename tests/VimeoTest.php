@@ -9,7 +9,10 @@ class VimeoTest extends PhpAllyTestCase {
     {
         $url = 'https://vimeo.com/205755088';
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $vimeo = new Vimeo($client);
+        $options = [
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
+        ];
+        $vimeo = new Vimeo($client, 'en', $options['vimeoApiKey']);
 
         $this->assertEquals(0, $vimeo->captionsMissing($url), 'Vimeo Test should return a 0 to indicate missing captions');
     }
@@ -18,7 +21,10 @@ class VimeoTest extends PhpAllyTestCase {
     {
         $url = 'https://vimeo.com/83595709';
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $vimeo = new Vimeo($client);
+        $options = [
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
+        ];
+        $vimeo = new Vimeo($client, 'en', $options['vimeoApiKey']);
 
         $this->assertEquals(2, $vimeo->captionsMissing($url), 'Vimeo Test should return a 2 to indicate that the video has captions');
     }
@@ -27,7 +33,10 @@ class VimeoTest extends PhpAllyTestCase {
     {
         $url = 'https://vimeo.com/83595709';
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $vimeo = new Vimeo($client);
+        $options = [
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
+        ];
+        $vimeo = new Vimeo($client, 'en', $options['vimeoApiKey']);
 
         $this->assertEquals(2, $vimeo->captionsLanguage($url), 'Vimeo Test should return a 2 to indicate that the video has captions in the correct language');
     }
@@ -36,7 +45,10 @@ class VimeoTest extends PhpAllyTestCase {
     {
         $url = 'https://vimeo.com/83595709';
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $vimeo = new Vimeo($client, 'es');
+        $options = [
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
+        ];
+        $vimeo = new Vimeo($client, 'es', $options['vimeoApiKey']);
 
         $this->assertEquals(0, $vimeo->captionsLanguage($url), 'Vimeo Test should return a 0 to indicate that the video has captions in the correct language');
     }
