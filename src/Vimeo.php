@@ -14,12 +14,12 @@ class Vimeo
 	private $search_url = 'https://api.vimeo.com/videos/';
 	private $client;
 	private $language;
-	private $api_key = 'bef37736cfb26b6dc52986d8f531d0ad';
 
-	public function __construct(Client $client, $language = 'en')
+	public function __construct(Client $client, $language = 'en', $api_key)
 	{
 		$this->client = $client;
 		$this->language = $language;
+		$this->api_key = $api_key;
 	}
 
 	/**

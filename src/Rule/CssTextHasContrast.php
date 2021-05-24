@@ -10,12 +10,6 @@ use DOMXPath;
 */
 class CssTextHasContrast extends BaseRule
 {
-	
-	
-    public $default_background = '#ffffff';
-    
-	public $default_color = '#000000';
-
 	public $color_names = array(
 		'aliceblue' => 'f0f8ff',
 		'antiquewhite' => 'faebd7',
@@ -183,24 +177,27 @@ class CssTextHasContrast extends BaseRule
 		*/
 		$entries = $xpath->query('//*[(text() = . or ( ./*[text() != .]) or (.//*[text() = . and not(@style)])) and ((@style) or (name() = "strong") or (name() = "em"))]');
 
+		$options = $this->getOptions();
+		$default_background = $options['backgroundColor'];
+		$default_color = $options['textColor'];
 
 		foreach ($entries as $element) {
             $style = $this->getStyle($element);
             
 			if(isset($style['background-color']) || isset($style['color'])){
 				if (!isset($style['background-color'])) {
-					$style['background-color'] = $this->default_background;
+					$style['background-color'] = $default_background;
 				}
 
 				if (!isset($style['color'])) {
-					$style['color'] = $this->default_color;
+					$style['color'] = $default_color;
 				}
 
 				if ((isset($style['background']) || isset($style['background-color'])) && isset($style['color']) && $element->nodeValue) {
 					$background = (isset($style['background-color'])) ? $style['background-color'] : $style['background'];
 
 					if (!$background) {
-						$background = $this->default_background;
+						$background = $default_background;
 					}
 
 					if(strtolower(substr($style['color'], 0, 3)) == 'rgb') {

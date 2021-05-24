@@ -61,6 +61,11 @@ class BaseRule implements PhpAllyRuleInterface {
         return true;
     }
 
+	public function getOptions()
+	{
+		return $this->options;
+	}
+
     public function getPreviewElement(DOMElement $elem = null)
     {
         return null;

@@ -29,10 +29,10 @@ class VideoCaptionsMatchCourseLanguage extends BaseRule
 			if ($video->hasAttribute($attr)) {
 				$attr_val = $video->getAttribute($attr);
 				if ( preg_match($search_youtube, $attr_val) ) {
-					$service = new Youtube(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang);
+					$service = new Youtube(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['youtubeApiKey']);
 				}
 				elseif ( preg_match($search_vimeo, $attr_val) ) {
-					$service = new Vimeo(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang);
+					$service = new Vimeo(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['vimeoApiKey']);
 				}
 				if (isset($service)) {
                     $captionState = $service->captionsLanguage($attr_val);
