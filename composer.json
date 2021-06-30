@@ -15,7 +15,8 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "kaltura/api-client-library": "^17.2"
     },
     "scripts": {
         "test": "./vendor/bin/phpunit tests"

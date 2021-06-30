@@ -38,10 +38,7 @@ class Vimeo
 		}
 
 		if ($vimeo_id = $this->isVimeoVideo($link_url)) {
-			$url = $url . $vimeo_id . '/texttracks';
-			$response = $this->client->request('GET', $url, ['headers' => [
-				'Authorization' => "Bearer $this->api_key"
-			]]);
+			$response = $this->getVideoData($vimeo_id);
 
 			$body = json_decode($response->getBody());
 
@@ -79,9 +76,7 @@ class Vimeo
 
 		if ($vimeo_id = $this->isVimeoVideo($link_url)) {
 			$url = $url . $vimeo_id . '/texttracks';
-			$response = $this->client->request('GET', $url, ['headers' => [
-				'Authorization' => "Bearer $this->api_key"
-			]]);
+			$response = $this->getVideoData($vimeo_id);
 
 			$body = json_decode($response->getBody());
 
@@ -118,5 +113,14 @@ class Vimeo
 			return $matches[1];
 		}
 		return false;
+	}
+
+	function getVideoData($vimeo_id) 
+	{
+		$url = $this->search_url . $vimeo_id . '/texttracks';
+
+		return $this->client->request('GET', $url, ['headers' => [
+			'Authorization' => "Bearer $this->api_key"
+		]]);
 	}
 }
