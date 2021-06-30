@@ -13,6 +13,16 @@ class ObjectMustContainTextTest extends PhpAllyTestCase {
         $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
     }
 
+    public function testCheckTrueAlt()
+    {
+        $html = '<div><object alt="media application" type="application/pdf"data="/media/examples/In-CC0.pdf"width="250"height="200"></object></div>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new ObjectMustContainText($dom);
+
+        $this->assertEquals(0, $rule->check(), 'Object Must Contain Text should have no issues.');
+    }
+
     public function testCheckFalse()
     {
         $html = '<div><object type="application/pdf"data="/media/examples/In-CC0.pdf"width="250"height="200"></object></div>';;

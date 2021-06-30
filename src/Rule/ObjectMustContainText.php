@@ -21,8 +21,10 @@ class ObjectMustContainText extends BaseRule
     public function check()
     {
         foreach ($this->getAllElements('object') as $object) {
-			if (!$object->nodeValue || trim($object->nodeValue) == '')
+			if ((!$object->nodeValue || trim($object->nodeValue) == '') && (!$object->hasAttribute('alt') || trim($object->getAttribute('alt')) == '')) 
+            {
 				$this->setIssue($object);
+            }
 		}
         
         return count($this->issues);
