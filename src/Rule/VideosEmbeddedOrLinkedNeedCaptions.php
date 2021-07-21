@@ -4,6 +4,7 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use CidiLabs\PhpAlly\Vimeo;
 use CidiLabs\PhpAlly\Youtube;
+use Cidilabs\PhpAlly\Kaltura;
 
 /**
  *	Links to YouTube videos must have a caption
