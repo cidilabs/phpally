@@ -6,7 +6,7 @@ use DOMElement;
 use CidiLabs\PhpAlly;
 use CidiLabs\PhpAlly\Vimeo;
 use CidiLabs\PhpAlly\Youtube;
-use Cidilabs\PhpAlly\Kaltura;
+use CidiLabs\PhpAlly\Kaltura;
 use GuzzleHttp\Client;
 
 /**
