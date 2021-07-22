@@ -38,7 +38,7 @@ class Kaltura {
 		$key_trimmed = trim($this->api_key);
 		$username_trimmed = trim($this->username);
 		if (empty($key_trimmed) || empty($username_trimmed)) {
-			return self::KALTURA_FAILED_CONNECTION;
+			return self::KALTURA_SUCCESS;
 		}
 
 		if(($video_id = $this->isKalturaVideo($link_url)) && ($partner_id = $this->getPartnerID($link_url))) {
@@ -62,7 +62,7 @@ class Kaltura {
 		$key_trimmed = trim($this->api_key);
 		$username_trimmed = trim($this->username);
 		if (empty($key_trimmed) || empty($username_trimmed)) {
-			return self::KALTURA_FAILED_CONNECTION;
+			return self::KALTURA_SUCCESS;
 		}
 
 		if(($video_id = $this->isKalturaVideo($link_url)) && ($partner_id = $this->getPartnerID($link_url))) {
