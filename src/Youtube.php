@@ -50,8 +50,7 @@ class Youtube
 		}
 
 		if ($youtube_id = $this->isYouTubeVideo($link_url)) {
-			$url = $url . $youtube_id . '&key=' . $this->api_key;
-			$response = $this->client->request('GET', $url);
+			$response = $this->getVideoData($youtube_id);
 
 			if ($response->getStatusCode() >= 400) {
 				return self::YOUTUBE_NO_VIDEO;
@@ -72,12 +71,12 @@ class Youtube
 		// If the API key is blank, flag the video for manual inspection
 		$key_trimmed = trim($this->api_key);
 		if (empty($key_trimmed)) {
+			print("TEST");
 			return self::YOUTUBE_NO_VIDEO;
 		}
 
 		if ($youtube_id = $this->isYouTubeVideo($link_url)) {
-			$url = $url . $youtube_id . '&key=' . $this->api_key;
-			$response = $this->client->request('GET', $url);
+			$response = $this->getVideoData($youtube_id);
 
 			if ($response->getStatusCode() >= 400) {
 				return self::YOUTUBE_NO_VIDEO;
@@ -123,8 +122,7 @@ class Youtube
 		}
 
 		if ($youtube_id = $this->isYouTubeVideo($link_url)) {
-			$url = $url . $youtube_id . '&key=' . $api_key;
-			$response = $this->client->request('GET', $url);
+			$response = $this->getVideoData($youtube_id);
 
 			// If the video was pulled due to copyright violations, is unlisted, or is unavailable, the reponse header will be 404
 			if ($response->getStatusCode() >= 400) {
@@ -171,5 +169,13 @@ class Youtube
 			}
 		}
 		return false;
+	}
+
+	function getVideoData($youtube_id)
+	{
+		$url = $this->search_url . $youtube_id . '&key=' . $this->api_key;
+		$response = $this->client->request('GET', $url);
+
+		return $response;
 	}
 }

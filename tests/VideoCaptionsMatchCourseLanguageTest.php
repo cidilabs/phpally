@@ -9,12 +9,22 @@ class VideoCaptionsMatchCourseLanguageTest extends PhpAllyTestCase {
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
-            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
+            'vimeoApiKey' => 'test',
+            'youtubeApiKey' => 'test',
+            'kalturaApiKey' => 'test',
+            'kalturaUsername' => 'test'
         ];
-        $rule = new VideoCaptionsMatchCourseLanguage($dom, $options);
 
-        $this->assertEquals(1, $rule->check(), 'Video Embed Check should have one issues.');
+        $ruleMock = $this->getMockBuilder(VideoCaptionsMatchCourseLanguage::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
+
+        $ruleMock->expects($this->once())
+            ->method('getCaptionState')
+            ->will($this->returnValue(0));
+
+        $this->assertEquals(1, $ruleMock->check());
     }
 
     public function testCheckNoIssuesRightLanguage()
@@ -23,26 +33,86 @@ class VideoCaptionsMatchCourseLanguageTest extends PhpAllyTestCase {
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $options = [
-            'lang' => 'es',
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
-            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
+            'vimeoApiKey' => 'test',
+            'youtubeApiKey' => 'test',
+            'kalturaApiKey' => 'test',
+            'kalturaUsername' => 'test'
         ];
-        $rule = new VideoCaptionsMatchCourseLanguage($dom, $options);
 
-        $this->assertEquals(0, $rule->check(), 'Video Embed Check should have one issues.');
+        $ruleMock = $this->getMockBuilder(VideoCaptionsMatchCourseLanguage::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
+
+        $ruleMock->expects($this->once())
+            ->method('getCaptionState')
+            ->will($this->returnValue(2));
+
+        $this->assertEquals(0, $ruleMock->check());
     }
 
-    public function testCheckNoIssuesAsrTrack()
+    public function testCheckNoIssuesVimeo()
     {
-        $html = '<div><a href="https://www.youtube.com/watch?v=MJ4DtLnTPvY">Valid Link</a></div>';
+        $html = '<div><a href="https://vimeo.com/205755088">Valid Link</a></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $options = [
             'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
             'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
         ];
-        $rule = new VideoCaptionsMatchCourseLanguage($dom, $options);
+        $ruleMock = $this->getMockBuilder(VideoCaptionsMatchCourseLanguage::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
 
-        $this->assertEquals(0, $rule->check(), 'Video Embed Check should have no issues.');
+        $ruleMock->expects($this->once())
+            ->method('getCaptionState')
+            ->will($this->returnValue(2));
+
+        $this->assertEquals(0, $ruleMock->check());
     }
+
+    public function testCheckNoIssuesKaltura()
+    {
+        $html = '<div><a href="https://cdnapisec.kaltura.com/p/4183983">Valid Link</a></div>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
+            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
+        ];
+        $ruleMock = $this->getMockBuilder(VideoCaptionsMatchCourseLanguage::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
+
+        $ruleMock->expects($this->once())
+            ->method('getCaptionState')
+            ->will($this->returnValue(2));
+
+        $this->assertEquals(0, $ruleMock->check());
+    }
+
+    public function testCheckNoIssuesUnsupportedSite()
+    {
+        $html = '<div><a href="https://fakewebsite.com/p/4183983">Valid Link</a></div>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
+            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
+        ];
+        $ruleMock = $this->getMockBuilder(VideoCaptionsMatchCourseLanguage::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
+
+        $ruleMock->expects($this->once())
+            ->method('getCaptionState')
+            ->will($this->returnValue(2));
+
+        $this->assertEquals(0, $ruleMock->check());
+    }
+
+    
 }

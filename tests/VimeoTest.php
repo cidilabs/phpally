@@ -2,55 +2,98 @@
 
 use CidiLabs\PhpAlly\Vimeo;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 class VimeoTest extends PhpAllyTestCase {
 
+    private $link_url = 'https://vimeo.com/205755088';
+
     public function testCaptionsMissing()
     {
-        $url = 'https://vimeo.com/205755088';
+        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
-        ];
-        $vimeo = new Vimeo($client, 'en', $options['vimeoApiKey']);
+        $string = '{
+            "total": 0,
+            "data": []
+        }';
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $this->assertEquals(0, $vimeo->captionsMissing($url), 'Vimeo Test should return a 0 to indicate missing captions');
+        $vimeoMock = $this->getMockBuilder(Vimeo::class)
+             ->setConstructorArgs([$client, 'en', 'testApiKey'])
+             ->setMethods(array('getVideoData'))
+             ->getMock(); 
+
+        $vimeoMock->expects($this->once())
+            ->method('getVideoData')
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($vimeoMock->captionsMissing($link_url), 0);
     }
 
     public function testCaptionsMissingHasCaptions()
     {
-        $url = 'https://vimeo.com/83595709';
+        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
-        ];
-        $vimeo = new Vimeo($client, 'en', $options['vimeoApiKey']);
+        $string = '{
+            "total": 2,
+            "data": [{"language": "en"}, {"language": "es"}]
+        }';
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $this->assertEquals(2, $vimeo->captionsMissing($url), 'Vimeo Test should return a 2 to indicate that the video has captions');
+        $vimeoMock = $this->getMockBuilder(Vimeo::class)
+             ->setConstructorArgs([$client, 'en', 'testApiKey'])
+             ->setMethods(array('getVideoData'))
+             ->getMock(); 
+
+        $vimeoMock->expects($this->once())
+            ->method('getVideoData')
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($vimeoMock->captionsMissing($link_url), 2);
     }
 
     public function testCaptionsLanguage()
     {
-        $url = 'https://vimeo.com/83595709';
+        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
-        ];
-        $vimeo = new Vimeo($client, 'en', $options['vimeoApiKey']);
+        $string = '{
+            "total": 1,
+            "data": [{"language": "en"}]
+        }';
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $this->assertEquals(2, $vimeo->captionsLanguage($url), 'Vimeo Test should return a 2 to indicate that the video has captions in the correct language');
+        $vimeoMock = $this->getMockBuilder(Vimeo::class)
+             ->setConstructorArgs([$client, 'en', 'testApiKey'])
+             ->setMethods(array('getVideoData'))
+             ->getMock(); 
+
+        $vimeoMock->expects($this->once())
+            ->method('getVideoData')
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($vimeoMock->captionsLanguage($link_url), 2);
     }
 
     public function testCaptionsLanguageFailure()
     {
-        $url = 'https://vimeo.com/83595709';
+        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad'
-        ];
-        $vimeo = new Vimeo($client, 'es', $options['vimeoApiKey']);
+        $string = '{
+            "total": 1,
+            "data": [{"language": "es"}]
+        }';
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $this->assertEquals(0, $vimeo->captionsLanguage($url), 'Vimeo Test should return a 0 to indicate that the video has captions in the correct language');
+        $vimeoMock = $this->getMockBuilder(Vimeo::class)
+             ->setConstructorArgs([$client, 'en', 'testApiKey'])
+             ->setMethods(array('getVideoData'))
+             ->getMock(); 
+
+        $vimeoMock->expects($this->once())
+            ->method('getVideoData')
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($vimeoMock->captionsLanguage($link_url), 0);
     }
 
     

@@ -11,12 +11,22 @@ class VideosEmbeddedOrLinkedNeedCaptionsTest extends PhpAllyTestCase {
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
-            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
+            'vimeoApiKey' => 'test',
+            'youtubeApiKey' => 'test',
+            'kalturaApiKey' => 'test',
+            'kalturaUsername' => 'test'
         ];
-        $rule = new VideosEmbeddedOrLinkedNeedCaptions($dom, $options);
 
-        $this->assertEquals(2, $rule->check(), 'Youtube Test will pass with auto-generated captions, Vimeo should fail.');
+        $ruleMock = $this->getMockBuilder(VideosEmbeddedOrLinkedNeedCaptions::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
+
+        $ruleMock->expects($this->exactly(2))
+            ->method('getCaptionState')
+            ->will($this->returnValue(0));
+
+        $this->assertEquals(2, $ruleMock->check());
     }
 
     public function testCaptionsMissingHasCaptions()
@@ -26,11 +36,21 @@ class VideosEmbeddedOrLinkedNeedCaptionsTest extends PhpAllyTestCase {
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $options = [
-            'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
-            'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
+            'vimeoApiKey' => 'test',
+            'youtubeApiKey' => 'test',
+            'kalturaApiKey' => 'test',
+            'kalturaUsername' => 'test'
         ];
-        $rule = new VideosEmbeddedOrLinkedNeedCaptions($dom, $options);
 
-        $this->assertEquals(0, $rule->check(), 'Youtube Test should return a 0 to indicate missing captions');
+        $ruleMock = $this->getMockBuilder(VideosEmbeddedOrLinkedNeedCaptions::class)
+            ->setConstructorArgs([$dom, $options])
+            ->setMethods(array('getCaptionState'))
+            ->getMock();
+
+        $ruleMock->expects($this->exactly(2))
+            ->method('getCaptionState')
+            ->will($this->returnValue(2));
+
+        $this->assertEquals(0, $ruleMock->check());
     }
 }
