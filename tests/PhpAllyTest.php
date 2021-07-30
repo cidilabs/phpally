@@ -14,7 +14,7 @@ class PhpAllyTest extends PhpAllyTestCase {
             'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
             'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
         ];
-        $report = $ally->checkOne($this->getColorContrastHtml(), 'CssTextStyleEmphasize', $options);
+        $report = $ally->checkOne($this->getColorContrastHtml(), 'CidiLabs\\PhpAlly\\Rule\\CssTextStyleEmphasize', $options);
         $issues = $report->getIssues();
         $errors = $report->getErrors();
         $issue = reset($issues);
