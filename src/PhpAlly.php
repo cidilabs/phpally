@@ -22,7 +22,7 @@ class PhpAlly {
 
         foreach ($ruleIds as $ruleId) {
             try {
-                $className = 'CidiLabs\\PhpAlly\\Rule\\' . $ruleId;
+                $className = $ruleId;
                 if (!class_exists($className)) {
                     $report->setError('Rule does not exist.');
                     continue;

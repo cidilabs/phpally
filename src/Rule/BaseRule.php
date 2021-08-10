@@ -244,7 +244,7 @@ class BaseRule implements PhpAllyRuleInterface {
 
     public function setIssue($element, $previewElement = null, $metadata = null)
     {
-        $ruleId = str_replace('CidiLabs\\PhpAlly\\Rule\\', '', $this->id());
+		$ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $this->id());
 
 		if (!$previewElement) {
 			$previewElement = $this->previewElement;
