@@ -19,8 +19,8 @@ class ImageHasAltDecorative extends BaseRule
     public function check()
     {
         foreach ($this->getAllElements('img') as $img) {
-			if($img->hasAttribute('data-decorative')
-				&& $img->getAttribute('data-decorative') == 'true'
+			if($img->hasAttribute('role')
+				&& $img->getAttribute('role') == 'presentation'
 				&& $img->hasAttribute('alt')
 				&& trim($img->getAttribute('alt') != '')) {
 				$this->setIssue($img);

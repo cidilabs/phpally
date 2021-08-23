@@ -15,7 +15,7 @@ class ImageHasAltTest extends PhpAllyTestCase {
 
     public function testCheckTrueDecorative()
     {
-        $html = '<div><img src="validDecorativeImage.png" data-decorative="true"></div>';
+        $html = '<div><img src="validDecorativeImage.png" role="presentation"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageHasAlt($dom);
@@ -35,7 +35,7 @@ class ImageHasAltTest extends PhpAllyTestCase {
 
     public function testCheckDataDecorativeFalse()
     {
-        $html = '<div><img src="validDecorativeImage.png" data-decorative="false"></div>';
+        $html = '<div><img src="validDecorativeImage.png" role="none"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageHasAlt($dom);
