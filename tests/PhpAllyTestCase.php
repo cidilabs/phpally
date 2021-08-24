@@ -51,22 +51,22 @@ class PhpAllyTestCase extends TestCase {
 
     protected function getGoodBackgroundContrastColorNameHtml()
     {
-        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: green; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: green no-repeat fixed center; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
     }
 
     protected function getBadBackgroundContrastColorNameHtml()
     {
-        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: white; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: white no-repeat fixed center; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
     }
 
     protected function getGoodBackgroundContrastRgbHtml()
     {
-        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: rgb(0,0,0); color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: rgb(0,0,0) no-repeat fixed center; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
     }
 
     protected function getBadBackgroundContrastRgbHtml()
     {
-        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: rgb(255,255,255); color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: rgb(255,255,255) no-repeat fixed center; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
     }
 
     protected function getGoodColorContrastRGBHtml(){
