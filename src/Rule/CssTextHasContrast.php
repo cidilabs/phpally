@@ -185,7 +185,11 @@ class CssTextHasContrast extends BaseRule
             $style = $this->getStyle($element);
 
 			if(isset($style['background'])) {
-				$style["background-color"] = $this->getBackgroundInfo($style['background']);
+				$background = $this->getBackgroundInfo($style['background']);
+
+				if(!is_null($background)) {
+					$style["background-color"] = $this->getBackgroundInfo($style['background']);
+				}
 			}
             
 			if(isset($style['background-color']) || isset($style['color'])){
