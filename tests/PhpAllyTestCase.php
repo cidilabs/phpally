@@ -49,6 +49,26 @@ class PhpAllyTestCase extends TestCase {
         return '<div style="background-color: #444"><p style="color: #000";">Paragraph text does not have enough contrast.</p><p style="color: #FFF";">Paragraph text does have enough contrast.</p><p style="color: #00A";">Paragraph text has blue text, no contrast.</p></div>';
     }
 
+    protected function getGoodBackgroundContrastColorNameHtml()
+    {
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: green; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+    }
+
+    protected function getBadBackgroundContrastColorNameHtml()
+    {
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: white; color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+    }
+
+    protected function getGoodBackgroundContrastRgbHtml()
+    {
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: rgb(0,0,0); color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+    }
+
+    protected function getBadBackgroundContrastRgbHtml()
+    {
+        return '<span id="kl_popup_2_content" class="kl_tooltip_content kl_popup_content bs-badge bs-badge-dark" style="background: rgb(255,255,255); color: rgb(255, 255, 255); padding: 2px 5px; font-weight: normal; font-style: normal;">Some Tooltip Text</span>';
+    }
+
     protected function getGoodColorContrastRGBHtml(){
         return '<p style="background-color: rgb(64, 0, 100); color: rgb(169, 169, 169);">Paragraph text does not have enough contrast.</p>';
     }
