@@ -25,6 +25,13 @@ class ImageHasAltDecorative extends BaseRule
 				&& trim($img->getAttribute('alt') != '')) {
 				$this->setIssue($img);
 			}
+
+            else if($img->hasAttribute('data-decorative')
+				&& $img->getAttribute('data-decorative') == 'true'
+				&& $img->hasAttribute('alt')
+				&& trim($img->getAttribute('alt') != '')) {
+				$this->setIssue($img);
+			}
 		}
         
         return count($this->issues);

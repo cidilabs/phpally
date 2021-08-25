@@ -27,6 +27,11 @@ class ImageHasAlt extends BaseRule
 					&& $img->getAttribute('role') == 'presentation')) {
 					$this->setIssue($img);
 				}
+
+                else if(!($img->hasAttribute('data-decorative')
+					&& $img->getAttribute('data-decorative') == 'true')) {
+					$this->setIssue($img);
+				}
 			}
         }
         

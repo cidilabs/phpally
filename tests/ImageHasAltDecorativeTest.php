@@ -5,7 +5,7 @@ use CidiLabs\PhpAlly\Rule\ImageHasAltDecorative;
 class ImageHasAltDecorativeTest extends PhpAllyTestCase {
     public function testCheckTrue()
     {
-        $html = '<div><img src="validImage.png" role="presentation"></div>';
+        $html = '<div><img src="validImage.png" data-decorative="true" role="presentation"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
@@ -15,7 +15,7 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
 
     public function testCheckTrueBlankAltText()
     {
-        $html = '<div><img src="invalidImage.png" role="presentation" alt=""></div>';
+        $html = '<div><img src="invalidImage.png" data-decorative="true" role="presentation" alt=""></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
@@ -25,7 +25,7 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
 
     public function testCheckTrueNotDecorative()
     {
-        $html = '<div><img src="invalidImage.png" role="none" alt="This should be here"></div>';
+        $html = '<div><img src="invalidImage.png" data-decorative="false" role="none" alt="This should be here"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
@@ -35,7 +35,7 @@ class ImageHasAltDecorativeTest extends PhpAllyTestCase {
 
     public function testCheckFalse()
     {
-        $html = '<div><img src="validDecorativeImage.png" role="presentation" alt="Unnecessary"></div>';
+        $html = '<div><img src="validDecorativeImage.png" data-decorative="true" role="presentation" alt="Unnecessary"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageHasAltDecorative($dom);
