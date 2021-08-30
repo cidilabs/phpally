@@ -24,6 +24,8 @@ class PhpAllyIssue implements \JsonSerializable {
                 $this->previewElement = $this->prepareElement($this->element->parentNode);        
             }
         }
+
+        print($this->element->ownerDocument->saveHTML($this->element));
     }
 
     public function getElement()
