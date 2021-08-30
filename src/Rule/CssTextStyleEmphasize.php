@@ -191,8 +191,8 @@ class CssTextStyleEmphasize extends BaseRule
 			if(isset($style['background'])) {
 				$background = $this->getBackgroundInfo($style['background']);
 
-				if(!is_null($background)) {
-					$style["background-color"] = $this->getBackgroundInfo($style['background']);
+				if($background) {
+					$style["background-color"] = $background;
 				}
 			}
 
