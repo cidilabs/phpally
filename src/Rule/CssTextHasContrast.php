@@ -183,6 +183,14 @@ class CssTextHasContrast extends BaseRule
 
 		foreach ($entries as $element) {
             $style = $this->getStyle($element);
+
+			if(isset($style['background'])) {
+				$background = $this->getBackgroundInfo($style['background']);
+
+				if($background) {
+					$style["background-color"] = $background;
+				}
+			}
             
 			if(isset($style['background-color']) || isset($style['color'])){
 				if (!isset($style['background-color'])) {
@@ -416,5 +424,24 @@ class CssTextHasContrast extends BaseRule
 		}
 		$results = array('r' => hexdec($c[0]), 'g' => hexdec($c[1]), 'b' => hexdec($c[2]));
 		return $results;
+	}
+
+	function getBackgroundInfo($backgroundString) {
+		$regex = '/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^\)]*\)/';
+
+		//Check to see if string contains hex or rgb value
+		if (preg_match($regex, trim($backgroundString), $matches)) {
+			return trim($matches[0]);
+		}
+
+		//Check for color string
+		foreach(array_keys($this->color_names) as $color) {
+			if(strpos(trim($backgroundString), $color) !== FALSE) {
+				return "#" . $this->color_names[$color];
+			}
+		}
+
+		//No background color found. Return  null
+		return null;
 	}
 }

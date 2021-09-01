@@ -62,4 +62,64 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
 
         $this->assertEquals(6, $rule->check(), 'CSS Text Has Contrast should have four issues.');
     }
+
+    public function testCheckBackgroundAttributeColorNamePass() 
+    {
+        $html = $this->getGoodBackgroundContrastColorNameHtml();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+        
+        $rule = new CssTextHasContrast($dom, $options);
+
+        $this->assertEquals(0, $rule->check(), 'CSS Text Has Contrast should have no issues.');
+    }
+
+    public function testCheckBackgroundAttributeColorNameFail() 
+    {
+        $html = $this->getBadBackgroundContrastColorNameHtml();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+        
+        $rule = new CssTextHasContrast($dom, $options);
+
+        $this->assertEquals(1, $rule->check(), 'CSS Text Has Contrast should have no issues.');
+    }
+
+    public function testCheckBackgroundAttributeRgbPass() 
+    {
+        $html = $this->getGoodBackgroundContrastRgbHtml();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+        
+        $rule = new CssTextHasContrast($dom, $options);
+
+        $this->assertEquals(0, $rule->check(), 'CSS Text Has Contrast should have no issues.');
+    }
+
+    public function testCheckBackgroundAttributeRgbFail() 
+    {
+        $html = $this->getBadBackgroundContrastRgbHtml();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+        
+        $rule = new CssTextHasContrast($dom, $options);
+
+        $this->assertEquals(1, $rule->check(), 'CSS Text Has Contrast should have no issues.');
+    }
 }
