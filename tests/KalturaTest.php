@@ -13,7 +13,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
              ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-             ->setMethods(array('getVideoData'))
+             ->addMethods(array('getVideoData'))
              ->getMock(); 
 
         $this->assertEquals($kalturaMock->captionsMissing($link_url), 2);
@@ -34,7 +34,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
             ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-            ->setMethods(array('getVideoData'))
+            ->addMethods(array('getVideoData'))
             ->getMock();
 
         $kalturaMock->expects($this->once())
@@ -55,7 +55,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
             ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-            ->setMethods(array('getVideoData'))
+            ->addMethods(array('getVideoData'))
             ->getMock();
 
         $kalturaMock->expects($this->once())
@@ -72,7 +72,7 @@ class KalturaTest extends PhpAllyTestCase {
         
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
              ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-             ->setMethods(array('getVideoData'))
+             ->addMethods(array('getVideoData'))
              ->getMock(); 
 
         $this->assertEquals($kalturaMock->captionsLanguage($link_url), 2);
@@ -93,7 +93,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
             ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-            ->setMethods(array('getVideoData'))
+            ->addMethods(array('getVideoData'))
             ->getMock();
 
         $kalturaMock->expects($this->once())
@@ -114,7 +114,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
             ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-            ->setMethods(array('getVideoData'))
+            ->addMethods(array('getVideoData'))
             ->getMock();
 
         $kalturaMock->expects($this->once())
@@ -139,7 +139,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
             ->setConstructorArgs(['en', 'testApiKey', 'testEmail'])
-            ->setMethods(array('getVideoData'))
+            ->addMethods(array('getVideoData'))
             ->getMock();
 
         $kalturaMock->expects($this->once())
@@ -164,7 +164,7 @@ class KalturaTest extends PhpAllyTestCase {
 
         $kalturaMock = $this->getMockBuilder(Kaltura::class)
             ->setConstructorArgs(['es', 'testApiKey', 'testEmail'])
-            ->setMethods(array('getVideoData'))
+            ->addMethods(array('getVideoData'))
             ->getMock();
 
         $kalturaMock->expects($this->once())
