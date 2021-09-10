@@ -71,7 +71,6 @@ class Youtube
 		// If the API key is blank, flag the video for manual inspection
 		$key_trimmed = trim($this->api_key);
 		if (empty($key_trimmed)) {
-			print("TEST");
 			return self::YOUTUBE_NO_VIDEO;
 		}
 
