@@ -18,6 +18,21 @@ class CssTextStyleEmphasizeTest extends PhpAllyTestCase {
         $this->assertEquals(0, $rule->check(), 'Css Text Style Emphasize should have no issues.');
     }
 
+    public function testCheckTrueChildTag()
+    {
+        $html = $this->getEphasisPass();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+
+        $rule = new CssTextStyleEmphasize($dom, $options);
+
+        $this->assertEquals(0, $rule->check(), 'Css Text Style Emphasize should have no issues.');
+    }
+
     public function testCheckFalse()
     {
         $html = $this->getColorContrastHtml();

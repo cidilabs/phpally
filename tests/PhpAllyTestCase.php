@@ -44,6 +44,11 @@ class PhpAllyTestCase extends TestCase {
         </div>';
     }
 
+    protected function getEphasisPass()
+    {
+        return '<p style="color: #008000; background-color: #ffffff;"><em><strong>Testing</strong></em></p>';
+    }
+
     protected function getColorContrastHtml()
     {
         return '<div style="background-color: #444; background: no-repeat fixed center;"><p style="color: #000";">Paragraph text does not have enough contrast.</p><p style="color: #FFF";">Paragraph text does have enough contrast.</p><p style="color: #00A";">Paragraph text has blue text, no contrast.</p></div>';

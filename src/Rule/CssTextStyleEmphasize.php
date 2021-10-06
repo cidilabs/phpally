@@ -276,7 +276,8 @@ class CssTextStyleEmphasize extends BaseRule
 					$style['font-style'] = "normal";
 				}
 
-				if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $this->checkTextEqualsHeadingText($element)) {
+				if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $this->checkTextEqualsHeadingText($element)
+				|| $this->getElementChild($element, 'strong') || $this->getElementChild($element, 'em')) {
 					continue;
 				} elseif ($font_size >= 18 || $font_size >= 14 && $bold) {
 					if ($luminosity >= 3 && !$bold && !$italic) {
@@ -348,6 +349,19 @@ class CssTextStyleEmphasize extends BaseRule
 			}
 			$element = $element->parentNode;
 		}
+		return false;
+	}
+
+	function getElementChild($element, $ancestor_tag)
+	{
+		foreach ($element->childNodes as $child){
+			if(property_exists($child, 'tagName')){
+				if($child->tagName === $ancestor_tag){
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 
