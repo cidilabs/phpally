@@ -308,9 +308,11 @@ class CssTextStyleEmphasize extends BaseRule
 	 * @param object $element A DOMElement object
 	 */
 	function isHeading($element) {
-		if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' 
-		|| $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6') {
-			return true;
+		if (property_exists($element, 'tagName')) {
+			if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' 
+			|| $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6') {
+				return true;
+			}
 		}
 
 		return false;
