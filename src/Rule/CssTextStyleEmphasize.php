@@ -276,8 +276,7 @@ class CssTextStyleEmphasize extends BaseRule
 					$style['font-style'] = "normal";
 				}
 
-				if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' || $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6' || $this->checkTextEqualsHeadingText($element)
-				|| $this->getElementChild($element, 'strong') || $this->getElementChild($element, 'em')) {
+				if ($this->isHeading($element) || $this->checkTextEqualsHeadingText($element) || $this->getElementChild($element, 'strong') || $this->getElementChild($element, 'em')) {
 					continue;
 				} elseif ($font_size >= 18 || $font_size >= 14 && $bold) {
 					if ($luminosity >= 3 && !$bold && !$italic) {
@@ -303,6 +302,19 @@ class CssTextStyleEmphasize extends BaseRule
 	}
 
 	// Helpers
+
+	/**
+	 * Returns true the element is a heading 
+	 * @param object $element A DOMElement object
+	 */
+	function isHeading($element) {
+		if ($element->tagName === 'h1' || $element->tagName === 'h2' || $element->tagName === 'h3' 
+		|| $element->tagName === 'h4' || $element->tagName === 'h5' || $element->tagName === 'h6') {
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Returns true if the tag descends from a heading tag and
@@ -352,6 +364,11 @@ class CssTextStyleEmphasize extends BaseRule
 		return false;
 	}
 
+	/**
+	 *	Returns true if an immediate child of the element is a given tag
+	 *	@param object $element A DOMElement object
+	 *	@param string $child_tag The name of the tag we are looking for
+	 */
 	function getElementChild($element, $child_tag)
 	{
 		foreach ($element->childNodes as $child){
