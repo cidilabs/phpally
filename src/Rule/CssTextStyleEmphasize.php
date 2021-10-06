@@ -352,11 +352,11 @@ class CssTextStyleEmphasize extends BaseRule
 		return false;
 	}
 
-	function getElementChild($element, $ancestor_tag)
+	function getElementChild($element, $child_tag)
 	{
 		foreach ($element->childNodes as $child){
 			if(property_exists($child, 'tagName')){
-				if($child->tagName === $ancestor_tag){
+				if($child->tagName === $child_tag){
 					return true;
 				}
 			}
