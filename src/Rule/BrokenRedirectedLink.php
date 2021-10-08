@@ -42,7 +42,7 @@ class BrokenRedirectedLink extends BaseRule
 			$status = curl_getinfo($curls[$i], CURLINFO_HTTP_CODE);
 			if ($link != $redirect) {
 				// Redirected link (May be a Canvas link that is not actually redirected)
-				$this->setIssue($links[$link], $metadata = $redirect);
+				$this->setIssue($links[$link], null, json_encode(array('redirect_url' => $redirect)));
 			}
 			if (404 == $status) {
 				$this->setIssue($links[$link]);
