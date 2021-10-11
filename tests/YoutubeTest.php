@@ -19,7 +19,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
         $youtubeMock = $this->getMockBuilder(Youtube::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $youtubeMock->expects($this->once())
@@ -53,7 +53,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
         $youtubeMock = $this->getMockBuilder(Youtube::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $youtubeMock->expects($this->once())
@@ -86,7 +86,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
         $youtubeMock = $this->getMockBuilder(Youtube::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $youtubeMock->expects($this->once())
@@ -119,7 +119,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
         $youtubeMock = $this->getMockBuilder(Youtube::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $youtubeMock->expects($this->once())
@@ -146,7 +146,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
         $youtubeMock = $this->getMockBuilder(Youtube::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $youtubeMock->expects($this->once())
@@ -179,7 +179,7 @@ class YoutubeTest extends PhpAllyTestCase {
 
         $youtubeMock = $this->getMockBuilder(Youtube::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $youtubeMock->expects($this->once())
