@@ -15,7 +15,7 @@ class ImageAltIsDifferentTest extends PhpAllyTestCase {
 
     public function testCheckTrueSameNameNoExtension()
     {
-        $html = '<div><img src="validImage.png" alt="validImage"></div>';
+        $html = '<div><img src="validImage.png" alt="valid image png"></div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ImageAltIsDifferent($dom);
