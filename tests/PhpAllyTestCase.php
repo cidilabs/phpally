@@ -24,16 +24,14 @@ class PhpAllyTestCase extends TestCase {
             
             <p style="color: #0000FF";"><strong>Paragraph text does have enough contrast.</strong></p>
 
-            <p style="color: #000";">Paragraph text does not have enough contrast.</p>
-            <p style="color: #FFF";">Paragraph text does have enough contrast.</p>
-            <p style="color: #00A";">Paragraph text has blue text, no contrast.</p>
+            <p>Paragraph text <span style="color: #000">has</span> enough contrast.</p>
+            <p style="color: #FFF">Paragraph text NOT does have enough contrast.</p>
+            <p style="color: #00A">Paragraph text has blue text, no contrast.</p>
 
             <video controls width="250"src="/media/examples/friday.mp4">
-            <track default kind="captions"srclang="en"src="/media/examples/friday.vtt"/>
+            <track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>
             Sorry, your browser doesnt support embedded videos.
             </video>
-
-
         </div>';
     }
 
@@ -52,6 +50,11 @@ class PhpAllyTestCase extends TestCase {
     protected function getColorContrastHtml()
     {
         return '<div style="background-color: #444; background: no-repeat fixed center;"><p style="color: #000";">Paragraph text does not have enough contrast.</p><p style="color: #FFF";">Paragraph text does have enough contrast.</p><p style="color: #00A";">Paragraph text has blue text, no contrast.</p></div>';
+    }
+
+    protected function getColorEmphasisHtml()
+    {
+        return '<p>Text does not have <span style="color: red">correct emphasis</span>.</p>';
     }
 
     protected function getGoodBackgroundContrastColorNameHtml()

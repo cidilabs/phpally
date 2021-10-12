@@ -20,7 +20,7 @@ class VimeoTest extends PhpAllyTestCase {
 
         $vimeoMock = $this->getMockBuilder(Vimeo::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $vimeoMock->expects($this->once())
@@ -42,7 +42,7 @@ class VimeoTest extends PhpAllyTestCase {
 
         $vimeoMock = $this->getMockBuilder(Vimeo::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $vimeoMock->expects($this->once())
@@ -64,7 +64,7 @@ class VimeoTest extends PhpAllyTestCase {
 
         $vimeoMock = $this->getMockBuilder(Vimeo::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $vimeoMock->expects($this->once())
@@ -86,7 +86,7 @@ class VimeoTest extends PhpAllyTestCase {
 
         $vimeoMock = $this->getMockBuilder(Vimeo::class)
              ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->setMethods(array('getVideoData'))
+             ->onlyMethods(array('getVideoData'))
              ->getMock(); 
 
         $vimeoMock->expects($this->once())

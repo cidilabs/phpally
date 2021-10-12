@@ -14,12 +14,17 @@ class PhpAllyTest extends PhpAllyTestCase {
             'vimeoApiKey' => 'bef37736cfb26b6dc52986d8f531d0ad',
             'youtubeApiKey' => 'AIzaSyB5bTf8rbYwiM73k1rj8dDnwEalwTqdz_c'
         ];
-        $report = $ally->checkOne($this->getColorContrastHtml(), 'CidiLabs\\PhpAlly\\Rule\\CssTextStyleEmphasize', $options);
+        $report = $ally->checkOne($this->getColorEmphasisHtml(), 'CidiLabs\\PhpAlly\\Rule\\CssTextStyleEmphasize', $options);
         $issues = $report->getIssues();
         $errors = $report->getErrors();
         $issue = reset($issues);
 
-        $this->assertCount(1, $issues, 'Testcheckone should have 1 issues.');
+        if (!empty($errors)) {
+            print_r($errors);
+            exit;
+        }
+
+        $this->assertCount(1, $issues, 'TestCheckOne should have 1 issue.');
         $this->phpAllyIssueTest($issue);
         $this->phpAllyReportTest($report);
     }
@@ -37,7 +42,7 @@ class PhpAllyTest extends PhpAllyTestCase {
         $issues = $report->getIssues();
         $issue = reset($issues);
         
-        $this->assertCount(8, $issues, 'Total report should have 5 issues.');
+        $this->assertCount(6, $issues, 'Total report should have 5 issues.');
         $this->phpAllyIssueTest($issue);
         $this->phpAllyReportTest($report);
     }

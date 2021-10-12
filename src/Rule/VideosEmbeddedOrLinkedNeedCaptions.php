@@ -46,11 +46,17 @@ class VideosEmbeddedOrLinkedNeedCaptions extends BaseRule
 		$search_kaltura = '/(kaltura)/';
 
 		if (preg_match($search_youtube, $attr_val)) {
-			$service = new Youtube(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['youtubeApiKey']);
+			if (!empty($this->options['youtubeApiKey'])) {
+				$service = new Youtube(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['youtubeApiKey']);
+			}
 		} elseif (preg_match($search_vimeo, $attr_val)) {
-			$service = new Vimeo(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['vimeoApiKey']);
+			if (!empty($this->options['vimeoApiKey'])) {
+				$service = new Vimeo(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['vimeoApiKey']);
+			}
 		} else if (preg_match($search_kaltura, $attr_val)) {
-			$service = new Kaltura($this->lang, $this->options['kalturaApiKey'], $this->options['kalturaUsername']);
+			if (!empty($this->options['kalturaApiKey'])) {
+				$service = new Kaltura($this->lang, $this->options['kalturaApiKey'], $this->options['kalturaUsername']);
+			}
 		}
 		if (isset($service)) {
 			$captionState = $service->captionsMissing($attr_val);
