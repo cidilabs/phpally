@@ -66,7 +66,7 @@ class BrokenRedirectedLink extends BaseRule
 		foreach ($this->getAllElements('a') as $a) {
 			$href = $a->getAttribute('href');
 			if ($href) {
-				$links[$href] = $a; // href should exclude start with '#'
+				$links[$href] = $a;
 			}
 		}
 		$this->linkCheck($links);
