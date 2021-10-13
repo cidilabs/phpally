@@ -158,7 +158,7 @@ class BaseRule implements PhpAllyRuleInterface {
 	*	 			 to that element (ignoring inheritance)
 	*
 	*/
-	private function getNodeStyle($element) {
+	public function getNodeStyle($element) {
 		$style = array();
 
 		if($element->hasAttribute('quail_style_index')) {

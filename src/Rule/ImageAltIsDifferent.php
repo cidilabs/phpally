@@ -23,7 +23,7 @@ class ImageAltIsDifferent extends BaseRule
         foreach ($this->getAllElements('img') as $img) {
 			if (trim($img->getAttribute('src')) == trim($img->getAttribute('alt')))
 				$this->setIssue($img);
-			else if ( preg_match("/.jpg|.JPG|.png|.PNG|.gif|.GIF|.jpeg|.JPEG$/", trim($img->getAttribute('alt'))) )
+			else if ( preg_match("/\.jpg|\.JPG|\.png|\.PNG|\.gif|\.GIF|\.jpeg|\.JPEG$/", trim($img->getAttribute('alt'))) )
 				$this->setIssue($img);
 		}
         
