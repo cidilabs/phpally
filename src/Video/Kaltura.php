@@ -32,22 +32,12 @@ class Kaltura {
 	 *	@param string $link_url The URL to the video or video resource
 	 *   @return int 0 if captions are missing, 1 if video is private, 2 if captions exist or not a video
 	 */
-    function captionsMissing($link_url)
+    function captionsMissing($captionData)
 	{
-		// If the API key or username is blank, flag the video for manual inspection
-		$key_trimmed = trim($this->api_key);
-		$username_trimmed = trim($this->username);
-		if (empty($key_trimmed) || empty($username_trimmed)) {
-			return self::KALTURA_SUCCESS;
+		if($result->totalCount === 0) {
+			return self::KALTURA_FAIL;
 		}
-
-		if(($video_id = $this->isKalturaVideo($link_url)) && ($partner_id = $this->getPartnerID($link_url))) {
-			$result = $this->getVideoData($video_id, $partner_id);
-
-			if($result->totalCount === 0) {
-				return self::KALTURA_FAIL;
-			}
-		}
+		
 		return self::KALTURA_SUCCESS;
 	}
 
@@ -58,26 +48,14 @@ class Kaltura {
 	 */
 	function captionsLanguage($link_url)
 	{
-		// If the API key or username is blank, flag the video for manual inspection
-		$key_trimmed = trim($this->api_key);
-		$username_trimmed = trim($this->username);
-		if (empty($key_trimmed) || empty($username_trimmed)) {
-			return self::KALTURA_SUCCESS;
+		$captionsArray = $result->objects;
+		foreach($captionsArray as $caption) 
+		{
+			if(substr($caption->languageCode, 0, 2) === substr($this->language, 0, 2)) {
+				return self::KALTURA_SUCCESS;
+			} 
 		}
-
-		if(($video_id = $this->isKalturaVideo($link_url)) && ($partner_id = $this->getPartnerID($link_url))) {
-			$result = $this->getVideoData($video_id, $partner_id);
-			$captionsArray = $result->objects;
-			foreach($captionsArray as $caption) 
-			{
-				if(substr($caption->languageCode, 0, 2) === substr($this->language, 0, 2)) {
-					return self::KALTURA_SUCCESS;
-				} 
-			}
-			return self::KALTURA_FAIL;
-		}
-
-		return self::KALTURA_SUCCESS;
+		return self::KALTURA_FAIL;
 	}
 
 	/**
@@ -114,26 +92,38 @@ class Kaltura {
 	 *	@return mixed FALSE if the api calls fails or its not a Kaltura video,
 	 *  or an array of caption objects if it is
 	 */
-	function getVideoData($video_id, $partner_id)
+	function getVideoData($link_url)
 	{
-		$config = new KalturaConfiguration($partner_id);
-		$config->setServiceUrl('https://www.kaltura.com');
-		$this->client = new KalturaClient($config);
-		$ks = $this->client->generateSession(
-			$this->api_key,
-			$this->username,
-			SessionType::ADMIN,
-			$partner_id);
-			$this->client->setKS($ks);
+		// If the API key or username is blank, flag the video for manual inspection
+		$key_trimmed = trim($this->api_key);
+		$username_trimmed = trim($this->username);
+		if (empty($key_trimmed) || empty($username_trimmed)) {
+			return false;
+		}
 
-		$captionPlugin = CaptionPlugin::get($this->client);
-		$filter = new AssetFilter();
-		$filter->entryIdIn = $video_id;
-		$pager = new FilterPager();
+		if ($video_id = $this->isKalturaVideo($link_url) && $partner_id = $this->getPartnerID($link_url)) {
 
-		$result = $captionPlugin->captionAsset->listAction($filter, $pager);
+			$config = new KalturaConfiguration($partner_id);
+			$config->setServiceUrl('https://www.kaltura.com');
+			$this->client = new KalturaClient($config);
+			$ks = $this->client->generateSession(
+				$this->api_key,
+				$this->username,
+				SessionType::ADMIN,
+				$partner_id);
+				$this->client->setKS($ks);
 
-		return $result;
+			$captionPlugin = CaptionPlugin::get($this->client);
+			$filter = new AssetFilter();
+			$filter->entryIdIn = $video_id;
+			$pager = new FilterPager();
+
+			$result = $captionPlugin->captionAsset->listAction($filter, $pager);
+
+			return $result;
+		}
+
+		return false;
 	}
 
 }
