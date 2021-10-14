@@ -1,6 +1,6 @@
 <?php
 
-namespace CidiLabs\PhpAlly;
+namespace CidiLabs\PhpAlly\Video;
 
 use Kaltura\Client\Configuration as KalturaConfiguration;
 use Kaltura\Client\Client as KalturaClient;
@@ -86,7 +86,7 @@ class Kaltura {
 	 *	@param string $link_url The URL to the video or video resource
 	 *	@return mixed FALSE if it's not a Kaltura video, or a string video ID if it is
 	 */
-	private function isKalturaVideo($link_url)
+	function isKalturaVideo($link_url)
 	{
 		$regex = '@\bkaltura\b.*\bentry_id=(.{10})@';
 		$matches = null;
@@ -97,7 +97,7 @@ class Kaltura {
 		return false;
 	}
 
-	private function getPartnerID($link_url)
+	function getPartnerID($link_url)
 	{
 		$regex = '@partner_id/(.{7})@';
 		$matches = null;

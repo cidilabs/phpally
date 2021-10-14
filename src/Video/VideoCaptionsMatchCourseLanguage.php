@@ -1,6 +1,6 @@
 <?php
 
-namespace CidiLabs\PhpAlly\Rule;
+namespace CidiLabs\PhpAlly\Video;
 
 use DOMElement;
 use CidiLabs\PhpAlly;
