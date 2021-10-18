@@ -34,7 +34,7 @@ class Kaltura {
 	 */
     function captionsMissing($captionData)
 	{
-		if($result->totalCount === 0) {
+		if($captionData->totalCount === 0) {
 			return self::KALTURA_FAIL;
 		}
 		
@@ -46,16 +46,16 @@ class Kaltura {
 	 *	@param string $link_url The URL to the video or video resource
 	 *	@return int 0 if captions are manual and wrong language, 1 if video is private, 2 if there are no captions or if manually generated and correct language
 	 */
-	function captionsLanguage($link_url)
+	function captionsLanguage($captionData)
 	{
-		$captionsArray = $result->objects;
+		$captionsArray = $captionData->objects;
 		foreach($captionsArray as $caption) 
 		{
 			if(substr($caption->languageCode, 0, 2) === substr($this->language, 0, 2)) {
 				return self::KALTURA_SUCCESS;
 			} 
 		}
-		return self::KALTURA_FAIL;
+		return empty($captionsArray) ? self::KALTURA_SUCCESS : self::KALTURA_FAIL;
 	}
 
 	/**
@@ -123,7 +123,7 @@ class Kaltura {
 			return $result;
 		}
 
-		return false;
+		return null;
 	}
 
 }

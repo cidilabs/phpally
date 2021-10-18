@@ -102,6 +102,6 @@ class Vimeo
 			]]);
 		}
 
-		return false;
+		return null;
 	}
 }

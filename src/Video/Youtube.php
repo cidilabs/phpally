@@ -64,7 +64,7 @@ class Youtube
 			}
 		}
 
-		return self::YOUTUBE_FAIL;
+		return empty($items) ? self::YOUTUBE_SUCCESS : self::YOUTUBE_FAIL;
 	}
 
 	/**
@@ -138,6 +138,6 @@ class Youtube
 			return $response;
 		}
 
-		return false;
+		return null;
 	}
 }

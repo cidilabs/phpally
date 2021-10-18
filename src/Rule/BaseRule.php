@@ -244,7 +244,7 @@ class BaseRule implements PhpAllyRuleInterface {
 
     public function setIssue($element, $ruleId = null, $metadata = null)
     {
-		if (!$ruleId) {
+		if (!isset($ruleId)) {
 			$ruleId = $this->id();
 		}
 
