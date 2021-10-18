@@ -29,7 +29,7 @@ class Kaltura {
 
 	/**
 	 *	Checks to see if a video is missing caption information in Kaltura
-	 *	@param string $link_url The URL to the video or video resource
+	 *	@param object $captionData The caption data for the video
 	 *   @return int 0 if captions are missing, 1 if video is private, 2 if captions exist or not a video
 	 */
     function captionsMissing($captionData)
@@ -43,7 +43,7 @@ class Kaltura {
 
     /**
 	 *	Checks to see if a video is missing caption information in YouTube
-	 *	@param string $link_url The URL to the video or video resource
+	 *	@param object $captionData The caption data for the video
 	 *	@return int 0 if captions are manual and wrong language, 1 if video is private, 2 if there are no captions or if manually generated and correct language
 	 */
 	function captionsLanguage($captionData)
@@ -89,7 +89,7 @@ class Kaltura {
 	/**
 	 *	Makes the api call to get the caption data for the video.
 	 *	@param string $link_url The URL to the video or video resource
-	 *	@return mixed FALSE if the api calls fails or its not a Kaltura video,
+	 *	@return mixed null if the api calls fails or its not a Kaltura video,
 	 *  or an array of caption objects if it is
 	 */
 	function getVideoData($link_url)

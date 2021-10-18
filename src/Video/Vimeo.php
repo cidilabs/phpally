@@ -90,6 +90,11 @@ class Vimeo
 		return false;
 	}
 
+	/**
+	 *	Gets the caption data from the youtube api
+	 *	@param string $link_url The URL to the video or video resource
+	 *	@return mixed $response Returns response object if api call can be made, null otherwise
+	 */
 	function getVideoData($link_url) 
 	{
 		$key_trimmed = trim($this->api_key);
