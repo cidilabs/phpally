@@ -48,10 +48,16 @@ class Kaltura {
 	 */
 	function captionsLanguage($captionData)
 	{
+		// If for whatever reason course_locale is blank, set it to English
+		$course_locale = $this->language;
+		if ($course_locale === '' || is_null($course_locale)) {
+			$course_locale = 'en';
+		}
+
 		$captionsArray = $captionData->objects;
 		foreach($captionsArray as $caption) 
 		{
-			if(substr($caption->languageCode, 0, 2) === substr($this->language, 0, 2)) {
+			if(substr($caption->languageCode, 0, 2) === substr($course_locale, 0, 2)) {
 				return self::KALTURA_SUCCESS;
 			} 
 		}

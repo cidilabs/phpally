@@ -62,5 +62,33 @@ class VimeoTest extends PhpAllyTestCase {
         $this->assertEquals($vimeo->captionsLanguage($response), 0);
     }
 
+    public function testCaptionsNoLanguage()
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
+        $string = '{
+            "total": 1,
+            "data": [{"language": "en"}]
+        }';
+
+        $vimeo = new Vimeo($client, '', 'testApikey');
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
+
+        $this->assertEquals($vimeo->captionsLanguage($response), 2);
+    }
+
+    public function testCaptionsNoLanguageFailure()
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
+        $string = '{
+            "total": 1,
+            "data": [{"language": "es"}]
+        }';
+
+        $vimeo = new Vimeo($client, '', 'testApikey');
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
+
+        $this->assertEquals($vimeo->captionsLanguage($response), 0);
+    }
+
     
 }

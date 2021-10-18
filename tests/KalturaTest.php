@@ -48,7 +48,7 @@ class KalturaTest extends PhpAllyTestCase {
         $this->assertEquals($kaltura->captionsLanguage($response), 2);
     }
 
-    public function testCaptionsLanguageFailureEmpty()
+    public function testCaptionsLanguageEmpty()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
         $response = json_decode('{
@@ -60,7 +60,7 @@ class KalturaTest extends PhpAllyTestCase {
         $this->assertEquals($kaltura->captionsLanguage($response), 2);
     }
 
-    public function testCaptionsLanguageFailureWrongLanguage()
+    public function testCaptionsLanguageWrongLanguage()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
         $response = json_decode('{
@@ -76,13 +76,45 @@ class KalturaTest extends PhpAllyTestCase {
         $this->assertEquals($kaltura->captionsLanguage($response), 0);
     }
 
-    public function testCaptionsLanguageFailureWrongLanguageInverse()
+    public function testCaptionsLanguageWrongLanguageInverse()
     {
         $kaltura = new Kaltura('es', 'testApiKey', 'testEmail');
         $response = json_decode('{
             "objects": [
                 {
                   "languageCode": "en"
+                }
+              ],
+            "totalCount": 0,
+            "objectType": "KalturaCaptionAssetListResponse"
+        }');
+
+        $this->assertEquals($kaltura->captionsLanguage($response), 0);
+    }
+
+    public function testCaptionsNoLanguage()
+    {
+        $kaltura = new Kaltura('', 'testApiKey', 'testEmail');
+        $response = json_decode('{
+            "objects": [
+                {
+                  "languageCode": "en"
+                }
+              ],
+            "totalCount": 0,
+            "objectType": "KalturaCaptionAssetListResponse"
+        }');
+
+        $this->assertEquals($kaltura->captionsLanguage($response), 2);
+    }
+
+    public function testCaptionsNoLanguageFailure()
+    {
+        $kaltura = new Kaltura('', 'testApiKey', 'testEmail');
+        $response = json_decode('{
+            "objects": [
+                {
+                  "languageCode": "es"
                 }
               ],
             "totalCount": 0,
