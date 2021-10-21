@@ -40,7 +40,13 @@ class RedirectedLink extends BaseRule
 
 			// Only permanent redirections are a problem
 			if ($status === 301 || $status === 308) {
-				$this->setIssue($links[$link], null, json_encode(array('redirect_url' => $redirect)));
+				$parsed_link = parse_url($link);
+				$parsed_redirect = parse_url($redirect);
+				if ($parsed_link[host] !== $parsed_redirect[host] ||
+					$parsed_link[path] !== $parsed_redirect[path]) {
+					$this->setIssue($links[$link], null, json_encode(array('redirect_url' => $redirect)));
+				}
+
 			}
 
 			curl_multi_remove_handle($mcurl, $curls[$i]);
