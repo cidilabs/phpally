@@ -38,8 +38,8 @@ class RedirectedLink extends BaseRule
 		} while ($running > 0);
 		foreach (array_keys($links) as $i => $link) {
 			$redirect = curl_getinfo($curls[$i], CURLINFO_EFFECTIVE_URL);
-			$status = curl_getinfo($curls[$i], CURLINFO_HTTP_CODE);
-			if ($status < 400 && $link != $redirect) {
+			$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
+			if (($status < 400) && ($link != $redirect)) {
 				// Redirected link (May be a Canvas link that is not actually redirected)
 				$ref = $redirect;
 				preg_match('/^[^#\s]+/', $ref, $matches);
