@@ -39,7 +39,7 @@ class BrokenLink extends BaseRule
 		foreach (array_keys($links) as $i => $link) {
 			$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
 			// If the status is greater than or equal to 400 the link is broken.
-			if (400 >= $status) {
+			if (400 <= $status) {
 				$this->setIssue($links[$link]);
 			}
 			curl_multi_remove_handle($mcurl, $curls[$i]);
