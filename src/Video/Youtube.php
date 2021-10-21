@@ -140,8 +140,9 @@ class Youtube
 	function getVideoData($link_url)
 	{
 		$key_trimmed = trim($this->api_key);
+		$youtube_id = $this->isYouTubeVideo($link_url);
 
-		if ($youtube_id = $this->isYouTubeVideo($link_url) && !empty($key_trimmed)) {
+		if ($youtube_id && !empty($key_trimmed)) {
 			$url = $this->search_url . $youtube_id . '&key=' . $this->api_key;
 			$response = $this->client->request('GET', $url);
 

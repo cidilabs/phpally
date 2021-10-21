@@ -98,8 +98,9 @@ class Vimeo
 	function getVideoData($link_url) 
 	{
 		$key_trimmed = trim($this->api_key);
+		$vimeo_id = $this->isVimeoVideo($link_url);
 	
-		if ($vimeo_id = $this->isVimeoVideo($link_url) && !empty($key_trimmed)) {
+		if ($vimeo_id && !empty($key_trimmed)) {
 			$url = $this->search_url . $vimeo_id . '/texttracks';
 
 			return $this->client->request('GET', $url, ['headers' => [

@@ -71,7 +71,7 @@ class VideoScan extends BaseRule
         // Use provider to call
         if (method_exists($provider, 'captionsLanguage')) {
             $captionState = $provider->captionsLanguage($captionData);
-            
+
             if ($captionState != self::SUCCESS) {
                 $this->setIssue($video, 'VideoCaptionsMatchCourseLanguage');
             }

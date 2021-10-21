@@ -107,7 +107,10 @@ class Kaltura {
 			return false;
 		}
 
-		if ($video_id = $this->isKalturaVideo($link_url) && $partner_id = $this->getPartnerID($link_url)) {
+		$video_id = $this->isKalturaVideo($link_url);
+		$partner_id = $this->getPartnerID($link_url);
+
+		if ($video_id && $partner_id) {
 
 			$config = new KalturaConfiguration($partner_id);
 			$config->setServiceUrl('https://www.kaltura.com');
