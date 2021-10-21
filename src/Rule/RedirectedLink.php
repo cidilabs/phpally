@@ -41,15 +41,11 @@ class RedirectedLink extends BaseRule
 			$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
 			if ((400 > $status) && ($link != $redirect)) {
 				// Redirected link (May be a Canvas link that is not actually redirected)
-				$ref = $redirect;
-				preg_match('/^[^#\s]+/', $ref, $matches);
-				$base = $matches[0];
-				$base = preg_replace('/\/$/', '', $base);
-				$base = preg_replace('/www\./', '', $base);
-				$base = preg_replace('/http[s]{0,1}:\/\//', '', $base);
-				if (strpos($link, $base) === false) {
+				$parsed_link = parse_url($link);
+				$parsed_redirect = parse_url($redirect);
+				if ($parsed_link[host] !== $parsed_redirect[host] ||
+					$parsed_link[path] !== $parsed_redirect[path])
 					$this->setIssue($links[$link], null, json_encode(array('redirect_url' => $redirect)));
-				}
 			}
 			curl_multi_remove_handle($mcurl, $curls[$i]);
 		}
