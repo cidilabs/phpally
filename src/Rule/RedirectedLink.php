@@ -71,10 +71,10 @@ class RedirectedLink extends BaseRule
 		curl_setopt($curl, CURLOPT_TIMEOUT, 2);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-		$result = curl_exec($curl);
+		curl_exec($curl);
+		$redirect = curl_getinfo($curl, CURLINFO_REDIRECT_URL);
+		$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 		curl_close($curl);
-		$redirect = curl_getinfo($curls[$i], CURLINFO_REDIRECT_URL);
-		$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
 
 		// Only permanent redirections are a problem
 		if ($status === 301 || $status === 308) {
@@ -83,10 +83,8 @@ class RedirectedLink extends BaseRule
 	}
 
 	private function followPermanentRedirects($original, $link, $maxRedirects = 20) {
-		if (maxRedirects < 1) {
-			$this->setIssue($links[$link], null, json_encode(array('redirect_url' => $redirect)));
+		if (maxRedirects < 1)
 			return;
-		}
 
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $link);
@@ -96,16 +94,16 @@ class RedirectedLink extends BaseRule
 		curl_setopt($curl, CURLOPT_TIMEOUT, 2);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-		$result = curl_exec($curl);
+		curl_exec($curl);
+		$redirect = curl_getinfo($curl, CURLINFO_REDIRECT_URL);
+		$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 		curl_close($curl);
-		$redirect = curl_getinfo($curls[$i], CURLINFO_REDIRECT_URL);
-		$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
 
 		// Only permanent redirections are a problem
 		if ($status === 301 || $status === 308) {
 			followPermanentRedirects($redirect, $maxRedirects - 1);
 		} else {
-			$this->setIssue($links[$link], null, json_encode(array('redirect_url' => $redirect)));
+			$this->setIssue($original, null, json_encode(array('redirect_url' => $redirect)));
 		}
 	}
 }
