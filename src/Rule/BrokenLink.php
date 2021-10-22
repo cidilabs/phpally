@@ -27,9 +27,7 @@ class BrokenLink extends BaseRule
 			curl_setopt($curls[$i], CURLOPT_NOBODY, true);
 			curl_setopt($curls[$i], CURLOPT_REFERER, true);
 			curl_setopt($curls[$i], CURLOPT_TIMEOUT, 2);
-			curl_setopt($curls[$i], CURLOPT_AUTOREFERER, true);
 			curl_setopt($curls[$i], CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curls[$i], CURLOPT_FOLLOWLOCATION, true);
 			curl_multi_add_handle($mcurl, $curls[$i]);
 		}
 		$running = null;

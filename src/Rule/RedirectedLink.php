@@ -5,7 +5,7 @@ namespace CidiLabs\PhpAlly\Rule;
 use DOMElement;
 
 /**
-*  Links that are redirected should be updated with the new link.
+*  Links that are permanently redirected should be updated with the new link.
 *  Based on UDOIT 2.8.X https://github.com/ucfopen/UDOIT/blob/classic/lib/Udoit.php
 *  contributions by Emily Sachs
 */
