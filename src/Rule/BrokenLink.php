@@ -17,7 +17,21 @@ class BrokenLink extends BaseRule
 		return self::class;
 	}
 
-	private function linkCheck($links) {
+	public function check()
+	{
+		$links = array();
+		foreach ($this->getAllElements('a') as $a) {
+			$href = $a->getAttribute('href');
+			if ($href) {
+				$links[$href] = $a;
+			}
+		}
+		$this->checkLink($links);
+
+		return count($this->issues);
+	}
+
+	private function checkLink($links) {
 		$curls = array();
 		$mcurl = curl_multi_init();
 		foreach (array_keys($links) as $i => $link) {
@@ -27,7 +41,10 @@ class BrokenLink extends BaseRule
 			curl_setopt($curls[$i], CURLOPT_NOBODY, true);
 			curl_setopt($curls[$i], CURLOPT_REFERER, true);
 			curl_setopt($curls[$i], CURLOPT_TIMEOUT, 2);
+			curl_setopt($curls[$i], CURLOPT_TIMEOUT, 2);
+			curl_setopt($curls[$i], CURLOPT_AUTOREFERER, true);
 			curl_setopt($curls[$i], CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curls[$i], CURLOPT_FOLLOWLOCATION, true);
 			curl_multi_add_handle($mcurl, $curls[$i]);
 		}
 		$running = null;
@@ -43,19 +60,5 @@ class BrokenLink extends BaseRule
 			curl_multi_remove_handle($mcurl, $curls[$i]);
 		}
 		curl_multi_close($mcurl);
-	}
-
-	public function check()
-	{
-		$links = array();
-		foreach ($this->getAllElements('a') as $a) {
-			$href = $a->getAttribute('href');
-			if ($href) {
-				$links[$href] = $a;
-			}
-		}
-		$this->linkCheck($links);
-
-		return count($this->issues);
 	}
 }
