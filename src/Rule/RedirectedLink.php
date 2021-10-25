@@ -107,7 +107,7 @@ class RedirectedLink extends BaseRule
 		if ($status === 301 || $status === 308) {
 			$this->followPermanentRedirects($original, $redirect, $maxRedirects - 1);
 		} else {
-			$this->setIssue($original, null, json_encode(array('redirect_url' => $redirect)));
+			$this->setIssue($original, null, json_encode(array('redirect_url' => $link)));
 		}
 	}
 }
