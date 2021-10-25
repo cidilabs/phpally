@@ -54,7 +54,7 @@ class RedirectedLink extends BaseRule
 		foreach (array_keys($links) as $i => $link) {
 			$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
 			// If the status is 400 or greater the link is broken so dont bother checking.
-			if (400 > $status) {
+			if ($status < 400) {
 				$this->checkRedirect($links[$link]);
 			}
 			curl_multi_remove_handle($mcurl, $curls[$i]);
@@ -62,7 +62,8 @@ class RedirectedLink extends BaseRule
 		curl_multi_close($mcurl);
 	}
 
-	private function checkRedirect($link) {
+	private function checkRedirect($original) {
+		$link = $original->getAttribute('href');
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $link);
 		curl_setopt($curl, CURLOPT_HEADER, true);
@@ -78,13 +79,16 @@ class RedirectedLink extends BaseRule
 
 		// Only permanent redirections are a problem
 		if ($status === 301 || $status === 308) {
-			followPermanentRedirects($link, $redirect);
+			$this->followPermanentRedirects($original, $redirect);
 		}
 	}
 
 	private function followPermanentRedirects($original, $link, $maxRedirects = 20) {
-		if (maxRedirects < 1)
+		// Avoid infinite calls. 20 is chrome and firefox redirect limit.
+		if ($maxRedirects < 1) {
+			$this->setIssue($original, null, json_encode(array('redirect_url' => $link)));
 			return;
+		}
 
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $link);
@@ -99,9 +103,9 @@ class RedirectedLink extends BaseRule
 		$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 		curl_close($curl);
 
-		// Only permanent redirections are a problem
+		// Continue until we run out of permanent redirects
 		if ($status === 301 || $status === 308) {
-			followPermanentRedirects($redirect, $maxRedirects - 1);
+			$this->followPermanentRedirects($original, $redirect, $maxRedirects - 1);
 		} else {
 			$this->setIssue($original, null, json_encode(array('redirect_url' => $redirect)));
 		}

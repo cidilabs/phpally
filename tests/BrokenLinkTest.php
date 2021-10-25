@@ -15,7 +15,7 @@ class BrokenLinkTest extends PhpAllyTestCase {
 
     public function testCheckBroken400()
     {
-        $html = '<div><a href="http://www.deadlinkcity.com/error-page.asp?e=400
+        $html = '<div><a href="http://www.deadlinkcity.com/error-page.asp?e=404
         ">I am a link.</a><div>';
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
