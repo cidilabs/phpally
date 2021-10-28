@@ -1,37 +1,26 @@
 <?php
 
-use CidiLabs\PhpAlly\Youtube;
+use CidiLabs\PhpAlly\Video\Youtube;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
 class YoutubeTest extends PhpAllyTestCase {
 
-    private $link_url = 'https://www.youtube.com/watch?v=1xZxxVlu7BM';
-
     public function testCaptionsMissing()
     {
-        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $string = '{
             "items": []
         }';
+
+        $youtube = new Youtube($client, 'en', 'testApiKey');
         $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $youtubeMock = $this->getMockBuilder(Youtube::class)
-             ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->onlyMethods(array('getVideoData'))
-             ->getMock(); 
-
-        $youtubeMock->expects($this->once())
-            ->method('getVideoData')
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($youtubeMock->captionsMissing($link_url), 0);
+        $this->assertEquals($youtube->captionsMissing($response), 0);
     }
 
     public function testCaptionsMissingHasCaptions()
     {
-        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $string = '{
             "items": [
@@ -49,22 +38,14 @@ class YoutubeTest extends PhpAllyTestCase {
                 }
             ]
         }';
+
+        $youtube = new Youtube($client, 'en', 'testApiKey');
         $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $youtubeMock = $this->getMockBuilder(Youtube::class)
-             ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->onlyMethods(array('getVideoData'))
-             ->getMock(); 
-
-        $youtubeMock->expects($this->once())
-            ->method('getVideoData')
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($youtubeMock->captionsMissing($link_url), 2);
+        $this->assertEquals($youtube->captionsMissing($response), 2);
     }
 
     public function testCaptionsLanguageFail(){
-        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $string = '{
             "items": [
@@ -82,22 +63,14 @@ class YoutubeTest extends PhpAllyTestCase {
                 }
             ]
         }';
+
+        $youtube = new Youtube($client, 'en', 'testApiKey');
         $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $youtubeMock = $this->getMockBuilder(Youtube::class)
-             ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->onlyMethods(array('getVideoData'))
-             ->getMock(); 
-
-        $youtubeMock->expects($this->once())
-            ->method('getVideoData')
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($youtubeMock->captionsLanguage($link_url), 0);
+        $this->assertEquals($youtube->captionsLanguage($response), 0);
     }
 
     public function testCaptionsLanguageSuccess(){
-        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $string = '{
             "items": [
@@ -115,22 +88,76 @@ class YoutubeTest extends PhpAllyTestCase {
                 }
             ]
         }';
+
+        $youtube = new Youtube($client, 'en', 'testApiKey');
         $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $youtubeMock = $this->getMockBuilder(Youtube::class)
-             ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->onlyMethods(array('getVideoData'))
-             ->getMock(); 
+        $this->assertEquals($youtube->captionsLanguage($response), 2);
+    }
 
-        $youtubeMock->expects($this->once())
-            ->method('getVideoData')
-            ->will($this->returnValue($response));
+    public function testCaptionsLanguageEmpty(){
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
+        $string = '{
+            "items": []
+        }';
 
-        $this->assertEquals($youtubeMock->captionsLanguage($link_url), 2);
+        $youtube = new Youtube($client, 'en', 'testApiKey');
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
+
+        $this->assertEquals($youtube->captionsLanguage($response), 2);
+    }
+
+    public function testCaptionsNoLanguage(){
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
+        $string = '{
+            "items": [
+                {
+                    "snippet": {
+                        "trackKind": "standard",
+                        "language": "en"
+                    }
+                },
+                {
+                    "snippet": {
+                        "trackKind": "standard",
+                        "language": "es-419"
+                    }
+                }
+            ]
+        }';
+
+        $youtube = new Youtube($client, '', 'testApiKey');
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
+
+        $this->assertEquals($youtube->captionsLanguage($response), 2);
+    }
+
+    public function testCaptionsNoLanguageFailure(){
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
+        $string = '{
+            "items": [
+                {
+                    "snippet": {
+                        "trackKind": "standard",
+                        "language": "de"
+                    }
+                },
+                {
+                    "snippet": {
+                        "trackKind": "standard",
+                        "language": "es-419"
+                    }
+                }
+            ]
+        }';
+
+        $youtube = new Youtube($client, '', 'testApiKey');
+        $response = new Response(200, ['Content-Type' => 'application/json'], $string);
+
+        $this->assertEquals($youtube->captionsLanguage($response), 0);
     }
 
     public function testCaptionsAutoGeneratedFailure(){
-        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $string = '{
             "items": [
@@ -142,22 +169,14 @@ class YoutubeTest extends PhpAllyTestCase {
                 }
             ]
         }';
+
+        $youtube = new Youtube($client, 'en', 'testApiKey');
         $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $youtubeMock = $this->getMockBuilder(Youtube::class)
-             ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->onlyMethods(array('getVideoData'))
-             ->getMock(); 
-
-        $youtubeMock->expects($this->once())
-            ->method('getVideoData')
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($youtubeMock->captionsAutoGenerated($link_url), 0);
+        $this->assertEquals($youtube->captionsAutoGenerated($response), 0);
     }
 
     public function testCaptionsAutoGeneratedSuccess(){
-        $link_url = $this->link_url;
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
         $string = '{
             "items": [
@@ -175,18 +194,11 @@ class YoutubeTest extends PhpAllyTestCase {
                 }
             ]
         }';
+
+        $youtube = new Youtube($client, 'en', 'testApiKey');
         $response = new Response(200, ['Content-Type' => 'application/json'], $string);
 
-        $youtubeMock = $this->getMockBuilder(Youtube::class)
-             ->setConstructorArgs([$client, 'en', 'testApiKey'])
-             ->onlyMethods(array('getVideoData'))
-             ->getMock(); 
-
-        $youtubeMock->expects($this->once())
-            ->method('getVideoData')
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($youtubeMock->captionsAutoGenerated($link_url), 2);
+        $this->assertEquals($youtube->captionsAutoGenerated($response), 2);
     }
 
 }

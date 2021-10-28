@@ -242,14 +242,15 @@ class BaseRule implements PhpAllyRuleInterface {
         return false;
     }
 
-    public function setIssue($element, $previewElement = null, $metadata = null)
+    public function setIssue($element, $ruleId = null, $metadata = null)
     {
-		$ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $this->id());
-
-		if (!$previewElement) {
-			$previewElement = $this->previewElement;
+		if (!isset($ruleId)) {
+			$ruleId = $this->id();
 		}
 
+		$ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $ruleId);
+		$previewElement = $this->previewElement;
+		
         if ($element) {
             $elementClasses = $element->getAttribute('class');
             if ($elementClasses && (strpos($elementClasses, 'phpally-ignore') !== false)) {
