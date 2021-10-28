@@ -42,4 +42,14 @@ class ImageHasAltTest extends PhpAllyTestCase {
 
         $this->assertEquals(1, $rule->check(), 'Image Has Alt should have one issue.');
     }
+
+    public function testCheckDataDecorativeTrue()
+    {
+        $html = '<div><img src="validDecorativeImage.png" data-decorative="true" role="none"></div>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new ImageHasAlt($dom);
+
+        $this->assertEquals(0, $rule->check(), 'Image Has Alt should have no issues.');
+    }
 }
