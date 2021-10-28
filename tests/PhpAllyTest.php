@@ -29,7 +29,7 @@ class PhpAllyTest extends PhpAllyTestCase {
         $this->phpAllyReportTest($report);
     }
 
-    public function testCheckMany() 
+    public function testCheckMany()
     {
         $ally = new PhpAlly();
         $options = [
@@ -41,17 +41,17 @@ class PhpAllyTest extends PhpAllyTestCase {
         $report = $ally->checkMany($this->getManyHtml(), $ally->getRuleIds(), $options);
         $issues = $report->getIssues();
         $issue = reset($issues);
-        
-        $this->assertCount(6, $issues, 'Total report should have 5 issues.');
+
+        $this->assertCount(6, $issues, 'Total report should have 6 issues.');
         $this->phpAllyIssueTest($issue);
         $this->phpAllyReportTest($report);
     }
 
-    
+
     protected function phpAllyReportTest($report)
     {
         $issues = $report->getIssues();
-        
+
         foreach($issues as $issue) {
             $this->phpAllyIssueTest($issue);
         }

@@ -18,10 +18,10 @@ class PhpAllyTestCase extends TestCase {
     {
         return '<div>
             <p style="color: #000;">Paragraph text is here.</p>
-            <a href="https://google.com"> </a>
-            <a href="https://google.com">Click Here</a>
-            <a href="https://google.com"> </a>
-            
+            <a href="https://www.google.com/"> </a>
+            <a href="https://www.google.com/">Click Here</a>
+            <a href="https://www.google.com/"> </a>
+
             <p style="color: #0000FF";"><strong>Paragraph text does have enough contrast.</strong></p>
 
             <p>Paragraph text <span style="color: #000">has</span> enough contrast.</p>
