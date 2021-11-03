@@ -19,14 +19,14 @@ class BrokenLink extends BaseRule
 
 	public function check()
 	{
-		// $links = array();
-		// foreach ($this->getAllElements('a') as $a) {
-		// 	$href = $a->getAttribute('href');
-		// 	if ($href) {
-		// 		$links[$href] = $a;
-		// 	}
-		// }
-		// $this->checkLink($links);
+		$links = array();
+		foreach ($this->getAllElements('a') as $a) {
+			$href = $a->getAttribute('href');
+			if ($href) {
+				$links[$href] = $a;
+			}
+		}
+		$this->checkLink($links);
 
 		return count($this->issues);
 	}

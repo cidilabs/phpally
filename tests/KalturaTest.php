@@ -7,121 +7,89 @@ class KalturaTest extends PhpAllyTestCase {
     public function testCaptionsMissingSuccess()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [
-              {
-                "languageCode": "en"
-              }
-            ],
-            "totalCount": 1,
-            "objectType": "KalturaCaptionAssetListResponse"
-          }');
+        $response = json_decode('[
+          {
+            "languageCode": "en"
+          }
+        ]');
 
-        $this->assertEquals($kaltura->captionsMissing($response), 2);
+        $this->assertEquals($kaltura->captionsMissing($response), Kaltura::KALTURA_SUCCESS);
     }
 
     public function testCaptionsMissingFailure()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [],
-            "totalCount": 0,
-            "objectType": "KalturaCaptionAssetListResponse"
-        }');
+        $response = [];
 
-        $this->assertEquals($kaltura->captionsMissing($response), 0);
+        $this->assertEquals($kaltura->captionsMissing($response), Kaltura::KALTURA_FAIL);
     }
 
     public function testCaptionsLanguageSuccess()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [
-              {
-                "languageCode": "en"
-              }
-            ],
-            "totalCount": 1,
-            "objectType": "KalturaCaptionAssetListResponse"
-          }');
+        $response = json_decode('[
+            {
+            "languageCode": "en"
+            }
+        ]');
 
-        $this->assertEquals($kaltura->captionsLanguage($response), 2);
+        $this->assertEquals($kaltura->captionsLanguage($response), Kaltura::KALTURA_SUCCESS);
     }
 
     public function testCaptionsLanguageEmpty()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [],
-            "totalCount": 0,
-            "objectType": "KalturaCaptionAssetListResponse"
-        }');
+        $response = [];
 
-        $this->assertEquals($kaltura->captionsLanguage($response), 2);
+        $this->assertEquals($kaltura->captionsLanguage($response), Kaltura::KALTURA_SUCCESS);
     }
 
     public function testCaptionsLanguageWrongLanguage()
     {
         $kaltura = new Kaltura('en', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [
-                {
-                  "languageCode": "es"
-                }
-              ],
-            "totalCount": 0,
-            "objectType": "KalturaCaptionAssetListResponse"
-        }');
+        $response = json_decode('[
+            {
+                "languageCode": "es"
+            }
+        ]');
 
-        $this->assertEquals($kaltura->captionsLanguage($response), 0);
+        $this->assertEquals($kaltura->captionsLanguage($response), Kaltura::KALTURA_FAIL);
     }
 
     public function testCaptionsLanguageWrongLanguageInverse()
     {
         $kaltura = new Kaltura('es', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [
-                {
-                  "languageCode": "en"
-                }
-              ],
-            "totalCount": 0,
-            "objectType": "KalturaCaptionAssetListResponse"
-        }');
+        $response = json_decode('[
+            {
+                "languageCode": "en"
+            }
+        ]');
 
-        $this->assertEquals($kaltura->captionsLanguage($response), 0);
+        $this->assertEquals($kaltura->captionsLanguage($response), Kaltura::KALTURA_FAIL);
     }
 
     public function testCaptionsNoLanguage()
     {
         $kaltura = new Kaltura('', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [
-                {
-                  "languageCode": "en"
-                }
-              ],
-            "totalCount": 0,
-            "objectType": "KalturaCaptionAssetListResponse"
-        }');
+        $response = json_decode('[
+            {
+                "languageCode": "en"
+            }
+        ]');
 
-        $this->assertEquals($kaltura->captionsLanguage($response), 2);
+        $this->assertEquals($kaltura->captionsLanguage($response), Kaltura::KALTURA_SUCCESS);
     }
 
     public function testCaptionsNoLanguageFailure()
     {
         $kaltura = new Kaltura('', 'testApiKey', 'testEmail');
-        $response = json_decode('{
-            "objects": [
-                {
-                  "languageCode": "es"
-                }
-              ],
-            "totalCount": 0,
-            "objectType": "KalturaCaptionAssetListResponse"
-        }');
+        $response = json_decode('[
+            {
+                "languageCode": "es"
+            }
+        ]');
 
-        $this->assertEquals($kaltura->captionsLanguage($response), 0);
+        $this->assertEquals($kaltura->captionsLanguage($response), Kaltura::KALTURA_FAIL);
     }
 
 }

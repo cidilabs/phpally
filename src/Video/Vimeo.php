@@ -6,9 +6,9 @@ use GuzzleHttp\Client;
 
 class Vimeo
 {
-	const VIMEO_FAIL = 0;
-	const VIMEO_FAILED_CONNECTION = 1;
-	const VIMEO_SUCCESS = 2;
+	const VIMEO_FAILED_CONNECTION = -1;
+	const VIMEO_FAIL = 0;	
+	const VIMEO_SUCCESS = 1;
 
 	private $regex = '@vimeo\.com/[^0-9]*([0-9]{7,9})@i';
 	private $search_url = 'https://api.vimeo.com/videos/';
@@ -24,55 +24,31 @@ class Vimeo
 
 	/**
 	 *	Checks to see if a video is missing caption information in Vimeo
-	 *	@param string $link_url The URL to the video or video resource
-	 *   @return int 0 if captions are missing, 1 if video is private, 2 if captions exist or not a video
+	 *	@param array $captions
+	 *   @return int 
 	 */
-	function captionsMissing($captionData)
+	function captionsMissing($captions)
 	{
-		$body = json_decode($captionData->getBody());
-
-		// Response header code is used to determine if video exists, doesn't exist, or is unaccessible
-		// 400 means a video is private, 404 means a video doesn't exist, and 200 means the video exists
-		if ($captionData->getStatusCode() >= 400) {
-			return self::VIMEO_FAILED_CONNECTION;
-		} else if (($captionData->getStatusCode() === 200) && $body->total === 0) {
-			return self::VIMEO_FAIL;
-		}
-		
-
-		return self::VIMEO_SUCCESS;
+		return !empty($captions) ? self::VIMEO_SUCCESS : self::VIMEO_FAIL;
 	}
 
 	/**
-	 *	Checks to see if a video is missing caption information in YouTube
-	 *	@param string $link_url The URL to the video or video resource
-	 *	@return int 0 if captions are manual and wrong language, 1 if video is private, 2 if there are no captions or if manually generated and correct language
+	 *	Checks to see if a video is missing caption information in Vimeo
+	 *	@param array $captions
+	 *	@return int 
 	 */
-	function captionsLanguage($captionData)
+	function captionsLanguage($captions)
 	{
 		// If for whatever reason course_locale is blank, set it to English
-		$course_locale = $this->language;
-		if ($course_locale === '' || is_null($course_locale)) {
-			$course_locale = 'en';
-		}
+		$course_locale = ($this->language) ? substr(strtolower($this->language), 0, 2) : 'en';
 
-		$body = json_decode($captionData->getBody());
-
-		// Response header code is used to determine if video exists, doesn't exist, or is unaccessible
-		// 400 means a video is private, 404 means a video doesn't exist, and 200 means the video exists
-		if ($captionData->getStatusCode() === 400 || $captionData->getStatusCode() === 404) {
-			return self::VIMEO_FAILED_CONNECTION;
-		} else if (($captionData->getStatusCode() === 200) && $body->total === 0) {
-			return self::VIMEO_SUCCESS;
-		}
-
-		foreach ($body->data as $track) {
-			if (substr($track->language, 0, 2) === $course_locale) {
+		foreach ($captions as $track) {
+			if (substr(strtolower($track->language), 0, 2) === $course_locale) {
 				return self::VIMEO_SUCCESS;
 			}
 		}
 
-		return self::VIMEO_FAIL;
+		return empty($captions) ? self::VIMEO_SUCCESS : self::VIMEO_FAIL;
 	}
 
 	/**
@@ -100,14 +76,22 @@ class Vimeo
 		$key_trimmed = trim($this->api_key);
 		$vimeo_id = $this->isVimeoVideo($link_url);
 	
-		if ($vimeo_id && !empty($key_trimmed)) {
-			$url = $this->search_url . $vimeo_id . '/texttracks';
-
-			return $this->client->request('GET', $url, ['headers' => [
-				'Authorization' => "Bearer $this->api_key"
-			]]);
+		if (!$vimeo_id || empty($key_trimmed)) {
+			return self::VIMEO_FAILED_CONNECTION;
 		}
 
-		return null;
+		$url = $this->search_url . $vimeo_id . '/texttracks';
+
+		$response = $this->client->request('GET', $url, ['headers' => [
+			'Authorization' => "Bearer $this->api_key"
+		]]);
+
+		if ($response->getStatusCode() >= 400) {
+			return self::VIMEO_FAILED_CONNECTION;
+		}
+
+		$result = json_decode($response->getBody());
+		
+		return isset($result->data) ? $result->data : self::VIMEO_FAILED_CONNECTION;
 	}
 }

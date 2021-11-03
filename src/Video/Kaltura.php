@@ -12,11 +12,10 @@ use Kaltura\Client\Plugin\Caption\CaptionPlugin;
 
 class Kaltura {
 
-	const KALTURA_FAIL = 0;
-	const KALTURA_FAILED_CONNECTION = 1;
-	const KALTURA_SUCCESS = 2;
+	const KALTURA_FAILED_CONNECTION = -1;
+	const KALTURA_FAIL = 0;	
+	const KALTURA_SUCCESS = 1;
 
-	private $regex = '';
 	private $client;
 	private $language;
 
@@ -29,39 +28,31 @@ class Kaltura {
 
 	/**
 	 *	Checks to see if a video is missing caption information in Kaltura
-	 *	@param object $captionData The caption data for the video
-	 *   @return int 0 if captions are missing, 1 if video is private, 2 if captions exist or not a video
+	 *	@param array $captions
+	 *  @return int 
 	 */
-    function captionsMissing($captionData)
+    function captionsMissing($captions)
 	{
-		if($captionData->totalCount === 0) {
-			return self::KALTURA_FAIL;
-		}
-		
-		return self::KALTURA_SUCCESS;
+		return !empty($captions) ? self::KALTURA_SUCCESS : self::KALTURA_FAIL;
 	}
 
     /**
-	 *	Checks to see if a video is missing caption information in YouTube
-	 *	@param object $captionData The caption data for the video
-	 *	@return int 0 if captions are manual and wrong language, 1 if video is private, 2 if there are no captions or if manually generated and correct language
+	 *	Checks to see if a video is missing caption information in Kaltura
+	 *	@param array $captions
+	 *	@return int 
 	 */
-	function captionsLanguage($captionData)
+	function captionsLanguage($captions)
 	{
 		// If for whatever reason course_locale is blank, set it to English
-		$course_locale = $this->language;
-		if ($course_locale === '' || is_null($course_locale)) {
-			$course_locale = 'en';
-		}
+		$course_locale = ($this->language) ? substr(strtolower($this->language), 0, 2) : 'en';
 
-		$captionsArray = $captionData->objects;
-		foreach($captionsArray as $caption) 
-		{
-			if(substr($caption->languageCode, 0, 2) === substr($course_locale, 0, 2)) {
+		foreach($captions as $caption) {
+			if(substr(strtolower($caption->languageCode), 0, 2) === substr($course_locale, 0, 2)) {
 				return self::KALTURA_SUCCESS;
 			} 
 		}
-		return empty($captionsArray) ? self::KALTURA_SUCCESS : self::KALTURA_FAIL;
+
+		return empty($captions) ? self::KALTURA_SUCCESS : self::KALTURA_FAIL;
 	}
 
 	/**
@@ -104,35 +95,36 @@ class Kaltura {
 		$key_trimmed = trim($this->api_key);
 		$username_trimmed = trim($this->username);
 		if (empty($key_trimmed) || empty($username_trimmed)) {
-			return false;
+			return self::KALTURA_FAILED_CONNECTION;
 		}
 
 		$video_id = $this->isKalturaVideo($link_url);
 		$partner_id = $this->getPartnerID($link_url);
 
-		if ($video_id && $partner_id) {
-
-			$config = new KalturaConfiguration($partner_id);
-			$config->setServiceUrl('https://www.kaltura.com');
-			$this->client = new KalturaClient($config);
-			$ks = $this->client->generateSession(
-				$this->api_key,
-				$this->username,
-				SessionType::ADMIN,
-				$partner_id);
-				$this->client->setKS($ks);
-
-			$captionPlugin = CaptionPlugin::get($this->client);
-			$filter = new AssetFilter();
-			$filter->entryIdIn = $video_id;
-			$pager = new FilterPager();
-
-			$result = $captionPlugin->captionAsset->listAction($filter, $pager);
-
-			return $result;
+		if (!$video_id || !$partner_id) {
+			return self::KALTURA_FAILED_CONNECTION;
 		}
 
-		return null;
+		$config = new KalturaConfiguration($partner_id);
+		$config->setServiceUrl('https://www.kaltura.com');
+		
+		$this->client = new KalturaClient($config);
+		
+		$ks = $this->client->generateSession(
+			$this->api_key,
+			$this->username,
+			SessionType::ADMIN,
+			$partner_id);
+		$this->client->setKS($ks);
+
+		$captionPlugin = CaptionPlugin::get($this->client);
+		$filter = new AssetFilter();
+		$filter->entryIdIn = $video_id;
+		$pager = new FilterPager();
+
+		$result = $captionPlugin->captionAsset->listAction($filter, $pager);
+
+		return !isset($result->objects) ? $result->objects : self::KALTURA_FAILED_CONNECTION;
 	}
 
 }
