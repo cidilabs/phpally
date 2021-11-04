@@ -138,6 +138,6 @@ class Youtube
 			return self::YOUTUBE_FAILED_REQUEST;
 		}
 
-		return isset($result->items) ? $response->items : self::YOUTUBE_FAILED_REQUEST;
+		return isset($result->items) ? $result->items : self::YOUTUBE_FAILED_REQUEST;
 	}
 }
