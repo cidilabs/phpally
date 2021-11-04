@@ -38,7 +38,6 @@ class PhpAlly {
                 $report->setIssues($rule->getIssues());
                 $report->setErrors($rule->getErrors());
             } catch (\Exception $e) {
-                print($e->getLine());
                 $report->setError($e->getMessage());
             }
         }
