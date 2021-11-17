@@ -20,6 +20,7 @@ class BaseFontIsNotUsed extends BaseRule
     {
         foreach ($this->getAllElements('basefont') as $b) {
 			$this->setIssue($b);
+            $this->totalTests++;
 		}
         
         return count($this->issues);

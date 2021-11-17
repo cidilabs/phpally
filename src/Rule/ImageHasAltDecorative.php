@@ -32,7 +32,8 @@ class ImageHasAltDecorative extends BaseRule
 				&& trim($img->getAttribute('alt') != '')) {
 				$this->setIssue($img);
 			}
-		}
+            $this->totalTests++;
+        }
         
         return count($this->issues);
     }

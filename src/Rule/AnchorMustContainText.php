@@ -25,6 +25,7 @@ class AnchorMustContainText extends BaseRule
             if (!$this->elementContainsReadableText($a) && ($a->hasAttribute('href'))) {
                 $this->setIssue($a);
             }
+            $this->totalTests++;
         }
 
         return count($this->issues);

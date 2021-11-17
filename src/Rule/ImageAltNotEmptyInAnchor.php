@@ -28,7 +28,8 @@ class ImageAltNotEmptyInAnchor extends BaseRule
 							$this->setIssue($child);
 				}
 			}
-		}
+            $this->totalTests++;
+        }
         
         return count($this->issues);
     }

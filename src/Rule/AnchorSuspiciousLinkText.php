@@ -25,6 +25,7 @@ class AnchorSuspiciousLinkText extends BaseRule
         foreach ($this->getAllElements('a') as $a) {
             if (in_array(strtolower(trim($a->nodeValue)), $this->translation()) || $a->nodeValue == $a->getAttribute('href'))
 				$this->setIssue($a);
+            $this->totalTests++;
         }
 
         return count($this->issues);

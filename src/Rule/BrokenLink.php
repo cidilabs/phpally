@@ -25,6 +25,7 @@ class BrokenLink extends BaseRule
 			if ($href) {
 				$links[$href] = $a;
 			}
+            $this->totalTests++;
 		}
 		$this->checkLink($links);
 

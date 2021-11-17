@@ -33,8 +33,9 @@ class PhpAlly {
                 }           
 
                 $rule = new $className($document, $options);
-                $rule->check();                
+                $issueCount = $rule->check();                
 
+                $report->setIssueCounts($ruleId, $issueCount, $rule->getTotalTests());
                 $report->setIssues($rule->getIssues());
                 $report->setErrors($rule->getErrors());
             } catch (\Exception $e) {

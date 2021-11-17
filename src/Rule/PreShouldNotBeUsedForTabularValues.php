@@ -23,7 +23,8 @@ class PreShouldNotBeUsedForTabularValues extends BaseRule
 			$rows = preg_split('/[\n\r]+/', $pre->nodeValue);
 			if (count($rows) > 1)
 				$this->setIssue($pre);
-		}
+            $this->totalTests++;
+        }
         
         return count($this->issues);
     }

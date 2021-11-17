@@ -37,8 +37,8 @@ class HeadingsInOrder extends BaseRule
             }
 
             $previousLevel = $currentLevel;
+            $this->totalTests++;
         }
-
         return count($this->issues);
     }
 }

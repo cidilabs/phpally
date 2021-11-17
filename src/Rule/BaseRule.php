@@ -25,6 +25,7 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $altTextLengthLimit;
     protected $minDocLengthForHeaders;
     protected $maxWordCount;
+    protected $totalTests = 0;
 
     public function __construct(DOMDocument $dom, $options = [])
     {
@@ -217,8 +218,6 @@ class BaseRule implements PhpAllyRuleInterface {
 	}
 
 
-
-
     public function elementContainsReadableText($element)
     {
         if (is_a($element, 'DOMText')) {
@@ -264,6 +263,15 @@ class BaseRule implements PhpAllyRuleInterface {
     public function getIssues()
     {
         return $this->issues;
+    }
+
+    public function getTotalTests()
+    {
+        return $this->totalTests;
+    }
+    public function IncrementTotalTests()
+    {
+        return $this->totalTests++;
     }
 
     public function setError($errorMsg) 
@@ -323,4 +331,6 @@ class BaseRule implements PhpAllyRuleInterface {
 		}
 		return ($property_value == $value);
 	}
+
+
 }

@@ -51,7 +51,9 @@ class TableDataShouldHaveTableHeader extends BaseRule
 					}
 				}
 			}
-		}
+            $this->totalTests++;
+
+        }
 
 		return count($this->issues);
 	}

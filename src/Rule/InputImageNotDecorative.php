@@ -23,7 +23,9 @@ class InputImageNotDecorative extends BaseRule
         foreach ($this->getAllElements('input') as $input) {
 			if ($input->getAttribute('type') == 'image')
 				$this->setIssue($input);
-		}
+            $this->totalTests++;
+
+        }
         
         return count($this->issues);
     }

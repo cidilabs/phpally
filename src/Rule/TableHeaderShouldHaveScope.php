@@ -41,6 +41,8 @@ class TableHeaderShouldHaveScope extends BaseRule
                 $this->setIssue($table);
                 $this->setPreviewElement($table);
             }
+            $this->totalTests++;
+
         }
 
         return count($this->issues);

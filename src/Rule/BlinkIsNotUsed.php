@@ -21,6 +21,7 @@ class BlinkIsNotUsed extends BaseRule
     {
         foreach ($this->getAllElements('blink') as $b) {
 			$this->setIssue($b);
+            $this->totalTests++;
 		}
         
         return count($this->issues);

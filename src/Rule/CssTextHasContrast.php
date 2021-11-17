@@ -287,6 +287,7 @@ class CssTextHasContrast extends BaseRule
 					}
 				}
 			}
+            $this->totalTests++;
 		}
         
         return count($this->issues);

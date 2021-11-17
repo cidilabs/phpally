@@ -34,7 +34,8 @@ class AnchorLinksToSoundFilesNeedTranscripts extends BaseRule
 					$this->setIssue($a);
 				}
 			}
-		}
+            $this->totalTests++;
+        }
 
         return count($this->issues);
     }
