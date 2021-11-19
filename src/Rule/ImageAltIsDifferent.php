@@ -25,7 +25,9 @@ class ImageAltIsDifferent extends BaseRule
 				$this->setIssue($img);
 			else if ( preg_match("/\.jpg|\.JPG|\.png|\.PNG|\.gif|\.GIF|\.jpeg|\.JPEG$/", trim($img->getAttribute('alt'))) )
 				$this->setIssue($img);
-		}
+            $this->totalTests++;
+
+        }
         
         return count($this->issues);
     }

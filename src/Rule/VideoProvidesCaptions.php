@@ -22,7 +22,9 @@ class VideoProvidesCaptions extends BaseRule
 			if (!$this->elementHasChild($video, 'track')) {
 				$this->setIssue($video);
 			}
-		}
+            $this->totalTests++;
+
+        }
         
         return count($this->issues);
     }

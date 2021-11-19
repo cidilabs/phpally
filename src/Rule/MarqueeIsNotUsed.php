@@ -21,7 +21,9 @@ class MarqueeIsNotUsed extends BaseRule
     {
         foreach ($this->getAllElements('marquee') as $m) {
 			$this->setIssue($m);
-		}
+            $this->totalTests++;
+
+        }
         
         return count($this->issues);
     }

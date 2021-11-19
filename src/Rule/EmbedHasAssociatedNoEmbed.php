@@ -24,7 +24,7 @@ class EmbedHasAssociatedNoEmbed extends BaseRule
 			   && !$this->propertyIsEqual($embed->nextSibling, 'tagName', 'noembed')) {
 					$this->setIssue($embed);
 			}
-
+            $this->totalTests++;
 		}
         
         return count($this->issues);

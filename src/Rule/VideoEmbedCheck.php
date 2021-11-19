@@ -24,19 +24,25 @@ class VideoEmbedCheck extends BaseRule
 			if (preg_match($search, $iframe->getAttribute('src'))) {
 				$this->setIssue($iframe);
 			}
-		}
+            $this->totalTests++;
+
+        }
 
 		foreach ($this->getAllElements('a') as $link) {
 			if (preg_match($search, $link->getAttribute('href'))) {
 				$this->setIssue($link);
 			}
-		}
+            $this->totalTests++;
+
+        }
 
 		foreach ($this->getAllElements('object') as $object) {
 			if (preg_match($search, $object->getAttribute('data'))) {
 				$this->setIssue($object);
 			}
-		}
+            $this->totalTests++;
+
+        }
         
         return count($this->issues);
     }

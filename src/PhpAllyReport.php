@@ -6,6 +6,7 @@ class PhpAllyReport implements \JsonSerializable {
     protected $issues = [];
     protected $errors = [];
     protected $html = '';
+    protected $issueCounts = [];
 
     public function __construct()
     {
@@ -16,6 +17,7 @@ class PhpAllyReport implements \JsonSerializable {
         return [
             'issues' => $this->getIssues(),
             'errors' => $this->getErrors(),
+            'issueCounts' => $this->getIssueCounts(),
         ];
     }
 
@@ -57,6 +59,16 @@ class PhpAllyReport implements \JsonSerializable {
     public function setErrors($errors)
     {
         $this->errors = array_merge($this->errors, $errors);
+    }
+
+    public function getIssueCounts()
+    {
+        return $this->issueCounts;
+    }
+
+    public function setIssueCounts($ruleId, $issueCount, $total) {
+        $ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $ruleId);
+        $this->issueCounts[$ruleId] = array('issueCount' => $issueCount, "totalCount" => $total);
     }
 
 }

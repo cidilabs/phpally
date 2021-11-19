@@ -24,7 +24,8 @@ class ImageAltIsTooLong extends BaseRule
 			if ($img->hasAttribute('alt') && (strlen($img->getAttribute('alt')) > $this->altTextLengthLimit)) {
                 $this->setIssue($img);
             }
-		}
+            $this->totalTests++;
+        }
         
         return count($this->issues);
     }

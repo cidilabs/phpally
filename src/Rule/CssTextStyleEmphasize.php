@@ -89,6 +89,7 @@ class CssTextStyleEmphasize extends BaseRule
 			}
 
 			$this->setIssue($element);
+            $this->totalTests++;
 		}
 
 		return count($this->issues);

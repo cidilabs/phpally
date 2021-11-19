@@ -19,6 +19,7 @@ class EmbedTagDetected extends BaseRule
     {
         foreach ($this->getAllElements('embed') as $object) {
             $this->setIssue($object);
+            $this->totalTests++;
         }
 
         return count($this->issues);

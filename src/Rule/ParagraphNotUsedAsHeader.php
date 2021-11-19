@@ -44,7 +44,9 @@ class ParagraphNotUsedAsHeader extends BaseRule
 					}
 				}
 			}
-		}
+            $this->totalTests++;
+
+        }
 
 		return count($this->issues);
 	}

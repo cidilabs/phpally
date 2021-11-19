@@ -22,6 +22,7 @@ class HeadersHaveText extends BaseRule
 			if (!$this->elementContainsReadableText($header)) {
 				$this->setIssue($header);
 			}
+            $this->totalTests++;
 		}
         
         return count($this->issues);

@@ -32,7 +32,9 @@ class NoHeadings extends BaseRule
 				$this->setIssue($this->dom->documentElement);
 			}
 		}
-        
+        $this->totalTests++;
+
+
         return count($this->issues);
     }
 

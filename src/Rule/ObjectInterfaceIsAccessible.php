@@ -21,7 +21,10 @@ class ObjectInterfaceIsAccessible extends BaseRule
     {
         foreach ($this->getAllElements('object') as $object) {
 			$this->setIssue($object);
-		}
+
+            $this->totalTests++;
+
+        }
         
         return count($this->issues);
     }

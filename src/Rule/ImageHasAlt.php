@@ -26,6 +26,7 @@ class ImageHasAlt extends BaseRule
 					$this->setIssue($img);
 				}
 			}
+			$this->totalTests++;
         }
 
         return count($this->issues);

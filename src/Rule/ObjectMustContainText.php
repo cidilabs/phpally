@@ -32,6 +32,7 @@ class ObjectMustContainText extends BaseRule
                 && (!$object->hasAttribute('alt') || trim($object->getAttribute('alt')) == '')){
 					$this->setIssue($object);
 			}
+            $this->totalTests++;
 
             return count($this->issues);
 		}   

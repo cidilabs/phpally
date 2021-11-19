@@ -28,6 +28,7 @@ class ContentTooLong extends BaseRule
 			if($text != null){
 				$pageText = $pageText . $text;
 			}
+            $this->totalTests++;
 		}
         $wordCount = str_word_count($pageText);
 
