@@ -13,6 +13,7 @@
   "CidiLabs\\PhpAlly\\Rule\\FontIsNotUsed",
   "CidiLabs\\PhpAlly\\Rule\\HeadersHaveText",
   "CidiLabs\\PhpAlly\\Rule\\HeadingsInOrder",
+  "CidiLabs\\PhpAlly\\Rule\\IframeNotHandled",
   "CidiLabs\\PhpAlly\\Rule\\ImageAltIsDifferent",
   "CidiLabs\\PhpAlly\\Rule\\ImageAltIsTooLong",
   "CidiLabs\\PhpAlly\\Rule\\ImageAltNotEmptyInAnchor",
