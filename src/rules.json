@@ -30,6 +30,7 @@
   "CidiLabs\\PhpAlly\\Rule\\RedirectedLink",
   "CidiLabs\\PhpAlly\\Rule\\TableDataShouldHaveTableHeader",
   "CidiLabs\\PhpAlly\\Rule\\TableHeaderShouldHaveScope",
+  "CidiLabs\\PhpAlly\\Rule\\TableNotEmpty",
   "CidiLabs\\PhpAlly\\Rule\\VideoEmbedCheck",
   "CidiLabs\\PhpAlly\\Rule\\VideoProvidesCaptions",
   "CidiLabs\\PhpAlly\\Rule\\VideoScan"
