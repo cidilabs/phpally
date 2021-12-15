@@ -49,6 +49,8 @@ class PhpAlly {
     public function getDomDocument($html)
     {
         $dom = new DOMDocument('1.0', 'utf-8');
+        libxml_use_internal_errors(true);
+        
         if (strpos($html, '<?xml encoding="utf-8"') !== false) {
             $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } else {
