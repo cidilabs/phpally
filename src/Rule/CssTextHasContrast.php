@@ -208,6 +208,10 @@ class CssTextHasContrast extends BaseRule
 						$background = $default_background;
 					}
 
+					if (substr($background, 0, 3) == 'var' || substr($style['color'], 0, 3) == 'var') {
+						continue;
+					}
+					
 					if(strtolower(substr($style['color'], 0, 3)) == 'rgb') {
 						// Explode the match (0,0,0 for example) into an array
 						$style['color'] = substr($style['color'], 4, -1);
