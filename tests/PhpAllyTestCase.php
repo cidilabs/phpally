@@ -119,6 +119,42 @@ class PhpAllyTestCase extends TestCase {
             </div>';
     }
 
+    public function getDesignPlusHtml()
+    {
+        return '<div style="background-color:#2D3B45;" id="dp-wrapper" class="dp-wrapper dp-heading-color-border-h2-dp-primary dp-heading-border-h2-heavy dp-heading-icon-text-h2-dp-primary dp-heading-icon-text-h3-dp-primary dp-heading-icon-text-h4-dp-primary dp-heading-icon-text-h5-dp-primary dp-heading-icon-text-h6-dp-primary dp-heading-color-border-h3-dp-primary dp-heading-color-border-h4-dp-primary dp-heading-color-border-h5-dp-primary dp-heading-color-border-h6-dp-primary dp-heading-base-h2-bottom-border dp-heading-base-h3-bottom-border dp-heading-base-h4-bottom-border dp-heading-base-h5-bottom-border dp-heading-base-h6-bottom-border dp-heading-border-h3-mid dp-heading-border-h4-light dp-heading-display-h5-table dp-heading-display-h6-table">
+        <h2>DesignPLUS - Next Generation Alpha Testing</h2>
+        <h3 class="dp-has-icon"><i class="dp-icon fas fa-folder-open" aria-hidden="true"> </i> Background</h3>
+        <p>Over the last five years since the release of DesignPLUS, we have received loads of general customer comments, feature requests, and thoughts on tool limitations. Without a doubt, we have learned a great deal from our users. We have also learned over time about more sustainable frameworks for DesignPLUS, more efficient building and maintenance strategies, and more ways to improve the overall user experience. Three years of planning and development have led us, finally, to the Alpha Testing stage.&nbsp;</p>
+        <h3 class="dp-has-icon"><i class="dp-icon fas fa-check-circle" aria-hidden="true"> </i> Goals for Alpha Testing&nbsp;</h3>
+        <p>The purpose of this initial round of testing is to:&nbsp;</p>
+        <ul>
+            <li aria-level="1"><span>Determine how intuitive the new user experience is to you</span></li>
+            <li aria-level="1"><span>Understand any challenges that you encounter in using DP-NG</span></li>
+            <li aria-level="1"><span>Identify ways that Cidi Labs can ease the transition from Legacy DesignPLUS to DP-NG</span></li>
+            <li aria-level="1"><span>Note any inconsistencies across the tools and/or missing features&nbsp;</span><br />
+                <ul>
+                    <li aria-level="1">The <a title="Alpha Testing Release Notes" href="https://cidilabs.instructure.com/courses/7288/pages/alpha-testing-release-notes" data-api-endpoint="https://cidilabs.instructure.com/api/v1/courses/7288/pages/alpha-testing-release-notes" data-api-returntype="Page"><span>Alpha Testing Release Notes</span></a> page can help you see feature parity, new features, and known issues&nbsp;</li>
+                </ul>
+            </li>
+        </ul>
+        <h3 class="dp-has-icon"><i class="dp-icon fas fa-clipboard-list" aria-hidden="true"> </i> Tasks</h3>
+        <p>Use the pages in your own module to complete each corresponding task. If you create additional pages or other content, please follow the naming convention "[Your Last Name] - [Content Title]." Be sure to add any new content you create to your own module.&nbsp;</p>
+        <p><a class="btn btn-dp-primary" href="https://docs.google.com/document/d/1_Kk4a7EsDDrQLdHIexkizVZVjuzAAIz71WqdH6dN8yc/edit#" target="_blank" rel="noopener">Open this document to view instructions for tasks.</a></p>
+        <div class="dp-content-block dp-rce-highlight">
+            <h3 class="dp-has-icon"><i class="dp-icon fas fa-file-signature" aria-hidden="true"> </i> Terms</h3>
+                <li aria-level="2">
+                    <p><span style="font-size: 12pt;">Participants will treat the software as confidential and will not demonstrate, copy, sell or market the software to any third party; or p</span><span style="font-size: 12pt;">ublish or otherwise disclose information relating to performance or quality of the Software to any third party.</span></p>
+                </li>
+                <li aria-level="2">
+                    <p><span style="font-size: 12pt;">Participants will not modify, reuse, disassemble, decompile, reverse engineer or otherwise translate the software or any portion thereof. </span></p>
+                </li>
+                <li>Participants understand that the s<span>oftware is prerelease code and is not at the level of performance or compatibility of a final, generally available product offering. Software may be substantially modified prior to general availability.&nbsp;&nbsp;</span></li>
+            </ul>
+            <h3 class="dp-has-icon"><i class="dp-icon fas fa-question-circle" aria-hidden="true"> </i> Need Help?</h3>
+        </div>
+    </div>';
+    }
+
     protected function getTableHtml()
     {
         return '';

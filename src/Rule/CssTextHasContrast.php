@@ -184,6 +184,13 @@ class CssTextHasContrast extends BaseRule
 		foreach ($entries as $element) {
             $style = $this->getStyle($element);
 
+			$class = $element->getAttribute('class');
+
+			// Checking for Design Plus classnames
+			if (!(strpos($class, 'dp-') === false) || !(strpos($class, 'kl-') === false)) {
+				continue;
+			}
+
 			if(isset($style['background'])) {
 				$background = $this->getBackgroundInfo($style['background']);
 

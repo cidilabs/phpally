@@ -137,4 +137,19 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
 
         $this->assertEquals(0, $rule->check(), 'Css Text Has Contrast should have no issues.');
     }
+
+    public function testCheckDesignPlusClassnames()
+    {
+        $html = $this->getDesignPlusHtml();
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+
+        $rule = new CssTextHasContrast($dom, $options);
+
+        $this->assertEquals(0, $rule->check());
+    }
 }
