@@ -10,6 +10,7 @@
   "CidiLabs\\PhpAlly\\Rule\\CssTextHasContrast",
   "CidiLabs\\PhpAlly\\Rule\\CssTextStyleEmphasize",
   "CidiLabs\\PhpAlly\\Rule\\DocumentReadingDirection",
+  "CidiLabs\\PhpAlly\\Rule\\EmbedTagDetected",
   "CidiLabs\\PhpAlly\\Rule\\FontIsNotUsed",
   "CidiLabs\\PhpAlly\\Rule\\HeadersHaveText",
   "CidiLabs\\PhpAlly\\Rule\\HeadingsInOrder",
