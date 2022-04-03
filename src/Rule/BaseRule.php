@@ -128,6 +128,8 @@ class BaseRule implements PhpAllyRuleInterface {
 		if(isset($style['background-color']) || isset($style['color'])){
 			$style = $this->walkUpTreeForInheritance($element, $style);
 		}
+
+		$style = $this->walkDownTreeForOverride($element, $style);
 		if($element->hasAttribute('style')) {
 			$inline_styles = explode(';', $element->getAttribute('style'));
 			foreach($inline_styles as $inline_style) {
@@ -214,6 +216,37 @@ class BaseRule implements PhpAllyRuleInterface {
 			}
 			$element = $element->parentNode;
 		}
+		return $style;
+	}
+
+	public function walkDownTreeForOverride($element, $style)
+	{
+		$children = $element->childNodes;
+		foreach ($children as $child) {
+			// Check if its a DOM element
+			if ($child->nodeType !== 1 ) { //Element nodes are of nodeType 1. Text 3. Comments 8. etc rtm
+				continue;
+			}
+
+			$child_style = $this->getNodeStyle($child);
+
+			if(is_array($child_style)) {
+				foreach($child_style as $k => $v) {
+					if(!isset($style[$k]) /*|| in_array($style[$k]['value'], $this->inheritance_strings)*/) {
+						$style[$k] = $v;
+					}
+
+					if($k == 'background-color' || $k == 'background'){
+						$style['background-color'] = $v;
+					}
+
+					if($k == 'color'){
+						$style['color'] = $v;
+					}
+				}
+			}
+		}
+
 		return $style;
 	}
 

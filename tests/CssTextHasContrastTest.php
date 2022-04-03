@@ -152,4 +152,19 @@ class CssTextHasContrastTest extends PhpAllyTestCase {
 
         $this->assertEquals(0, $rule->check());
     }
+
+    public function testConflictingAttributes()
+    {
+        $html = '<h3 style="background: #58595B; text-align: left; padding-left: 5px;"><img style="padding: 5px;" role="presentation" src="https://utk.test.instructure.com/courses/147193/files/11821925/download" alt="" width="40" height="40" align="absmiddle" data-decorative="true" data-api-endpoint="https://utk.test.instructure.com/api/v1/courses/147193/files/11821925" data-api-returntype="File" /><span style="color: #ffffff;"><strong>Basic Elements of the Course</strong></span></h3>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'backgroundColor' => '#ffffff',
+            'textColor' => '#2D3B45'
+        ];
+
+        $rule = new CssTextHasContrast($dom, $options);
+
+        $this->assertEquals(0, $rule->check());
+    }
 }
