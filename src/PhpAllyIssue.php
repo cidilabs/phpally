@@ -92,23 +92,9 @@ class PhpAllyIssue implements \JsonSerializable {
     {
         if($body = $element->getElementsByTagName('body')->item(0)){
             $mock = new DOMDocument;
-            $children = $body->childNodes;
-            $divNode = null;
-
-            if (count($children) > 1) {
-                // Add a wrapper div around the children
-                $divNode = $mock->createElement('div');
-                foreach ($children as $child){
-                    $divNode->appendChild($mock->importNode($child, true));
-                }
-
-                $mock->appendChild($divNode);
-            } else {
-                foreach ($children as $child){
-                    $mock->appendChild($mock->importNode($child, true));
-                }
+            foreach ($body->childNodes as $child){
+                $mock->appendChild($mock->importNode($child, true));
             }
-
             $mock->saveHTML();
             $element = $mock->documentElement;
         }
