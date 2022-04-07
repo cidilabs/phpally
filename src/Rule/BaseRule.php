@@ -231,10 +231,8 @@ class BaseRule implements PhpAllyRuleInterface {
 			$child_style = $this->getNodeStyle($child);
 
 			if(is_array($child_style)) {
-				foreach($child_style as $k => $v) {
-					if($k == 'color'){
-						return true;		
-					}
+				if (isset($child_style['color'])){
+					return true;
 				}
 			}
 		}
