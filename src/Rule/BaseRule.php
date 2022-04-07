@@ -129,7 +129,6 @@ class BaseRule implements PhpAllyRuleInterface {
 			$style = $this->walkUpTreeForInheritance($element, $style);
 		}
 
-		$style = $this->walkDownTreeForOverride($element, $style);
 		if($element->hasAttribute('style')) {
 			$inline_styles = explode(';', $element->getAttribute('style'));
 			foreach($inline_styles as $inline_style) {
@@ -219,7 +218,8 @@ class BaseRule implements PhpAllyRuleInterface {
 		return $style;
 	}
 
-	public function walkDownTreeForOverride($element, $style)
+	// Helper function to check if text node children of an element have a color
+	public function childrenHaveTextColor($element)
 	{
 		$children = $element->childNodes;
 		foreach ($children as $child) {
@@ -232,22 +232,14 @@ class BaseRule implements PhpAllyRuleInterface {
 
 			if(is_array($child_style)) {
 				foreach($child_style as $k => $v) {
-					if(!isset($style[$k]) /*|| in_array($style[$k]['value'], $this->inheritance_strings)*/) {
-						$style[$k] = $v;
-					}
-
-					if($k == 'background-color' || $k == 'background'){
-						$style['background-color'] = $v;
-					}
-
 					if($k == 'color'){
-						$style['color'] = $v;
+						return true;		
 					}
 				}
 			}
 		}
 
-		return $style;
+		return false;
 	}
 
 
