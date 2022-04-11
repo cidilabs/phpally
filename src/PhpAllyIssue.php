@@ -111,7 +111,6 @@ class PhpAllyIssue implements \JsonSerializable {
 
             $mock->saveHTML();
             $element = $mock->documentElement;
-            print_r($element);
         }
         
         return $element;
