@@ -128,6 +128,7 @@ class BaseRule implements PhpAllyRuleInterface {
 		if(isset($style['background-color']) || isset($style['color'])){
 			$style = $this->walkUpTreeForInheritance($element, $style);
 		}
+
 		if($element->hasAttribute('style')) {
 			$inline_styles = explode(';', $element->getAttribute('style'));
 			foreach($inline_styles as $inline_style) {
@@ -215,6 +216,28 @@ class BaseRule implements PhpAllyRuleInterface {
 			$element = $element->parentNode;
 		}
 		return $style;
+	}
+
+	// Helper function to check if text node children of an element have a color
+	public function childrenHaveTextColor($element)
+	{
+		$children = $element->childNodes;
+		foreach ($children as $child) {
+			// Check if its a DOM element
+			if ($child->nodeType !== 1 ) { //Element nodes are of nodeType 1. Text 3. Comments 8. etc rtm
+				continue;
+			}
+
+			$child_style = $this->getNodeStyle($child);
+
+			if(is_array($child_style)) {
+				if (isset($child_style['color'])){
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 

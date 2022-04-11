@@ -184,6 +184,12 @@ class CssTextHasContrast extends BaseRule
 		foreach ($entries as $element) {
             $style = $this->getStyle($element);
 
+			// If the parent element doesn't have a text color, but one of the children does
+			// then we won't assume the parent is using the LMS default 
+			if (!isset($style['color']) && $this->childrenHaveTextColor($element)) {
+				continue;
+			}
+
 			$class = $element->getAttribute('class');
 
 			// Checking for Design Plus classnames
