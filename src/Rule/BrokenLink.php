@@ -19,47 +19,39 @@ class BrokenLink extends BaseRule
 
 	public function check()
 	{
-		$links = array();
 		foreach ($this->getAllElements('a') as $a) {
 			$href = $a->getAttribute('href');
 			if ($href) {
-				$links[$href] = $a;
+				$this->checkLink($a, $href);
 			}
             $this->totalTests++;
 		}
-		$this->checkLink($links);
 
 		return count($this->issues);
 	}
 
-	private function checkLink($links) {
+	private function checkLink($element, $link) {
 		$curls = array();
-		$mcurl = curl_multi_init();
-		foreach (array_keys($links) as $i => $link) {
-			$curls[$i] = curl_init();
-			curl_setopt($curls[$i], CURLOPT_URL, $link);
-			curl_setopt($curls[$i], CURLOPT_HEADER, true);
-			curl_setopt($curls[$i], CURLOPT_NOBODY, true);
-			curl_setopt($curls[$i], CURLOPT_REFERER, true);
-			curl_setopt($curls[$i], CURLOPT_TIMEOUT, 2);
-			curl_setopt($curls[$i], CURLOPT_TIMEOUT, 2);
-			curl_setopt($curls[$i], CURLOPT_AUTOREFERER, true);
-			curl_setopt($curls[$i], CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curls[$i], CURLOPT_FOLLOWLOCATION, true);
-			curl_multi_add_handle($mcurl, $curls[$i]);
-		}
+		$mcurl = curl_init();
+		
+		curl_setopt($mcurl, CURLOPT_URL, $link);
+		curl_setopt($mcurl, CURLOPT_HEADER, true);
+		curl_setopt($mcurl, CURLOPT_NOBODY, true);
+		curl_setopt($mcurl, CURLOPT_REFERER, true);
+		curl_setopt($mcurl, CURLOPT_TIMEOUT, 2);
+		curl_setopt($mcurl, CURLOPT_AUTOREFERER, true);
+		curl_setopt($mcurl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($mcurl, CURLOPT_FOLLOWLOCATION, true);
+		
 		$running = null;
 		do {
-			curl_multi_exec($mcurl, $running);
+			curl_exec($mcurl);
 		} while ($running > 0);
-		foreach (array_keys($links) as $i => $link) {
-			$status = curl_getinfo($curls[$i], CURLINFO_RESPONSE_CODE);
+			$status = curl_getinfo($mcurl, CURLINFO_RESPONSE_CODE);
 			// If the status is greater than or equal to 400 the link is broken.
 			if ($status >= 400) {
-				$this->setIssue($links[$link]);
+				$this->setIssue($element);
 			}
-			curl_multi_remove_handle($mcurl, $curls[$i]);
-		}
-		curl_multi_close($mcurl);
+		curl_close($mcurl);
 	}
 }
