@@ -31,27 +31,26 @@ class BrokenLink extends BaseRule
 	}
 
 	private function checkLink($element, $link) {
-		$curls = array();
-		$mcurl = curl_init();
+		$curl = curl_init();
 		
-		curl_setopt($mcurl, CURLOPT_URL, $link);
-		curl_setopt($mcurl, CURLOPT_HEADER, true);
-		curl_setopt($mcurl, CURLOPT_NOBODY, true);
-		curl_setopt($mcurl, CURLOPT_REFERER, true);
-		curl_setopt($mcurl, CURLOPT_TIMEOUT, 2);
-		curl_setopt($mcurl, CURLOPT_AUTOREFERER, true);
-		curl_setopt($mcurl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($mcurl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_URL, $link);
+		curl_setopt($curl, CURLOPT_HEADER, true);
+		curl_setopt($curl, CURLOPT_NOBODY, true);
+		curl_setopt($curl, CURLOPT_REFERER, true);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 2);
+		curl_setopt($curl, CURLOPT_AUTOREFERER, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 		
 		$running = null;
 		do {
-			curl_exec($mcurl);
+			curl_exec($curl);
 		} while ($running > 0);
-			$status = curl_getinfo($mcurl, CURLINFO_RESPONSE_CODE);
+			$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 			// If the status is greater than or equal to 400 the link is broken.
 			if ($status >= 400) {
-				$this->setIssue($element);
+				$this->setIssue($element); 
 			}
-		curl_close($mcurl);
+		curl_close($curl);
 	}
 }
