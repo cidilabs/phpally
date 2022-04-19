@@ -26,7 +26,7 @@ class Youtube
 	private $client;
 	private $language;
 
-	public function __construct(Client $client, $language = 'en', $api_key)
+	public function __construct(Client $client, $language, $api_key)
 	{
 		$this->client = $client;
 		$this->language = $language;
