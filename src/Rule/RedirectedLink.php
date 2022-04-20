@@ -43,6 +43,7 @@ class RedirectedLink extends BaseRule
 		curl_setopt($curl, CURLOPT_AUTOREFERER, true);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+<<<<<<< Updated upstream
 		
 		$running = null;
 		do {
@@ -53,6 +54,16 @@ class RedirectedLink extends BaseRule
 			if ($status < 400) {
 				$this->checkRedirect($link);
 			}
+=======
+
+		curl_exec($curl);
+		$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+		// If the status is 400 or greater the link is broken so dont bother checking.
+		if ($status < 400) {
+			$this->checkRedirect($link);
+		}
+		
+>>>>>>> Stashed changes
 		curl_close($curl);
 	}
 
