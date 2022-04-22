@@ -27,7 +27,6 @@ class RedirectedLink extends BaseRule
             $this->totalTests++;
 
         }
-		$this->checkLink($links);
 
 		return count($this->issues);
 	}
