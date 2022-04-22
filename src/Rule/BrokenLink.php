@@ -41,27 +41,12 @@ class BrokenLink extends BaseRule
 		curl_setopt($curl, CURLOPT_AUTOREFERER, true);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-		
-<<<<<<< Updated upstream
-		$running = null;
-		do {
-			curl_exec($curl);
-		} while ($running > 0);
-			$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-			// If the status is greater than or equal to 400 the link is broken.
-			if ($status >= 400) {
-				$this->setIssue($element); 
-			}
-=======
 		curl_exec($curl);
-
 		$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 		// If the status is greater than or equal to 400 the link is broken.
 		if ($status >= 400) {
 			$this->setIssue($element); 
 		}
-		
->>>>>>> Stashed changes
-		curl_close($curl);
+		curl_exec($curl);
 	}
 }
