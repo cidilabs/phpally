@@ -272,6 +272,7 @@ class BaseRule implements PhpAllyRuleInterface {
 
 		$ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $ruleId);
 		$previewElement = $this->previewElement;
+		$isDocumentElement = false;
 		
         if ($element) {
             $elementClasses = $element->getAttribute('class');
@@ -280,7 +281,16 @@ class BaseRule implements PhpAllyRuleInterface {
             }
         }
 
-        $this->issues[] = new PhpAllyIssue($ruleId, $element, $previewElement, $metadata);
+		/* 
+		Special case for the contentTooLong rule.
+		Since it involves the entire content body, 
+		we set this flag here so we can process it accordingly in UDOIT. 
+		*/
+		if ($ruleId === 'ContentTooLong') {
+			$isDocumentElement = true;
+		}
+
+        $this->issues[] = new PhpAllyIssue($ruleId, $isDocumentElement, $element, $previewElement, $metadata);
     }
 
     public function getIssues()
