@@ -5,6 +5,9 @@ namespace CidiLabs\PhpAlly;
 use DOMDocument;
 
 class PhpAlly {
+
+    global $linkArray = [];
+    
     public function __construct()
     {
 
