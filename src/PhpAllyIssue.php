@@ -10,10 +10,9 @@ class PhpAllyIssue implements \JsonSerializable {
     protected $element;
     protected $previewElement;
 
-    public function __construct($ruleId, $isDocumentElement, DOMElement $element = null, DOMElement $previewElement = null, $metadata = null)
+    public function __construct($ruleId, DOMElement $element = null, DOMElement $previewElement = null, $metadata = null)
     {
         $this->ruleId = $ruleId;
-        $this->isDocumentElement = $isDocumentElement;
         $this->element = $element;
         $this->metadata = $metadata;
 

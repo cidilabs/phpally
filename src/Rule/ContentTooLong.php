@@ -33,7 +33,8 @@ class ContentTooLong extends BaseRule
         $wordCount = str_word_count($pageText);
 
 		if($wordCount > $this->maxWordCount) {
-			$this->setIssue($this->dom->documentElement);
+            $metadata = array('isDocumentElement' => true);
+			$this->setIssue($this->dom->documentElement, null, $metadata);
 		}
 
         return count($this->issues);

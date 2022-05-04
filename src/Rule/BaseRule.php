@@ -281,16 +281,7 @@ class BaseRule implements PhpAllyRuleInterface {
             }
         }
 
-		/* 
-		Special case for the contentTooLong rule.
-		Since it involves the entire content body, 
-		we set this flag here so we can process it accordingly in UDOIT. 
-		*/
-		if ($ruleId === 'ContentTooLong') {
-			$isDocumentElement = true;
-		}
-
-        $this->issues[] = new PhpAllyIssue($ruleId, $isDocumentElement, $element, $previewElement, $metadata);
+        $this->issues[] = new PhpAllyIssue($ruleId, $element, $previewElement, $metadata);
     }
 
     public function getIssues()
