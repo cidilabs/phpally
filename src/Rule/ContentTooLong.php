@@ -33,6 +33,10 @@ class ContentTooLong extends BaseRule
         $wordCount = str_word_count($pageText);
 
 		if($wordCount > $this->maxWordCount) {
+            /* 
+            Since this rule sets the document element as the issue
+            we set this flag here so we can process it accordingly in UDOIT. 
+            */
             $metadata = array('isDocumentElement' => true);
 			$this->setIssue($this->dom->documentElement, null, json_encode($metadata));
 		}
