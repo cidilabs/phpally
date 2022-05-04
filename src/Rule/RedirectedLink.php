@@ -19,7 +19,7 @@ class RedirectedLink extends BaseRule
 
 	public function check()
 	{
-		$linkArray = [];
+		global $linkArray;
 		foreach ($this->getAllElements('a') as $a) {
 			$href = $a->getAttribute('href');
 			if ($href) {

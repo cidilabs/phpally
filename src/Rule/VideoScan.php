@@ -33,10 +33,8 @@ class VideoScan extends BaseRule
                 $url = $video->getAttribute($attr);
                 
                 // Get provider (Youtube, Vimeo, or Kaltura class)
-                $provider = $this->getVideoProvider($url);
-                
-                if (!isset($provider)) {
-                    $this->setError('Failed finding provider.');
+                $provider = $this->getVideoProvider($url);                
+                if (!$provider) {
                     continue;
                 }
 
