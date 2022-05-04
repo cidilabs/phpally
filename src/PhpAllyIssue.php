@@ -13,15 +13,15 @@ class PhpAllyIssue implements \JsonSerializable {
     public function __construct($ruleId, DOMElement $element = null, DOMElement $previewElement = null, $metadata = null)
     {
         $this->ruleId = $ruleId;
-        $this->element = $this->prepareElement($element);
+        $this->element = $element;
         $this->metadata = $metadata;
 
         if (!is_null($previewElement)) {
-            $this->previewElement = $this->prepareElement($previewElement);
+            $this->previewElement = $previewElement;
         }
         else {
             if ($this->element) {
-                $this->previewElement = $this->prepareElement($this->element->parentNode);        
+                $this->previewElement = $this->element->parentNode;        
             }
         }
     }
@@ -86,19 +86,5 @@ class PhpAllyIssue implements \JsonSerializable {
     public function jsonSerialize()
     {
         return $this->toArray();
-    }
-
-    public function prepareElement($element)
-    {
-        if($body = $element->getElementsByTagName('body')->item(0)){
-            $mock = new DOMDocument;
-            foreach ($body->childNodes as $child){
-                $mock->appendChild($mock->importNode($child, true));
-            }
-            $mock->saveHTML();
-            $element = $mock->documentElement;
-        }
-
-        return $element;
     }
 }
