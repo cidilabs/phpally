@@ -34,7 +34,7 @@ class ContentTooLong extends BaseRule
 
 		if($wordCount > $this->maxWordCount) {
             $metadata = array('isDocumentElement' => true);
-			$this->setIssue($this->dom->documentElement, null, $metadata);
+			$this->setIssue($this->dom->documentElement, null, json_encode($metadata));
 		}
 
         return count($this->issues);
