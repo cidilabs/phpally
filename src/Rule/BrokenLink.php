@@ -4,6 +4,8 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
+global $linkArray;
+
 /**
 *  Links that are broken need to be removed or manually updated.
 *  Based on UDOIT 2.8.X https://github.com/ucfopen/UDOIT/blob/classic/lib/Udoit.php
@@ -19,15 +21,18 @@ class BrokenLink extends BaseRule
 
 	public function check()
 	{
-		global $linkArray;
 		foreach ($this->getAllElements('a') as $a) {
 			$href = $a->getAttribute('href');
 			if ($href) {
-				if(!in_array($href, $linkArray))
+				if($GLOBALS['linkArray'] == null)
+				{
+					$GLOBALS['linkArray'] = [];
+				}
+				if(!in_array($href, $GLOBALS['linkArray']))
 				{
 					$this->checkLink($a, $href);
 				}
-				array_push($linkArray, $href);
+				array_push($GLOBALS['linkArray'], $href);
 			}
             $this->totalTests++;
 		}
