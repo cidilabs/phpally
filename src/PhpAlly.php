@@ -52,7 +52,7 @@ class PhpAlly {
         if (strpos($html, '<?xml encoding="utf-8"') !== false) {
             $dom->loadHTML($html);
         } else {
-            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         }
 
         return $dom;
