@@ -38,7 +38,7 @@ class ContentTooLong extends BaseRule
             we set this flag here so we can process it accordingly in UDOIT. 
             */
             $metadata = array('isDocumentElement' => true);
-			$this->setIssue($this->dom->documentElement, null, json_encode($metadata));
+			$this->setIssue($this->dom->documentElement->parentNode, null, json_encode($metadata));
 		}
 
         return count($this->issues);

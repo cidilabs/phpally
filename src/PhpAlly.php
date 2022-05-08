@@ -50,7 +50,7 @@ class PhpAlly {
     {
         $dom = new DOMDocument('1.0', 'utf-8');
         if (strpos($html, '<?xml encoding="utf-8"') !== false) {
-            $dom->loadHTML($html);
+            $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } else {
             $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         }
