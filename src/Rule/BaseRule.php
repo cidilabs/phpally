@@ -272,6 +272,7 @@ class BaseRule implements PhpAllyRuleInterface {
 
 		$ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $ruleId);
 		$previewElement = $this->previewElement;
+		$isDocumentElement = false;
 		
         if ($element) {
             $elementClasses = $element->getAttribute('class');

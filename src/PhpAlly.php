@@ -7,7 +7,6 @@ use DOMDocument;
 $linkArray = [];
 
 class PhpAlly {
-    
     public function __construct()
     {
         global $linkArray;

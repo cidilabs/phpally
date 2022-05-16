@@ -38,7 +38,7 @@ class RedirectedLink extends BaseRule
 
         }
 		return count($this->issues);
-	}
+  }
 
 	private function checkLink($element, $link) {
 		$curl = curl_init();
@@ -51,6 +51,13 @@ class RedirectedLink extends BaseRule
 		curl_setopt($curl, CURLOPT_AUTOREFERER, true);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
+		curl_exec($curl);
+		$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+		// If the status is 400 or greater the link is broken so dont bother checking.
+		if ($status < 400) {
+			$this->checkRedirect($element);
+		}
 		
 		$running = null;
 		do {
