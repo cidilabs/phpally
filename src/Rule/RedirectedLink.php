@@ -4,6 +4,8 @@ namespace CidiLabs\PhpAlly\Rule;
 
 use DOMElement;
 
+global $linkArray;
+
 /**
 *  Links that are permanently redirected should be updated with the new link.
 *  Based on UDOIT 2.8.X https://github.com/ucfopen/UDOIT/blob/classic/lib/Udoit.php
@@ -19,22 +21,24 @@ class RedirectedLink extends BaseRule
 
 	public function check()
 	{
-		$linkArray = [];
 		foreach ($this->getAllElements('a') as $a) {
 			$href = $a->getAttribute('href');
 			if ($href) {
-				if(!in_array($href, $linkArray))
+				if($GLOBALS['linkArray'] == null)
+				{
+					$GLOBALS['linkArray'] = [];
+				}
+				if(!in_array($href, $GLOBALS['linkArray']))
 				{
 					$this->checkLink($a, $href);
 				}
-				array_push($linkArray, $href);
+				array_push($GLOBALS['linkArray'], $href);
 			}
             $this->totalTests++;
 
         }
-
 		return count($this->issues);
-	}
+  }
 
 	private function checkLink($element, $link) {
 		$curl = curl_init();
@@ -55,6 +59,15 @@ class RedirectedLink extends BaseRule
 			$this->checkRedirect($element);
 		}
 		
+		$running = null;
+		do {
+			curl_exec($curl);
+		} while ($running > 0);
+			$status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+			// If the status is 400 or greater the link is broken so dont bother checking.
+			if ($status < 400) {
+				$this->checkRedirect($element);
+			}
 		curl_close($curl);
 	}
 

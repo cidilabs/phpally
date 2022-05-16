@@ -4,10 +4,12 @@ namespace CidiLabs\PhpAlly;
 
 use DOMDocument;
 
+$linkArray = [];
+
 class PhpAlly {
     public function __construct()
     {
-
+        global $linkArray;
     }
 
     public function checkOne($content, $ruleId, $options = [])
