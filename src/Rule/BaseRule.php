@@ -18,7 +18,7 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $lang;
     protected $strings = array('en' => '');
 
-    const ALT_TEXT_LENGTH_LIMIT = 125;
+    const ALT_TEXT_LENGTH_LIMIT = 150;
     const DOC_LENGTH = 1500;
     const MAX_WORD_COUNT = 3000;
 
