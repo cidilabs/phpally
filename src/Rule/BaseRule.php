@@ -167,7 +167,7 @@ class BaseRule implements PhpAllyRuleInterface {
 			$style = $this->style_index[$element->getAttribute('quail_style_index')];
 		}
 		// To support the deprecated 'bgcolor' attribute
-		if($element->hasAttribute('bgcolor') &&  in_array($element->tagName, $this->deprecated_style_elements)) {
+		if($element->hasAttribute('bgcolor')) {
 			$style['background-color'] = $element->getAttribute('bgcolor');
 		}
 		if($element->hasAttribute('style')) {
