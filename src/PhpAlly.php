@@ -30,7 +30,7 @@ class PhpAlly {
                     $ruleId
                 );
                 if (!class_exists($className)) {
-                    $report->setError('Rule does not exist.');
+                    $report->setError("Rule does not exist: {$className}");
                     continue;
                 }           
 

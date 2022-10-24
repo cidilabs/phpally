@@ -1,8 +1,6 @@
 <?php
 
-namespace Cidilabs\PhpAlly\Rule;
-
-use DOMElement;
+namespace CidiLabs\PhpAlly\Rule;
 
 class TableNotEmpty extends BaseRule {
 
