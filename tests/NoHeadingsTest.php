@@ -39,4 +39,14 @@ class NoHeadingsTest extends PhpAllyTestCase {
 
         $this->assertEquals(1, $rule->check(), 'No Headings Test should have one issue.');
     }
+
+    public function testCheckSkipScriptTags()
+    {
+        $html = file_get_contents(__DIR__ . '/../tests/testFiles/ContentTooLongScript.html');
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new NoHeadings($dom);
+
+        $this->assertEquals(0, $rule->check(), 'No Headings Test should have one issue.');
+    }
 }

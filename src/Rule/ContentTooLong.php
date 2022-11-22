@@ -22,26 +22,30 @@ class ContentTooLong extends BaseRule
     {
         $pageText = '';
 		$wordCount = 0;
-		foreach ($this->getAllElements(null, 'text') as $element) {
-            $text = $element->nodeValue;
 
-			if($text != null){
-				$pageText = $pageText . $text;
-			}
-            $this->totalTests++;
-		}
-        $wordCount = str_word_count($pageText);
+        // Ignore html with script tags
+        if (count($this->getAllElements('script')) === 0) {
+            foreach ($this->getAllElements(null, 'text') as $element) {
+                $text = $element->nodeValue;
 
-		if($wordCount > $this->maxWordCount) {
-            /* 
-            Since this rule sets the document element as the issue
-            we set this flag here so we can process it accordingly in UDOIT. 
-            */
-            $metadata = array('isDocumentElement' => true);
-			$this->setIssue($this->dom->documentElement, null, json_encode($metadata));
-		}
+                if($text != null){
+                    $pageText = $pageText . $text;
+                }
+                $this->totalTests++;
+            }
+            $wordCount = str_word_count($pageText);
 
-        return count($this->issues);
+            if($wordCount > $this->maxWordCount) {
+                /* 
+                Since this rule sets the document element as the issue
+                we set this flag here so we can process it accordingly in UDOIT. 
+                */
+                $metadata = array('isDocumentElement' => true);
+                $this->setIssue($this->dom->documentElement, null, json_encode($metadata));
+            }
+
+            return count($this->issues);
+        }
     }
 
     public function getPreviewElement(DOMElement $a = null)
