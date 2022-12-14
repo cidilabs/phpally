@@ -45,7 +45,7 @@ class ContentTooLongTest extends PhpAllyTestCase {
 
     public function testCheckSkipScriptTags()
     {
-        $html = file_get_contents(__DIR__ . '/../tests/testFiles/ContentTooLongValidPage.html');
+        $html = file_get_contents(__DIR__ . '/../tests/testFiles/ContentTooLongScript.html');
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $rule = new ContentTooLong($dom);
