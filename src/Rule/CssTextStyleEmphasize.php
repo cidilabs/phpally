@@ -61,6 +61,11 @@ class CssTextStyleEmphasize extends BaseRule
 				continue;
 			}
 
+			// skip if the element only contains whitespace
+			if(!$elementText) {
+				continue;
+			}
+
 			// skip if parent text == element text AND parent element is emphasized
 			$parentNode = $element->parentNode;
 			if ($parentNode && ($parentNode->nodeType === XML_ELEMENT_NODE)) {

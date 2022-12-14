@@ -76,6 +76,9 @@ class CssTextStyleEmphasizeTest extends PhpAllyTestCase {
             // emphasis tag w/ color
             "valid colored {emphasis_tag}" => "<{block_tag}><{emphasis_tag} style='color: red'>COLORED EMPHASIS</{emphasis_tag}>.</{block_tag}>",
             "valid bgcolor {emphasis_tag}" => "<{block_tag}><{emphasis_tag} style='background-color: red;'>BG COLORED EMPHASIS</{emphasis_tag}>.</{block_tag}>",
+
+            // &nbsp;
+            "valid {block_tag}, bgcolor {generic_tag}" => "<{block_tag}><{generic_tag} style='background-color: red;'>&nbsp;&nbsp;&nbsp;</{generic_tag}></{block_tag}>",
         ];
     }
 
