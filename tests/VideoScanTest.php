@@ -184,4 +184,30 @@ class VideoScanTest extends PhpAllyTestCase {
         $this->assertEquals(0, $ruleMock->check(), 'No issues when API connection fails.');
         $this->assertCount(1, $ruleMock->getErrors(), 'One error found when API connection fails.');
     }
+
+    public function testCheckNoApiCreditsYoutube()
+    {
+        $html = '<embed type="video/webm" src="https://www.youtube.com/watch?v=1xZxxVlu7BM" width="400" height="300">';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $options = [
+            'vimeoApiKey' => 'test',
+            'youtubeApiKey' => 'test',
+            'kalturaApiKey' => 'test',
+            'kalturaUsername' => 'test'
+        ];
+        $response = VideoScan::NO_API_CREDITS;
+
+        $ruleMock = $this->getMockBuilder(VideoScan::class)
+            ->setConstructorArgs([$dom, $options])
+            ->onlyMethods(array('getCaptionData'))
+            ->getMock();
+
+        $ruleMock->expects($this->once())
+            ->method('getCaptionData')
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(0, $ruleMock->check(), 'No issues when credits run out.');
+        $this->assertCount(1, $ruleMock->getErrors(), 'One error found when credits run out.');
+    }
 }
