@@ -9,6 +9,7 @@ class Youtube
 	const YOUTUBE_FAILED_REQUEST = -1;
 	const YOUTUBE_FAIL = 0;	
 	const YOUTUBE_SUCCESS = 1;
+	const YOUTUBE_NO_CREDITS = -2;
 
 	private $regex = array(
 		'@youtube\.com/embed/([^"\&\? ]+)@i',
@@ -127,12 +128,17 @@ class Youtube
 		$url = $this->search_url . $youtube_id . '&key=' . $this->api_key;
 		$response = $this->client->request('GET', $url);
 
+		$result = json_decode($response->getBody());
+
 		// validate response
 		if ($response->getStatusCode() >= 400) {
+			foreach ($result->error->errors as $error) {
+				if ($error->reason === "quotaExceeded") {
+					return self::YOUTUBE_NO_CREDITS;
+				}
+			}
 			return self::YOUTUBE_FAILED_REQUEST;
 		}
-
-		$result = json_decode($response->getBody());
 
 		if (!empty($result->error)) {
 			return self::YOUTUBE_FAILED_REQUEST;

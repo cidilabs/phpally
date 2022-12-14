@@ -14,6 +14,7 @@ class VideoScan extends BaseRule
     const FAILED_CONNECTION = -1;
     const FAILED_CAPTIONS = 0;
     const SUCCESSFUL_CAPTIONS = 1;
+    const NO_API_CREDITS = -2;
 
     public $youtube = null;
     public $vimeo = null;
@@ -39,6 +40,11 @@ class VideoScan extends BaseRule
                 }
 
                 $captions = $this->getCaptionData($url, $provider);
+
+                if (self::NO_API_CREDITS === $captions) {
+                    $this->setError('Out of Youtube API credits'); 
+                    continue;   
+                }
 
                 if (self::FAILED_CONNECTION === $captions) {
                     $this->setError('Failed provider API connection.'); 
