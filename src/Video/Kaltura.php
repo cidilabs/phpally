@@ -15,6 +15,7 @@ class Kaltura {
 	const KALTURA_FAILED_CONNECTION = -1;
 	const KALTURA_FAIL = 0;	
 	const KALTURA_SUCCESS = 1;
+	const PROVIDER_NAME = 'Kaltura';
 
 	private $client;
 	private $language;
@@ -125,6 +126,10 @@ class Kaltura {
 		$result = $captionPlugin->captionAsset->listAction($filter, $pager);
 
 		return !isset($result->objects) ? $result->objects : self::KALTURA_FAILED_CONNECTION;
+	}
+
+	public function getName() {
+		return self::PROVIDER_NAME;
 	}
 
 }
