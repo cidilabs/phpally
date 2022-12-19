@@ -9,6 +9,7 @@ class Vimeo
 	const VIMEO_FAILED_CONNECTION = -1;
 	const VIMEO_FAIL = 0;	
 	const VIMEO_SUCCESS = 1;
+	const PROVIDER_NAME = "Vimeo";
 
 	private $regex = '@vimeo\.com/[^0-9]*([0-9]{7,9})@i';
 	private $search_url = 'https://api.vimeo.com/videos/';
@@ -93,5 +94,9 @@ class Vimeo
 		$result = json_decode($response->getBody());
 		
 		return isset($result->data) ? $result->data : self::VIMEO_FAILED_CONNECTION;
+	}
+
+	public function getName() {
+		return self::PROVIDER_NAME;
 	}
 }

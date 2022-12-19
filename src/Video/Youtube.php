@@ -10,6 +10,7 @@ class Youtube
 	const YOUTUBE_FAIL = 0;	
 	const YOUTUBE_SUCCESS = 1;
 	const YOUTUBE_NO_CREDITS = -2;
+	const PROVIDER_NAME = 'Youtube';
 
 	private $regex = array(
 		'@youtube\.com/embed/([^"\&\? ]+)@i',
@@ -145,5 +146,9 @@ class Youtube
 		}
 
 		return isset($result->items) ? $result->items : self::YOUTUBE_FAILED_REQUEST;
+	}
+
+	public function getName() {
+		return self::PROVIDER_NAME;
 	}
 }
