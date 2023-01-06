@@ -2,8 +2,6 @@
 
 namespace CidiLabs\PhpAlly\Rule;
 
-use CidiLabs\PhpAlly\Rule\HtmlElement;
-
 use DOMElement;
 
 /**
@@ -22,6 +20,7 @@ class ContentTooLong extends BaseRule
     {
         $pageText = '';
 		$wordCount = 0;
+        $this->totalTests++;
 
         // Ignore html with script tags
         if (count($this->getAllElements('script')) === 0) {
@@ -31,7 +30,6 @@ class ContentTooLong extends BaseRule
                 if($text != null){
                     $pageText = $pageText . $text;
                 }
-                $this->totalTests++;
             }
             $wordCount = str_word_count($pageText);
 

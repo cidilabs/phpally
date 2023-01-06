@@ -3,9 +3,9 @@
 namespace CidiLabs\PhpAlly;
 
 use DOMElement;
-use DOMDocument;
 
-class PhpAllyIssue implements \JsonSerializable {
+class PhpAllyIssue implements \JsonSerializable 
+{
     protected $ruleId;
     protected $element;
     protected $previewElement;
@@ -68,7 +68,7 @@ class PhpAllyIssue implements \JsonSerializable {
         return $this->element->ownerDocument->saveHTML($this->previewElement);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'ruleId' => $this->ruleId,
@@ -83,7 +83,7 @@ class PhpAllyIssue implements \JsonSerializable {
         return \json_encode($this->toArray());
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
