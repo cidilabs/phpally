@@ -52,4 +52,17 @@ class AnchorSuspiciousLinkTextTest extends PhpAllyTestCase {
 
         $this->assertEquals(1, $rule->check(), 'Anchor Suspicious Link Test should have one issue.');
     }
+
+    /**
+	*	Checks the case where the link is just an anchor and has no href attribute
+	*/
+    public function testCheckTrueAnchorCase()
+    {
+        $html = '<div><p><a name="anchor">Click Here</a></p></div>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new AnchorSuspiciousLinkText($dom);
+
+        $this->assertEquals(0, $rule->check(), 'Anchor Suspicious Link Test should have no issues.');
+    }
 }
