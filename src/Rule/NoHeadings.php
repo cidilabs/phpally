@@ -31,7 +31,12 @@ class NoHeadings extends BaseRule
                     && !$this->getAllElements('h4')
                     && !$this->getAllElements('h5')
                     && !$this->getAllElements('h6')) {
-                    $this->setIssue($this->dom->documentElement);
+                    /* 
+                    Since this rule sets the document element as the issue
+                    we set this flag here so we can process it accordingly in UDOIT. 
+                    */
+                    $metadata = array('isDocumentElement' => true);
+                    $this->setIssue($this->dom->documentElement, null, json_encode($metadata));
                 }
             }
             $this->totalTests++;
