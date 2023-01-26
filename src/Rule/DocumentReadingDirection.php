@@ -31,8 +31,9 @@ class DocumentReadingDirection extends BaseRule
 				if ($element->getAttribute('dir') != 'rtl')
 				 	$this->setIssue($element);
 			}
-            $this->totalTests++;
 		}
+
+        $this->totalTests++;
         
         return count($this->issues);
     }

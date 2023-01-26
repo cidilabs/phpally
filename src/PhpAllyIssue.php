@@ -9,6 +9,7 @@ class PhpAllyIssue implements \JsonSerializable
     protected $ruleId;
     protected $element;
     protected $previewElement;
+    protected $metadata;
 
     public function __construct($ruleId, DOMElement $element = null, DOMElement $previewElement = null, $metadata = null)
     {
@@ -56,6 +57,14 @@ class PhpAllyIssue implements \JsonSerializable
             return '';
         }
 
+        $metaStr = $this->getMetadata();
+        if ($metaStr) {
+            $metadata = \json_decode($metaStr, true);
+            if (!empty($metadata['isDocumentElement'])) {
+                return '';
+            }
+        }
+
         return $this->element->ownerDocument->saveHTML($this->element);
     }
 
@@ -64,8 +73,18 @@ class PhpAllyIssue implements \JsonSerializable
         if (!$this->previewElement) {
             return '';
         }
+        
+        $metaStr = $this->getMetadata();
+        if ($metaStr) {
+            $metadata = \json_decode($metaStr, true);
+            if (!empty($metadata['isDocumentElement'])) {
+                return '';
+            }
+        }
 
-        return $this->element->ownerDocument->saveHTML($this->previewElement);
+        $preview = $this->element->ownerDocument->saveHTML($this->previewElement);
+
+        return str_replace('<?xml encoding="utf-8" ?>', '', $preview);
     }
 
     public function toArray(): array
