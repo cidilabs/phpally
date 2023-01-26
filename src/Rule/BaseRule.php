@@ -17,6 +17,7 @@ class BaseRule implements PhpAllyRuleInterface {
     protected $errors = [];
     protected $lang;
     protected $strings = array('en' => '');
+	protected $options;
 
     const ALT_TEXT_LENGTH_LIMIT = 150;
     const DOC_LENGTH = 1500;
@@ -272,7 +273,6 @@ class BaseRule implements PhpAllyRuleInterface {
 
 		$ruleId = str_replace(['CidiLabs\\PhpAlly\\Rule\\','App\\Rule\\'], '', $ruleId);
 		$previewElement = $this->previewElement;
-		$isDocumentElement = false;
 		
         if ($element) {
             $elementClasses = $element->getAttribute('class');

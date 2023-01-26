@@ -52,4 +52,20 @@ class ContentTooLongTest extends PhpAllyTestCase {
 
         $this->assertEquals(0, $rule->check(), 'Content Too Long should have no issues.');
     }
+
+    public function testCheckMetadata()
+    {
+        $html = file_get_contents(__DIR__ . '/../tests/testFiles/ContentTooLong.html');
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new ContentTooLong($dom);
+
+        $this->assertEquals(1, $rule->check(), 'Content Too Long should have issues.');
+
+        $issues = $rule->getIssues();
+        $issue = reset($issues);
+        
+        $this->assertEquals('', $issue->getHtml(), 'Content Too Long getHtml() returns an empty string.');
+        $this->assertEquals('', $issue->getPreview(), 'Content Too Long getHtml() returns an empty string.');
+    }
 }
