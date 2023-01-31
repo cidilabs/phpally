@@ -42,12 +42,12 @@ class VideoScan extends BaseRule
                 $captions = $this->getCaptionData($url, $provider);
 
                 if (self::NO_API_CREDITS === $captions) {
-                    $this->setError("{$provider->getName()} videos cannot be scanned at this time. Please try again at a later time."); 
+                    $this->setIssue($video, "VideoApi{$provider->getName()}ConnectionFailed");
                     continue;   
                 }
 
                 if (self::FAILED_CONNECTION === $captions) {
-                    $this->setError("Failed {$provider->getName()} API connection."); 
+                    $this->setIssue($video, "VideoApi{$provider->getName()}ConnectionFailed");
                     continue;   
                 }
 
@@ -114,17 +114,19 @@ class VideoScan extends BaseRule
         $search_vimeo = '/(vimeo)/';
         $search_kaltura = '/(kaltura)/';
 
-        if (preg_match($search_youtube, $url)) {
+        $domain = parse_url($url, PHP_URL_HOST);
+
+        if (preg_match($search_youtube, $domain)) {
             if (!isset($this->youtube)) {
                 $this->youtube = new Youtube(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['youtubeApiKey']);
             }
             return $this->youtube;
-        } elseif (preg_match($search_vimeo, $url)) {
+        } elseif (preg_match($search_vimeo, $domain)) {
             if (!isset($this->vimeo)) {
                 $this->vimeo = new Vimeo(new \GuzzleHttp\Client(['http_errors' => false]), $this->lang, $this->options['vimeoApiKey']);
             }
             return $this->vimeo;
-        } else if (preg_match($search_kaltura, $url)) {
+        } else if (preg_match($search_kaltura, $domain)) {
             if (!isset($this->kaltura)) {
                 $this->kaltura = new Kaltura($this->lang, $this->options['kalturaApiKey'], $this->options['kalturaUsername']);
             }
