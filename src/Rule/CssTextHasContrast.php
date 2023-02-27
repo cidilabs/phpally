@@ -182,7 +182,12 @@ class CssTextHasContrast extends BaseRule
 		$default_color = $options['textColor'];
 
 		foreach ($entries as $element) {
-            $style = $this->getStyle($element);
+			$childNodeWithStyle = $this->GetChildWithStyle($element);
+			if($childNodeWithStyle){
+				$style = $this->getStyle($childNodeWithStyle);
+			}else {
+				$style = $this->getStyle($element);
+			}
 
 			// If the parent element doesn't have a text color, but one of the children does
 			// then we won't assume the parent is using the LMS default 
@@ -319,6 +324,32 @@ class CssTextHasContrast extends BaseRule
 
 		return $results;
     }
+
+	public function GetChildWithStyle($element) {
+		if ($element->hasChildNodes()){
+			$children = $element->childNodes;
+			foreach ($children as $child) {
+				// Check if its a DOM element
+				if ($child->nodeType !== 1 ) { //Element nodes are of nodeType 1. Text 3. Comments 8. etc rtm
+					continue;
+				}
+
+				$child_style = $this->getNodeStyle($child);
+
+				if(is_array($child_style)) {
+					if (isset($child_style['color'])){
+						return $child;
+					}
+				}
+
+				if($child->hasChildNodes()){
+					return $this->GetChildWithStyle($child);
+				}
+			}
+
+			return [];
+		}
+	}
     
     /**
 	*	Converts multiple color or background styles into a simple hex string
