@@ -65,4 +65,17 @@ class AnchorSuspiciousLinkTextTest extends PhpAllyTestCase {
 
         $this->assertEquals(0, $rule->check(), 'Anchor Suspicious Link Test should have no issues.');
     }
+
+    /**
+     *  Checks the case where the link text starts with https 
+     */
+    public function testCheckFalseTextIsLinkCase()
+    {
+        $html = '<div><p><a href="https://cnn.com">https://msn.com</a></p></div>';
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML($html);
+        $rule = new AnchorSuspiciousLinkText($dom);
+
+        $this->assertEquals(0, $rule->check(), 'Anchor Suspicious Link Test should have no issues.');
+    }
 }
