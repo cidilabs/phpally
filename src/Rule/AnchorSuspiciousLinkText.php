@@ -23,7 +23,14 @@ class AnchorSuspiciousLinkText extends BaseRule
     public function check()
     {
         foreach ($this->getAllElements('a') as $a) {
-            if ((in_array(strtolower(trim($a->nodeValue)), $this->translation()) || $a->nodeValue == $a->getAttribute('href')) && $a->getAttribute('href') != "")
+
+            // Check to see if the link text is a url
+            $textIsLink = ($a->nodeValue == $a->getAttribute('href')) || str_starts_with($a->nodeValue, "http");
+
+            // Check that the link is not an anchor
+            $linkIsAnchor = ($a->getAttribute('href') == "");
+
+            if ((in_array(strtolower(trim($a->nodeValue)), $this->translation()) || $textIsLink) && !$linkIsAnchor )
 				$this->setIssue($a);
             $this->totalTests++;
         }
