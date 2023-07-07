@@ -1,5 +1,5 @@
 {
-    "name": "cidilabs/phpally",
+    "name": "ucfopen/phpally",
     "type": "library",
     "description": "PHP Accessibility (a11y) Testing Library",
     "license": "MIT",
