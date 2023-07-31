@@ -130,16 +130,17 @@ class BaseRule implements PhpAllyRuleInterface {
 			$style = $this->walkUpTreeForInheritance($element, $style);
 		}
 
-		if($element->hasAttribute('style')) {
-			$inline_styles = explode(';', $element->getAttribute('style'));
-			foreach($inline_styles as $inline_style) {
-				$s = explode(':', $inline_style);
+		// if($element->hasAttribute('style')) {
+		// 	$inline_styles = explode(';', $element->getAttribute('style'));
+		// 	foreach($inline_styles as $inline_style) {
+		// 		$s = explode(':', $inline_style);
+				
+		// 		if(isset($s[1])){	// Edit:  Make sure the style attribute doesn't have a trailing ;
+		// 			$style[trim($s[0])] = trim(strtolower($s[1]));
+		// 		}
+		// 	}
+		// }
 
-				if(isset($s[1])){	// Edit:  Make sure the style attribute doesn't have a trailing ;
-					$style[trim($s[0])] = trim(strtolower($s[1]));
-				}
-			}
-		}
 		if($element->tagName === "strong"){
 			$style['font-weight'] = "bold";
 		}
@@ -201,7 +202,7 @@ class BaseRule implements PhpAllyRuleInterface {
 						$style[$k] = $v;
 					}
 
-					if((!isset($style['background-color'])) || strtolower($style['background-color']) == strtolower("#FFFFFF")){
+					if((!isset($style['background-color'])) || strtolower($style['background-color']) == strtolower("#FFFFFF") || strtolower($style['background-color']) == strtolower("transparent")){
 						if($k == 'background-color'){
 							$style['background-color'] = $v;
 						}

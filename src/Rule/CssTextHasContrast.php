@@ -189,6 +189,10 @@ class CssTextHasContrast extends BaseRule
 				$style = $this->getStyle($element);
 			}
 
+			if(strtolower($style['background-color']) == strtolower("transparent")) {
+				$style['background-color'] = $default_background;
+			}
+
 			// If the parent element doesn't have a text color, but one of the children does
 			// then we won't assume the parent is using the LMS default 
 			if (!isset($style['color']) && $this->childrenHaveTextColor($element)) {
